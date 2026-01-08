@@ -1001,33 +1001,83 @@ h6 {
         font-size: 0.8rem;
     }
 
+    /* Category Grid Optimization */
+    .category-list {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        overflow-x: visible !important;
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-category {
+        flex-direction: column;
+        padding: 8px 4px;
+        min-width: 0;
+        font-size: 0.75rem;
+        text-align: center;
+        gap: 4px;
+    }
+
+    .btn-category i {
+        font-size: 1.2rem;
+    }
+
     /* Grids & Layouts */
     .product-grid,
     .donor-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px;
+    }
+
+    .product-card {
+        padding: 10px;
+    }
+
+    .product-info {
+        padding: 8px 0 0 0;
     }
 
     .product-info h4 {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        margin-bottom: 4px;
+        line-height: 1.2;
+        height: 2.4em;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
 
     .product-price {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+
+    .product-condition {
+        font-size: 0.75rem;
+        margin-bottom: 8px;
     }
 
     .product-image-frame {
-        height: 140px;
+        height: 120px;
+    }
+
+    .btn-sm {
+        padding: 6px 8px;
+        font-size: 0.75rem;
     }
 
     /* Search & Filters */
     .search-bar-container {
         margin-bottom: 1.5rem;
+        padding: 0 10px;
     }
 
     .main-search-input {
         font-size: 0.9rem;
-        padding: 12px 12px 12px 40px;
+        padding: 10px 10px 10px 35px;
     }
 
     /* Hero Section */
@@ -1036,7 +1086,7 @@ h6 {
     }
 
     h1[style*="font-size: 3rem"] {
-        font-size: 2rem !important;
+        font-size: 1.8rem !important;
     }
 
     /* Footer */
@@ -1067,15 +1117,18 @@ h6 {
 
     /* ChatBot */
     .chatbot-window {
-        width: calc(100vw - 40px);
+        width: calc(100vw - 30px);
         height: 400px;
         bottom: 70px;
+        right: -10px;
     }
 }
 
 @media (max-width: 480px) {
-    .product-grid {
-        grid-template-columns: 1fr;
-        /* Single column on very small screens if preferred, or stay 2 */
+
+    /* Keeping 2 columns as per request for better density */
+    .product-grid,
+    .donor-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 }
