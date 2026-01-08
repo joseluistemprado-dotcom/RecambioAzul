@@ -120,29 +120,20 @@ export class DonorVehicles {
 
         content.innerHTML = `
             <div class="donor-details-wrapper">
-                <div class="donor-modal-hero">
-                    <img src="${this.currentDonor.image}" alt="${this.currentDonor.brand}">
-                </div>
-                
                 <div class="donor-modal-header">
-                    <h2 class="donor-title-main">${this.currentDonor.brand} ${this.currentDonor.model}</h2>
-                    <p class="donor-version-sub">${this.currentDonor.version}</p>
+                    <div class="donor-title-group">
+                        <h2 class="donor-title-main">${this.currentDonor.brand} ${this.currentDonor.model}</h2>
+                        <p class="donor-version-sub">${this.currentDonor.version}</p>
+                    </div>
                     
-                    <div class="donor-tabs-simple mobile-hidden">
+                    <div class="donor-tabs-simple">
                         <button class="tab-btn ${this.activeTab === 'info' ? 'active' : ''}">Ficha Técnica</button>
-                        <button class="tab-btn ${this.activeTab === 'parts' ? 'active' : ''}">Piezas (${parts.length})</button>
+                        <button class="tab-btn ${this.activeTab === 'parts' ? 'active' : ''}">Aprovechamiento (${parts.length})</button>
                     </div>
                 </div>
 
                 <div class="donor-modal-scroll-area">
-                    <div class="mobile-only-stack">
-                        ${this.renderInfoTab()}
-                        <div style="margin-top: 2rem;">
-                            <h3 class="sheet-title" style="margin-bottom: 1rem;">Piezas Disponibles (${parts.length})</h3>
-                            ${this.renderPartsTab(parts)}
-                        </div>
-                    </div>
-                    <div class="desktop-only-tabs">
+                    <div class="donor-tab-content">
                         ${this.activeTab === 'info' ? this.renderInfoTab() : this.renderPartsTab(parts)}
                     </div>
                 </div>
@@ -162,8 +153,8 @@ export class DonorVehicles {
         const d = this.currentDonor;
         return `
             <div class="donor-info-layout">
-                <div class="donor-info-image desktop-only">
-                    <img src="${d.image}" alt="${d.brand}" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
+                <div class="donor-info-image">
+                    <img src="${d.image}" alt="${d.brand}" class="donor-sheet-img">
                 </div>
                 <div class="donor-technical-sheet">
                     <h3 class="sheet-title">Datos del Vehículo</h3>

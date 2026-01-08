@@ -44,6 +44,13 @@
     padding: 0;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 body {
     background-color: var(--dark-bg);
     color: var(--text-main);
@@ -126,6 +133,7 @@ h6 {
 .logo-img {
     height: 48px;
     width: auto;
+    max-width: 250px;
 }
 
 .brand-name {
@@ -1519,12 +1527,189 @@ h6 {
     z-index: 4900 !important;
 }
 
+/* Donor Modal Details - Refined */
+.donor-details-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.donor-modal-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--card-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.donor-title-group {
+    flex: 1;
+}
+
+.donor-title-main {
+    font-size: 1.8rem;
+    margin: 0;
+    color: var(--text-main);
+    line-height: 1.2;
+}
+
+.donor-version-sub {
+    color: var(--primary-blue);
+    font-size: 1rem;
+    margin-top: 0.2rem;
+    font-weight: 500;
+}
+
+/* Tabs Styling */
+.donor-tabs-simple {
+    display: flex;
+    gap: 10px;
+}
+
+.tab-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    border-color: var(--text-muted);
+}
+
+.tab-btn.active {
+    background: var(--primary-blue);
+    color: var(--dark-bg);
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+.donor-modal-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2.5rem;
+    background: rgba(10, 15, 20, 0.4);
+}
+
+.donor-info-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.donor-info-image {
+    width: 100%;
+}
+
+.donor-sheet-img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    object-fit: contain;
+    background: #0f1219;
+}
+
+.sheet-title {
+    font-size: 1.4rem;
+    color: var(--text-main);
+    margin-bottom: 2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid var(--primary-blue);
+    display: inline-block;
+}
+
+.sheet-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+.sheet-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sheet-row span {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+.sheet-row strong {
+    color: var(--text-main);
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.cat-notice {
+    margin-top: 2.5rem;
+    padding: 1.2rem;
+    background: rgba(0, 240, 255, 0.05);
+    border-left: 4px solid var(--primary-blue);
+    border-radius: 4px;
+}
+
+.cat-notice p {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Mobile Overrides for Donor Modal */
 @media (max-width: 768px) {
-    .donor-modal-hero img {
-        max-width: 100% !important;
-        max-height: 100% !important;
-        height: auto !important;
-        width: auto !important;
-        object-fit: contain;
+    .donor-modal-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+        gap: 1.2rem;
+    }
+
+    .donor-tabs-simple {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .tab-btn {
+        flex: 1;
+        padding: 12px 10px;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    .donor-title-main {
+        font-size: 1.5rem;
+    }
+
+    .donor-modal-scroll-area {
+        padding: 1.5rem;
+    }
+
+    .donor-info-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .sheet-title {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .sheet-row span,
+    .sheet-row strong {
+        font-size: 0.95rem;
     }
 }
