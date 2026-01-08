@@ -118,13 +118,16 @@ export class DonorVehicles {
         const parts = this.products.filter(p => p.donorId === this.currentDonor.id);
 
         content.innerHTML = `
-            <div style="padding: 2rem 2rem 1rem 2rem; border-bottom: 1px solid var(--border-color);">
+            <div class="donor-hero">
+                <img src="${this.currentDonor.image}" alt="${this.currentDonor.brand} ${this.currentDonor.model}">
+            </div>
+            <div style="padding: 1.5rem 2rem 1rem 2rem; border-bottom: 1px solid var(--border-color);">
                 <h2 style="margin:0;">${this.currentDonor.brand} ${this.currentDonor.model} <span style="color:var(--text-muted); font-weight:400;">${this.currentDonor.version}</span></h2>
-                <div style="display:flex; gap: 1rem; margin-top:1.5rem;">
-                    <button class="nav-btn ${this.activeTab === 'info' ? 'active' : ''}" style="width:auto;" onclick="document.dispatchEvent(new CustomEvent('switch-donor-tab', {detail:'info'}))">
+                <div style="display:flex; gap: 1rem; margin-top:1.2rem;">
+                    <button class="nav-btn ${this.activeTab === 'info' ? 'active' : ''}" style="width:auto;">
                         Ficha Técnica
                     </button>
-                    <button class="nav-btn ${this.activeTab === 'parts' ? 'active' : ''}" style="width:auto;" onclick="document.dispatchEvent(new CustomEvent('switch-donor-tab', {detail:'parts'}))">
+                    <button class="nav-btn ${this.activeTab === 'parts' ? 'active' : ''}" style="width:auto;">
                         Aprovechamiento (${parts.length})
                     </button>
                 </div>
@@ -151,23 +154,23 @@ export class DonorVehicles {
     renderInfoTab() {
         const d = this.currentDonor;
         return `
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <div>
-                    <img src="${d.image}" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                </div>
-                <div style="display:flex; flex-direction:column; gap:1rem;">
-                    <h3 style="color:var(--primary-blue);">Datos del Vehículo</h3>
-                    <div class="details-meta">
-                        <p><strong>VIN/Ref:</strong> ${d.id}</p>
+            <div class="donor-info-content">
+                <div style="display:flex; flex-direction:column; gap:1.2rem;">
+                    <h3 style="color:var(--primary-blue); font-size: 1.2rem;">Datos Técnicos</h3>
+                    <div class="details-meta" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem;">
+                        <p><strong>Referencia:</strong> ${d.id}</p>
                         <p><strong>Color:</strong> ${d.color}</p>
                         <p><strong>Kilometraje:</strong> ${d.km.toLocaleString()} km</p>
                         <p><strong>Año:</strong> ${d.year}</p>
-                        <p><strong>Motivo Baja:</strong> ${d.damage}</p>
-                        <p><strong>Fecha Entrada:</strong> ${d.date_dismantled}</p>
+                        <p><strong>Daños:</strong> ${d.damage}</p>
+                        <p><strong>Despiece:</strong> ${d.date_dismantled}</p>
                     </div>
-                    <div style="background: rgba(255,165,2,0.1); padding:1rem; border-radius:4px; border:1px solid #ffa502;">
-                        <p style="color: #ffa502; margin:0; font-size:0.9rem;">⚠️ Este vehículo ha sido descontaminado y sus piezas verificadas según normativa CAT.</p>
-                    </div>
+                </div>
+                <div style="background: rgba(255,165,2,0.05); padding:1.2rem; border-radius:8px; border:1px solid rgba(255,165,2,0.2); margin-top: 2rem;">
+                    <p style="color: #ffa502; margin:0; font-size:0.9rem; display: flex; gap: 10px; align-items: flex-start;">
+                        <span>⚠️</span>
+                        <span>Este vehículo ha sido descontaminado y sus piezas verificadas según normativa CAT (Centro Autorizado de Tratamiento de Vehículos).</span>
+                    </p>
                 </div>
             </div>
         `;
