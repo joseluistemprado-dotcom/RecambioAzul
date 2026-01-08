@@ -113,6 +113,7 @@ export class DonorVehicles {
 
     renderModalContent() {
         const content = document.getElementById('donor-modal-content');
+        if (!content) return;
 
         // Count available parts
         const parts = this.products.filter(p => p.donorId === this.currentDonor.id);
@@ -127,21 +128,28 @@ export class DonorVehicles {
                     <h2 class="donor-title-main">${this.currentDonor.brand} ${this.currentDonor.model}</h2>
                     <p class="donor-version-sub">${this.currentDonor.version}</p>
                     
-                    <div class="donor-tabs-simple">
+                    <div class="donor-tabs-simple mobile-hidden">
                         <button class="tab-btn ${this.activeTab === 'info' ? 'active' : ''}">Ficha Técnica</button>
                         <button class="tab-btn ${this.activeTab === 'parts' ? 'active' : ''}">Piezas (${parts.length})</button>
                     </div>
                 </div>
 
                 <div class="donor-modal-scroll-area">
-                    ${this.activeTab === 'info' ? this.renderInfoTab() : this.renderPartsTab(parts)}
+                    <div class="mobile-only-stack">
+                        ${this.renderInfoTab()}
+                        <div style="margin-top: 2rem;">
+                            <h3 class="sheet-title" style="margin-bottom: 1rem;">Piezas Disponibles (${parts.length})</h3>
+                            ${this.renderPartsTab(parts)}
+                        </div>
+                    </div>
+                    <div class="desktop-only-tabs">
+                        ${this.activeTab === 'info' ? this.renderInfoTab() : this.renderPartsTab(parts)}
+                    </div>
                 </div>
             </div>
         `;
 
-        // Listen for tab switch (using document event for delegated simplicity)
-        // Note: In strict architecture we would bind this properly, but for speed we use a global listener in init or here.
-        // Let's attach listener to the buttons directly here to avoid global pollution.
+        // Listen for tab switch
         content.querySelectorAll('.tab-btn').forEach(btn => {
             btn.onclick = (e) => {
                 this.activeTab = btn.textContent.includes('Ficha') ? 'info' : 'parts';
