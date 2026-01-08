@@ -1100,25 +1100,79 @@ h6 {
         transform: translateX(-50%);
     }
 
-    /* Modals */
+    /* Modals Responsive Fixes */
+    .modal-container {
+        width: 100% !important;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 1.5rem !important;
+        margin: 10px;
+    }
+
     .details-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
     }
 
     .details-image {
-        min-height: 250px;
-        border-right: none;
+        min-height: 200px !important;
+        height: 250px;
+        border-right: none !important;
         border-bottom: 1px solid var(--border-color);
     }
 
-    .details-title {
-        font-size: 1.5rem;
+    .details-info {
+        padding: 1rem 0 !important;
     }
 
-    /* ChatBot */
+    .details-title {
+        font-size: 1.3rem !important;
+        margin-bottom: 0.5rem;
+    }
+
+    .details-price {
+        font-size: 1.5rem !important;
+        margin-bottom: 1rem;
+    }
+
+    /* Client Area Mobile */
+    #client-area-modal .modal-container {
+        padding: 1rem !important;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+
+    .dashboard-sidebar {
+        border-right: none !important;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 1rem !important;
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        margin-bottom: 1rem;
+    }
+
+    .dash-nav-btn {
+        white-space: nowrap;
+        padding: 8px 15px !important;
+    }
+
+    .order-card {
+        padding: 12px !important;
+    }
+
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 5px;
+    }
+
+    /* ChatBot Mobile */
     .chatbot-window {
         width: calc(100vw - 30px);
-        height: 400px;
+        height: 450px;
         bottom: 70px;
         right: -10px;
     }

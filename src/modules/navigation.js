@@ -18,6 +18,24 @@ export function initNavigation() {
     // Contact Modal
     setupModal('nav-contact', 'contact-modal', 'contact-close');
 
+    // History API - Support for Back Button on Modals
+    window.addEventListener('popstate', (e) => {
+        const activeModals = document.querySelectorAll('.modal-overlay.active, .cart-sidebar.active');
+        activeModals.forEach(modal => {
+            modal.classList.remove('active');
+            const overlay = document.getElementById('cart-overlay');
+            if (overlay) overlay.classList.remove('active');
+        });
+
+        // Restore main content if checkout was active
+        const checkout = document.getElementById('checkout-section');
+        if (checkout && !checkout.classList.contains('hidden')) {
+            checkout.classList.add('hidden');
+            const mainContent = document.querySelector('main.container');
+            if (mainContent) mainContent.style.display = 'block';
+        }
+    });
+
     // Mobile Menu Toggle
     const mobileToggle = document.getElementById('mobile-menu-toggle');
     const navLinks = document.getElementById('main-nav-links');
@@ -47,6 +65,7 @@ function setupModal(triggerId, modalId, closeId) {
         trigger.addEventListener('click', (e) => {
             e.preventDefault();
             modal.classList.add('active');
+            history.pushState({ modal: modalId }, "");
         });
     }
 
