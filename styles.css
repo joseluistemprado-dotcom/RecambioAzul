@@ -1519,9 +1519,12 @@ h6 {
     z-index: 4900 !important;
 }
 
-img {
-    max-width: 100% !important;
-    max-height: 100% !important;
-    height: auto !important;
-    width: auto !important;
+@media (max-width: 768px) {
+    .donor-modal-hero img {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        height: auto !important;
+        width: auto !important;
+        object-fit: contain;
+    }
 }
