@@ -118,37 +118,33 @@ export class DonorVehicles {
         const parts = this.products.filter(p => p.donorId === this.currentDonor.id);
 
         content.innerHTML = `
-            <div class="donor-header-compact">
-                <div class="donor-header-top">
-                    <img src="${this.currentDonor.image}" alt="${this.currentDonor.brand} ${this.currentDonor.model}" class="donor-thumb-header">
-                    <div class="donor-header-text">
-                        <h2 style="margin:0; font-size: 1.25rem;">${this.currentDonor.brand} ${this.currentDonor.model}</h2>
-                        <span style="color:var(--text-muted); font-size: 0.9rem;">${this.currentDonor.version}</span>
+            <div class="donor-details-wrapper">
+                <div class="donor-modal-hero">
+                    <img src="${this.currentDonor.image}" alt="${this.currentDonor.brand}">
+                </div>
+                
+                <div class="donor-modal-header">
+                    <h2 class="donor-title-main">${this.currentDonor.brand} ${this.currentDonor.model}</h2>
+                    <p class="donor-version-sub">${this.currentDonor.version}</p>
+                    
+                    <div class="donor-tabs-simple">
+                        <button class="tab-btn ${this.activeTab === 'info' ? 'active' : ''}">Ficha Técnica</button>
+                        <button class="tab-btn ${this.activeTab === 'parts' ? 'active' : ''}">Piezas (${parts.length})</button>
                     </div>
                 </div>
-                <div class="donor-tabs-row" style="display:flex; gap: 0.8rem; margin-top: 1rem;">
-                    <button class="nav-btn ${this.activeTab === 'info' ? 'active' : ''}" style="width:auto; flex:1; padding: 0.6rem;">
-                        Ficha Técnica
-                    </button>
-                    <button class="nav-btn ${this.activeTab === 'parts' ? 'active' : ''}" style="width:auto; flex:1; padding: 0.6rem;">
-                        Piezas (${parts.length})
-                    </button>
+
+                <div class="donor-modal-scroll-area">
+                    ${this.activeTab === 'info' ? this.renderInfoTab() : this.renderPartsTab(parts)}
                 </div>
-            </div>
-            
-            <div style="flex:1; padding: 2rem; overflow-y:auto;">
-                ${this.activeTab === 'info' ? this.renderInfoTab() : this.renderPartsTab(parts)}
             </div>
         `;
 
         // Listen for tab switch (using document event for delegated simplicity)
         // Note: In strict architecture we would bind this properly, but for speed we use a global listener in init or here.
         // Let's attach listener to the buttons directly here to avoid global pollution.
-        content.querySelectorAll('.nav-btn').forEach(btn => {
+        content.querySelectorAll('.tab-btn').forEach(btn => {
             btn.onclick = (e) => {
-                // Determine tab from text or index, simplistic:
-                const text = btn.textContent;
-                this.activeTab = text.includes('Ficha') ? 'info' : 'parts';
+                this.activeTab = btn.textContent.includes('Ficha') ? 'info' : 'parts';
                 this.renderModalContent();
             }
         });
@@ -157,23 +153,19 @@ export class DonorVehicles {
     renderInfoTab() {
         const d = this.currentDonor;
         return `
-            <div class="donor-info-content">
-                <div style="display:flex; flex-direction:column; gap:1.2rem;">
-                    <h3 style="color:var(--primary-blue); font-size: 1.2rem;">Datos Técnicos</h3>
-                    <div class="details-meta" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem;">
-                        <p><strong>Referencia:</strong> ${d.id}</p>
-                        <p><strong>Color:</strong> ${d.color}</p>
-                        <p><strong>Kilometraje:</strong> ${d.km.toLocaleString()} km</p>
-                        <p><strong>Año:</strong> ${d.year}</p>
-                        <p><strong>Daños:</strong> ${d.damage}</p>
-                        <p><strong>Despiece:</strong> ${d.date_dismantled}</p>
-                    </div>
+            <div class="donor-technical-sheet">
+                <h3 class="sheet-title">Datos del Vehículo</h3>
+                <div class="sheet-grid">
+                    <div class="sheet-row"><span>Ref/ID:</span> <strong>${d.id}</strong></div>
+                    <div class="sheet-row"><span>Color:</span> <strong>${d.color}</strong></div>
+                    <div class="sheet-row"><span>KM:</span> <strong>${d.km.toLocaleString()} km</strong></div>
+                    <div class="sheet-row"><span>Año:</span> <strong>${d.year}</strong></div>
+                    <div class="sheet-row"><span>Daños:</span> <strong>${d.damage}</strong></div>
+                    <div class="sheet-row"><span>Entrada:</span> <strong>${d.date_dismantled}</strong></div>
                 </div>
-                <div style="background: rgba(255,165,2,0.05); padding:1.2rem; border-radius:8px; border:1px solid rgba(255,165,2,0.2); margin-top: 2rem;">
-                    <p style="color: #ffa502; margin:0; font-size:0.9rem; display: flex; gap: 10px; align-items: flex-start;">
-                        <span>⚠️</span>
-                        <span>Este vehículo ha sido descontaminado y sus piezas verificadas según normativa CAT (Centro Autorizado de Tratamiento de Vehículos).</span>
-                    </p>
+                
+                <div class="cat-notice">
+                    <p>⚠️ Vehículo descontaminado y verificado según normativa CAT.</p>
                 </div>
             </div>
         `;
