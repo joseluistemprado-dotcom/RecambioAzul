@@ -993,7 +993,7 @@ h6 {
     }
 
     .logo-img {
-        height: 36px;
+        height: 36px !important;
     }
 
     .nav-links {
@@ -1516,4 +1516,11 @@ h6 {
 
 .cart-overlay {
     z-index: 4900 !important;
+}
+
+img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    height: auto !important;
+    width: auto !important;
 }
