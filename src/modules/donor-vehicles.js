@@ -24,15 +24,27 @@ export class DonorVehicles {
         console.log('Donor Vehicles Module Initialized');
     }
 
+    getBasePath() {
+        // Detect if we're on GitHub Pages and adjust the base path
+        const path = window.location.pathname;
+        if (path.includes('/RecambioAzul/')) {
+            return '/RecambioAzul/';
+        }
+        return '/';
+    }
+
     async loadData() {
         try {
+            const basePath = this.getBasePath();
             const cacheBuster = `?v=${Date.now()}`;
+            console.log('Loading data with base path:', basePath);
             const [vResp, pResp] = await Promise.all([
-                fetch('src/data/donor_vehicles.json' + cacheBuster),
-                fetch('src/data/products.json' + cacheBuster)
+                fetch(basePath + 'src/data/donor_vehicles.json' + cacheBuster),
+                fetch(basePath + 'src/data/products.json' + cacheBuster)
             ]);
             this.donors = await vResp.json();
             this.products = await pResp.json();
+            console.log('Loaded donors:', this.donors.length, 'products:', this.products.length);
         } catch (error) {
             console.error('Error loading data for DonorVehicles:', error);
         }
@@ -86,25 +98,42 @@ export class DonorVehicles {
             const id = card.dataset.id;
 
             card.addEventListener('click', () => {
+                console.log('Card clicked for vehicle ID:', id);
                 const vehicle = this.donors.find(v => v.id.toLowerCase() === id.toLowerCase());
-                if (vehicle) this.openDetails(vehicle);
+                if (vehicle) {
+                    console.log('Vehicle found, opening details:', vehicle);
+                    this.openDetails(vehicle);
+                } else {
+                    console.error('Vehicle not found for ID:', id);
+                }
             });
 
             const btn = card.querySelector('.btn-primary');
             if (btn) {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
+                    console.log('Button clicked for vehicle ID:', id);
                     const vehicle = this.donors.find(v => v.id.toLowerCase() === id.toLowerCase());
-                    if (vehicle) this.openDetails(vehicle);
+                    if (vehicle) {
+                        console.log('Vehicle found, opening details:', vehicle);
+                        this.openDetails(vehicle);
+                    } else {
+                        console.error('Vehicle not found for ID:', id);
+                    }
                 });
             }
         });
     }
 
     openDetails(vehicle) {
-        if (!this.detailsContainer) return;
+        console.log('openDetails called for vehicle:', vehicle);
+        if (!this.detailsContainer) {
+            console.error('Details container not found!');
+            return;
+        }
 
         this.renderDetailsView(vehicle);
+        console.log('Calling showView with path:', `vehiculo/${vehicle.id.toLowerCase()}`);
         showView('view-donor-details', `vehiculo/${vehicle.id.toLowerCase()}`, vehicle);
     }
 

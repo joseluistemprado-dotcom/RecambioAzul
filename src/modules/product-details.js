@@ -23,9 +23,18 @@ export class ProductDetails {
         });
     }
 
+    getBasePath() {
+        const path = window.location.pathname;
+        if (path.includes('/RecambioAzul/')) {
+            return '/RecambioAzul/';
+        }
+        return '/';
+    }
+
     async loadById(id) {
         try {
-            const response = await fetch(`src/data/products.json?v=${Date.now()}`);
+            const basePath = this.getBasePath();
+            const response = await fetch(`${basePath}src/data/products.json?v=${Date.now()}`);
             const products = await response.json();
             const product = products.find(p => p.id.toLowerCase() === id.toLowerCase());
 

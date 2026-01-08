@@ -8,10 +8,19 @@ export class ProductList {
         this.currentSearch = "";
     }
 
+    getBasePath() {
+        const path = window.location.pathname;
+        if (path.includes('/RecambioAzul/')) {
+            return '/RecambioAzul/';
+        }
+        return '/';
+    }
+
     async init() {
         this.attachEvents();
         try {
-            const response = await fetch(`src/data/products.json?v=${Date.now()}`);
+            const basePath = this.getBasePath();
+            const response = await fetch(`${basePath}src/data/products.json?v=${Date.now()}`);
             this.products = await response.json();
             this.applyFilters();
         } catch (error) {
