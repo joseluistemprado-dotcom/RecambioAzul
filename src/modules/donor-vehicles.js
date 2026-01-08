@@ -24,7 +24,7 @@ export class DonorVehicles {
     async loadData() {
         try {
             const [vResp, pResp] = await Promise.all([
-                fetch('src/data/vehicles.json'),
+                fetch('src/data/donor_vehicles.json'),
                 fetch('src/data/products.json')
             ]);
             this.donors = await vResp.json();
@@ -53,10 +53,10 @@ export class DonorVehicles {
 
         if (vehicle) {
             this.renderDetailsView(vehicle);
-            showView('view-donor-details', `/vehiculo/${id.toLowerCase()}`, vehicle);
+            showView('view-donor-details', `vehiculo/${id.toLowerCase()}`, vehicle);
         } else {
             console.error('Vehicle not found:', id);
-            showView('view-home');
+            showView('view-home', '/');
         }
     }
 
@@ -91,7 +91,7 @@ export class DonorVehicles {
         if (!this.detailsContainer) return;
 
         this.renderDetailsView(vehicle);
-        showView('view-donor-details', `/vehiculo/${vehicle.id.toLowerCase()}`, vehicle);
+        showView('view-donor-details', `vehiculo/${vehicle.id.toLowerCase()}`, vehicle);
     }
 
     renderDetailsView(vehicle) {
@@ -164,21 +164,27 @@ export class DonorVehicles {
     }
 
     renderPartsTab(vehicle) {
-        if (!vehicle.parts || vehicle.parts.length === 0) {
-            return `<p style="padding: 2rem; text-align: center; color: var(--text-muted);">No hay piezas registradas para este vehículo.</p>`;
+        // Filter products that belong to this donor vehicle
+        const vehicleParts = this.products.filter(p => p.donorId === vehicle.id);
+
+        if (vehicleParts.length === 0) {
+            return `<p style="padding: 2rem; text-align: center; color: var(--text-muted);">No hay piezas registradas para este vehículo en este momento.</p>`;
         }
 
         return `
             <div class="donor-parts-list" style="padding: 1rem 0;">
-                <h3 class="sheet-title">Piezas disponibles para desguace</h3>
+                <h3 class="sheet-title">Piezas disponibles de este vehículo</h3>
                 <div class="parts-scroll-container" style="max-height: 500px; overflow-y: auto; padding-right: 10px;">
                     <div class="product-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
-                        ${vehicle.parts.map(p => `
-                            <div class="product-card mini">
+                        ${vehicleParts.map(p => `
+                            <div class="product-card mini" style="cursor: pointer;" onclick="document.dispatchEvent(new CustomEvent('view-product', { detail: ${JSON.stringify(p).replace(/"/g, '&quot;')} }))">
+                                <div class="product-image-frame" style="height: 120px;">
+                                    <img src="${p.image}" alt="${p.name}" class="product-image" style="object-fit: contain;">
+                                </div>
                                 <div class="product-info" style="padding: 1rem;">
-                                    <h4 style="font-size: 0.9rem; margin:0;">${p.name}</h4>
+                                    <h4 style="font-size: 0.9rem; margin:0; height: 2.4rem; overflow: hidden;">${p.name}</h4>
                                     <p class="product-price" style="font-size: 1rem; color: var(--primary-blue); margin: 5px 0;">${p.price} €</p>
-                                    <button class="btn-primary btn-sm" style="width: 100%;" onclick="document.dispatchEvent(new CustomEvent('add-to-cart', { detail: ${JSON.stringify(p).replace(/"/g, '&quot;')} }))">Añadir</button>
+                                    <button class="btn-primary btn-sm" style="width: 100%;" onclick="event.stopPropagation(); document.dispatchEvent(new CustomEvent('add-to-cart', { detail: ${JSON.stringify(p).replace(/"/g, '&quot;')} }))">Añadir</button>
                                 </div>
                             </div>
                         `).join('')}

@@ -71,7 +71,7 @@ export class CategorySearch {
         this.selectedCategory = categoryId;
 
         if (updateUrl) {
-            const path = categoryId ? `/categoria/${categoryId}` : '/';
+            const path = categoryId ? `categoria/${categoryId}` : '/';
             showView('view-home', path);
         }
 

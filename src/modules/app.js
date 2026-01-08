@@ -66,4 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize General Navigation
     initNavigation();
+
+    // Handle initial route
+    handleRouting();
 });

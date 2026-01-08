@@ -45,7 +45,7 @@ export class ClientArea {
     open() {
         if (this.container) {
             this.render();
-            showView('view-client-area', '/cliente');
+            showView('view-client-area', 'cliente');
         }
     }
 

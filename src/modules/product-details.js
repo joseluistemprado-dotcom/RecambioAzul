@@ -32,10 +32,10 @@ export class ProductDetails {
             if (product) {
                 this.render(product);
                 // We use showView, which will update the URL
-                showView('view-product-details', `/pieza/${id.toLowerCase()}`, product);
+                showView('view-product-details', `pieza/${id.toLowerCase()}`, product);
             } else {
                 console.error('Product not found:', id);
-                showView('view-home');
+                showView('view-home', '/');
             }
         } catch (error) {
             console.error('Error loading product by ID:', error);
@@ -46,8 +46,8 @@ export class ProductDetails {
         if (!this.container) return;
 
         this.render(product);
-        // Update URL to /pieza/id
-        showView('view-product-details', `/pieza/${product.id.toLowerCase()}`, product);
+        // Update URL to pieza/id
+        showView('view-product-details', `pieza/${product.id.toLowerCase()}`, product);
     }
 
     render(product) {

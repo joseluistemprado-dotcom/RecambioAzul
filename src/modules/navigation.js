@@ -1,5 +1,5 @@
 export function showView(viewId, path = null, data = null) {
-    console.log('Switching to view:', viewId, 'Path:', path);
+    console.log('Switching to view:', viewId, 'Hash Path:', path);
 
     // Hide all views
     document.querySelectorAll('.page-view').forEach(view => {
@@ -12,51 +12,63 @@ export function showView(viewId, path = null, data = null) {
         target.classList.remove('hidden');
         window.scrollTo(0, 0); // Reset scroll
 
-        // Push state for history (back button support)
-        const currentState = history.state;
-        const normalizedPath = path || (viewId === 'view-home' ? '/' : null);
-
-        if (normalizedPath && window.location.pathname !== normalizedPath) {
-            history.pushState({ view: viewId, data: data }, "", normalizedPath);
-        } else if (!normalizedPath && currentState?.view !== viewId) {
-            history.pushState({ view: viewId, data: data }, "");
+        if (path) {
+            // Update hash without triggering a full page reload or redundancy
+            const newHash = `#${path.startsWith('/') ? '' : '/'}${path}`;
+            if (window.location.hash !== newHash) {
+                window.location.hash = newHash;
+            }
+        } else if (viewId === 'view-home') {
+            if (window.location.hash !== '' && window.location.hash !== '#/') {
+                window.location.hash = '/';
+            }
         }
     }
 }
 
 export function handleRouting() {
-    const path = window.location.pathname;
-    console.log('Handling routing for path:', path);
+    const hash = window.location.hash || '#/';
+    const path = hash.replace(/^#/, '');
+    console.log('Handling routing for hash path:', path);
 
-    if (path === '/' || path === '/index.html') {
-        showView('view-home');
+    if (path === '/' || path === '' || path === '/index.html') {
+        showOneView('view-home');
         return;
     }
 
     const segments = path.split('/').filter(Boolean);
 
     if (segments[0] === 'pieza' && segments[1]) {
-        // Dispatch event to load product by ID
+        showOneView('view-product-details');
         document.dispatchEvent(new CustomEvent('load-product-by-id', { detail: segments[1] }));
     } else if (segments[0] === 'vehiculo' && segments[1]) {
-        // Dispatch event to load vehicle by ID
+        showOneView('view-donor-details');
         document.dispatchEvent(new CustomEvent('load-vehicle-by-id', { detail: segments[1] }));
     } else if (segments[0] === 'categoria' && segments[1]) {
-        // Dispatch event to filter current view by category
-        showView('view-home');
+        showOneView('view-home');
         document.dispatchEvent(new CustomEvent('load-category', { detail: segments[1] }));
     } else if (segments[0] === 'vehiculos') {
-        showView('view-donor-vehicles', '/vehiculos');
+        showOneView('view-donor-vehicles');
     } else if (segments[0] === 'cliente') {
-        showView('view-client-area', '/cliente');
+        showOneView('view-client-area');
     } else if (segments[0] === 'vender') {
-        showView('view-sell-car', '/vender');
+        showOneView('view-sell-car');
     } else if (segments[0] === 'contacto') {
-        showView('view-contact', '/contacto');
+        showOneView('view-contact');
     } else if (segments[0] === 'carrito') {
-        showView('view-cart', '/carrito');
+        showOneView('view-cart');
     } else {
-        showView('view-home', '/');
+        showOneView('view-home');
+    }
+}
+
+// Helper to handle view visibility without pushing state again
+function showOneView(viewId) {
+    document.querySelectorAll('.page-view').forEach(v => v.classList.add('hidden'));
+    const target = document.getElementById(viewId);
+    if (target) {
+        target.classList.remove('hidden');
+        window.scrollTo(0, 0);
     }
 }
 
@@ -78,17 +90,32 @@ export function initNavigation() {
     });
 
     // View Transitions
-    setupView('nav-donor-vehicles', 'view-donor-vehicles', '/vehiculos');
-    setupView('nav-sell-car', 'view-sell-car', '/vender');
-    setupView('footer-sell-car', 'view-sell-car', '/vender');
-    setupView('nav-contact', 'view-contact', '/contacto');
+    setupView('nav-donor-vehicles', 'view-donor-vehicles', 'vehiculos');
+    setupView('nav-sell-car', 'view-sell-car', 'vender');
+    setupView('footer-sell-car', 'view-sell-car', 'vender');
+    setupView('nav-contact', 'view-contact', 'contacto');
+
+    // Global Search Parts link (needs to go home first)
+    const searchPartsBtn = document.getElementById('nav-search-parts');
+    if (searchPartsBtn) {
+        searchPartsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('view-home', '/');
+            setTimeout(() => {
+                const target = document.getElementById('vehicle-selector-container');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        });
+    }
 
     // Quick link for cart
     const cartToggle = document.getElementById('cart-toggle-btn');
     if (cartToggle) {
         cartToggle.addEventListener('click', (e) => {
             e.preventDefault();
-            showView('view-cart', '/carrito');
+            showView('view-cart', 'carrito');
         });
     }
 
@@ -99,22 +126,21 @@ export function initNavigation() {
 
     // Custom back buttons for specific nested flows
     document.querySelectorAll('.btn-back-donors').forEach(btn => {
-        btn.addEventListener('click', () => showView('view-donor-vehicles', '/vehiculos'));
+        btn.addEventListener('click', () => showView('view-donor-vehicles', 'vehiculos'));
     });
 
     document.querySelectorAll('.btn-back-catalog').forEach(btn => {
         btn.addEventListener('click', () => showView('view-home', '/'));
     });
 
-    // History API - Support for Back Button
-    window.addEventListener('popstate', (e) => {
+    // Hash Routing support
+    window.addEventListener('hashchange', () => {
         handleRouting();
+    });
 
-        // Always close cart sidebar/overlay if any (backward compatibility)
-        const sidebar = document.getElementById('cart-sidebar');
-        const overlay = document.getElementById('cart-overlay');
-        if (sidebar) sidebar.classList.remove('active');
-        if (overlay) overlay.classList.remove('active');
+    // Fallback for back button if it uses history.back()
+    window.addEventListener('popstate', () => {
+        handleRouting();
     });
 
     // Mobile Menu Toggle
