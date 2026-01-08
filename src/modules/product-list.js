@@ -29,8 +29,15 @@ export class ProductList {
     }
 
     attachEvents() {
-        // Listen for vehicle selection
+        // Listen for vehicle selection (manual selector)
         document.addEventListener('vehicle-selected', (e) => {
+            this.currentVehicle = e.detail;
+            this.applyFilters();
+        });
+
+        // Listen for vehicle identification (plate/VIN search)
+        document.addEventListener('vehicle-identified', (e) => {
+            console.log('Vehicle identified via search:', e.detail);
             this.currentVehicle = e.detail;
             this.applyFilters();
         });

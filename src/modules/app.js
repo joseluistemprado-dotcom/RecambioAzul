@@ -9,6 +9,7 @@ import { CategorySearch } from './category-search.js';
 import { ThemeToggle } from './theme-toggle.js';
 import { DonorVehicles } from './donor-vehicles.js';
 import { ChatBot } from './chatbot.js';
+import { VehicleSearch } from './vehicle-search.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Recambio Azul App Initialized');
@@ -22,6 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('product-list-container')) {
         const productList = new ProductList('product-list-container');
         productList.init();
+    }
+
+    // Initialize Vehicle Search (Plate/VIN)
+    if (document.getElementById('vehicle-search-container')) {
+        const vehicleSearch = new VehicleSearch('vehicle-search-container');
+        vehicleSearch.init();
     }
 
     // Initialize Shopping Cart
