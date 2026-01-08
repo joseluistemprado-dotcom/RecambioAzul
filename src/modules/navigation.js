@@ -1,9 +1,33 @@
+export function showView(viewId) {
+    console.log('Switching to view:', viewId);
+
+    // Hide all views
+    document.querySelectorAll('.page-view').forEach(view => {
+        view.classList.add('hidden');
+    });
+
+    // Show target view
+    const target = document.getElementById(viewId);
+    if (target) {
+        target.classList.remove('hidden');
+        window.scrollTo(0, 0); // Reset scroll
+
+        // Push state for history (back button support)
+        if (history.state?.view !== viewId) {
+            history.pushState({ view: viewId }, "");
+        }
+    }
+}
+
 export function initNavigation() {
     // Scroll handling for anchor links if any
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+
+            const target = document.querySelector(targetId);
             if (target) {
                 target.scrollIntoView({
                     behavior: 'smooth'
@@ -12,29 +36,44 @@ export function initNavigation() {
         });
     });
 
-    // Sell Car Modal
-    setupModal('nav-sell-car', 'sell-car-modal', 'sell-car-close');
-    setupModal('footer-sell-car', 'sell-car-modal', 'sell-car-close');
+    // View Transitions
+    setupView('nav-donor-vehicles', 'view-donor-vehicles');
+    setupView('nav-sell-car', 'view-sell-car');
+    setupView('footer-sell-car', 'view-sell-car');
+    setupView('nav-contact', 'view-contact');
 
-    // Contact Modal
-    setupModal('nav-contact', 'contact-modal', 'contact-close');
+    // Home links/buttons
+    document.querySelectorAll('.btn-back-home').forEach(btn => {
+        btn.addEventListener('click', () => showView('view-home'));
+    });
 
-    // History API - Support for Back Button on Modals
+    // Custom back buttons for specific nested flows
+    document.querySelectorAll('.btn-back-donors').forEach(btn => {
+        btn.addEventListener('click', () => showView('view-donor-vehicles'));
+    });
+
+    document.querySelectorAll('.btn-back-catalog').forEach(btn => {
+        btn.addEventListener('click', () => showView('view-home'));
+    });
+
+    // History API - Support for Back Button
     window.addEventListener('popstate', (e) => {
-        const activeModals = document.querySelectorAll('.modal-overlay.active, .cart-sidebar.active');
-        activeModals.forEach(modal => {
-            modal.classList.remove('active');
-            const overlay = document.getElementById('cart-overlay');
-            if (overlay) overlay.classList.remove('active');
-        });
-
-        // Restore main content if checkout was active
-        const checkout = document.getElementById('checkout-section');
-        if (checkout && !checkout.classList.contains('hidden')) {
-            checkout.classList.add('hidden');
-            const mainContent = document.querySelector('main.container');
-            if (mainContent) mainContent.style.display = 'block';
+        // If state has a view, show it
+        if (e.state && e.state.view) {
+            const views = document.querySelectorAll('.page-view');
+            views.forEach(v => v.classList.add('hidden'));
+            const target = document.getElementById(e.state.view);
+            if (target) target.classList.remove('hidden');
+        } else {
+            // Default to home
+            showView('view-home');
         }
+
+        // Always close cart sidebar on any history change
+        const sidebar = document.getElementById('cart-sidebar');
+        const overlay = document.getElementById('cart-overlay');
+        if (sidebar) sidebar.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
     });
 
     // Mobile Menu Toggle
@@ -57,28 +96,12 @@ export function initNavigation() {
     console.log('Navigation Initialized');
 }
 
-function setupModal(triggerId, modalId, closeId) {
+function setupView(triggerId, viewId) {
     const trigger = document.getElementById(triggerId);
-    const modal = document.getElementById(modalId);
-    const close = document.getElementById(closeId);
-
-    if (trigger && modal) {
+    if (trigger) {
         trigger.addEventListener('click', (e) => {
             e.preventDefault();
-            modal.classList.add('active');
-            history.pushState({ modal: modalId }, "");
-        });
-    }
-
-    if (close && modal) {
-        close.addEventListener('click', () => {
-            modal.classList.remove('active');
-        });
-    }
-
-    if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.remove('active');
+            showView(viewId);
         });
     }
 }

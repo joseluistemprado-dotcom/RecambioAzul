@@ -1,14 +1,12 @@
+import { showView } from './navigation.js';
+
 export class ProductDetails {
     constructor() {
-        this.modal = null;
-        this.content = null;
-        this.isOpen = false;
+        this.container = null;
     }
 
     init() {
-        this.modal = document.getElementById('product-details-modal');
-        this.content = document.getElementById('product-details-content');
-
+        this.container = document.getElementById('product-details-content-view');
         this.attachEvents();
         console.log('Product Details Module Initialized');
     }
@@ -18,42 +16,17 @@ export class ProductDetails {
         document.addEventListener('view-product', (e) => {
             this.open(e.detail);
         });
-
-        // Close button
-        const closeBtn = document.getElementById('product-details-close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => this.close());
-        }
-
-        // Click outside to close
-        if (this.modal) {
-            this.modal.addEventListener('click', (e) => {
-                if (e.target === this.modal) {
-                    this.close();
-                }
-            });
-        }
     }
 
     open(product) {
-        if (!this.modal || !this.content) return;
+        if (!this.container) return;
 
         this.render(product);
-        this.modal.classList.add('active');
-        history.pushState({ modal: 'product-details-modal' }, "");
-        this.isOpen = true;
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-    }
-
-    close() {
-        if (!this.modal) return;
-        this.modal.classList.remove('active');
-        this.isOpen = false;
-        document.body.style.overflow = '';
+        showView('view-product-details');
     }
 
     render(product) {
-        this.content.innerHTML = `
+        this.container.innerHTML = `
             <div class="details-grid">
                 <div class="details-image">
                     <div class="product-image-frame" style="height: 100%; border: none;">
@@ -72,7 +45,7 @@ export class ProductDetails {
                         <p><strong>Condición:</strong> <span class="badge-condition">${product.condition}</span></p>
                         <p><strong>Compatibilidad:</strong> ${product.vehicle || 'Consultar'}</p>
                     </div>
-
+ 
                     <div class="details-description">
                         <h3>Descripción</h3>
                         <p>Pieza verificada y probada. Garantía de funcionamiento. Envíos en 24/48h a toda la península.</p>
@@ -87,12 +60,11 @@ export class ProductDetails {
             </div>
         `;
 
-        // Re-attach add to cart listener for the modal button
-        const addBtn = this.content.querySelector('.btn-add-modal');
+        // Re-attach add to cart listener
+        const addBtn = this.container.querySelector('.btn-add-modal');
         if (addBtn) {
             addBtn.addEventListener('click', () => {
                 document.dispatchEvent(new CustomEvent('add-to-cart', { detail: product }));
-                this.close();
             });
         }
     }

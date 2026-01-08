@@ -1,12 +1,10 @@
+import { showView } from './navigation.js';
+
 export class Cart {
     constructor() {
         this.items = [];
         this.total = 0;
         this.storageKey = 'recambio_azul_cart';
-        this.isOpen = false;
-
-        // Bind methods
-        this.toggle = this.toggle.bind(this);
     }
 
     init() {
@@ -22,41 +20,33 @@ export class Cart {
             this.addItem(e.detail);
         });
 
-        // Cart toggle button (in header)
+        // Cart toggle button (in header) now acts as a view switch
         const cartBtn = document.getElementById('cart-toggle-btn');
         if (cartBtn) {
-            cartBtn.addEventListener('click', this.toggle);
-        }
-
-        // Close button (sidebar)
-        const closeBtn = document.getElementById('cart-close-btn');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', this.toggle);
-        }
-
-        // Overlay click to close
-        const overlay = document.getElementById('cart-overlay');
-        if (overlay) {
-            overlay.addEventListener('click', () => {
-                if (this.isOpen) this.toggle();
+            cartBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showView('view-cart');
             });
         }
+
+        // Listen for internal checkout trigger
+        document.addEventListener('checkout-start', () => {
+            showView('view-checkout');
+            this.updateCheckoutSummary();
+        });
     }
 
     addItem(product) {
         const existingItem = this.items.find(item => item.id === product.id);
 
         if (existingItem) {
-            // If we want quantity logic, we'd do it here. 
-            // For now, let's just say quantity is always 1 for unique replacement parts
-            // or perhaps increment if it's a generic item.
-            // Assuming unique parts for now:
             alert('Este producto ya está en tu carrito');
         } else {
             this.items.push(product);
             this.save();
             this.render();
-            this.open(); // Open cart when adding item (UX preference)
+            // Optional: Show notification instead of switching view automatically
+            showView('view-cart');
         }
     }
 
@@ -92,30 +82,9 @@ export class Cart {
         }
     }
 
-    toggle() {
-        this.isOpen = !this.isOpen;
-        const sidebar = document.getElementById('cart-sidebar');
-        const overlay = document.getElementById('cart-overlay');
-
-        if (sidebar && overlay) {
-            if (this.isOpen) {
-                sidebar.classList.add('active');
-                overlay.classList.add('active');
-                history.pushState({ modal: 'cart-sidebar' }, "");
-            } else {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            }
-        }
-    }
-
-    open() {
-        if (!this.isOpen) this.toggle();
-    }
-
     render() {
-        const container = document.getElementById('cart-items-container');
-        const totalEl = document.getElementById('cart-total-price');
+        const container = document.getElementById('cart-items-container-view');
+        const totalEl = document.getElementById('cart-total-price-view');
 
         if (totalEl) {
             totalEl.textContent = `${this.total.toFixed(2)} €`;
@@ -124,35 +93,83 @@ export class Cart {
         if (!container) return;
 
         if (this.items.length === 0) {
-            container.innerHTML = '<p class="cart-empty">Tu carrito está vacío</p>';
+            container.innerHTML = `
+                <div style="text-align: center; padding: 3rem 0;">
+                    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem;">Tu carrito está vacío</p>
+                    <button class="btn-primary btn-back-home">Explorar Catálogo</button>
+                </div>
+            `;
             return;
         }
 
-        container.innerHTML = this.items.map(item => `
-            <div class="cart-item">
-                <div class="cart-item-info">
-                    <h4>${item.name}</h4>
-                    <p class="cart-item-price">${item.price} €</p>
-                </div>
-                <button class="btn-remove" data-id="${item.id}" aria-label="Eliminar">&times;</button>
-            </div>
-        `).join('');
+        container.innerHTML = `
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.9rem;">
+                        <th style="text-align: left; padding: 1rem 0;">Producto</th>
+                        <th style="text-align: right; padding: 1rem 0;">Precio</th>
+                        <th style="text-align: right; padding: 1rem 0;">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${this.items.map(item => `
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 1.5rem 0;">
+                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                    <img src="${item.image}" style="width: 60px; height: 60px; object-fit: contain; background: #0f1219; border-radius: 4px;">
+                                    <div>
+                                        <h4 style="margin:0;">${item.name}</h4>
+                                        <span style="font-size: 0.8rem; color: var(--text-muted);">Ref: ${item.id.toUpperCase()}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: right; font-weight: 700;">${item.price.toFixed(2)} €</td>
+                            <td style="text-align: right;">
+                                <button class="btn-remove" data-id="${item.id}" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 1.2rem;">&times;</button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
 
         // Re-attach delete listeners
         container.querySelectorAll('.btn-remove').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const id = e.target.dataset.id;
+                const id = e.currentTarget.dataset.id;
                 this.removeItem(id);
             });
         });
 
-        // Attach Checkout Listener
-        const checkoutBtn = document.querySelector('.cart-footer .btn-primary');
+        // Re-attach home buttons if any injected
+        container.querySelectorAll('.btn-back-home').forEach(btn => {
+            btn.addEventListener('click', () => showView('view-home'));
+        });
+
+        // Checkout Button
+        const checkoutBtn = document.getElementById('btn-to-checkout');
         if (checkoutBtn) {
-            checkoutBtn.addEventListener('click', () => {
-                this.toggle(); // Close sidebar
+            checkoutBtn.onclick = () => {
                 document.dispatchEvent(new Event('checkout-start'));
-            });
+            };
         }
+    }
+
+    updateCheckoutSummary() {
+        const list = document.getElementById('order-items-summary');
+        const count = document.getElementById('order-count');
+        const total = document.getElementById('order-total');
+
+        if (list) {
+            list.innerHTML = this.items.map(item => `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                    <span>${item.name}</span>
+                    <span style="font-weight: 700;">${item.price.toFixed(2)} €</span>
+                </div>
+            `).join('');
+        }
+
+        if (count) count.textContent = this.items.length;
+        if (total) total.textContent = `${this.total.toFixed(2)} €`;
     }
 }
