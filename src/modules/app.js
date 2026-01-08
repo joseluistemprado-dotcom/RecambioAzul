@@ -4,7 +4,7 @@ import { Cart } from './cart.js';
 import { ProductDetails } from './product-details.js';
 import { Checkout } from './checkout.js';
 import { ClientArea } from './client-area.js';
-import { initNavigation } from './navigation.js';
+import { initNavigation, handleRouting } from './navigation.js';
 import { CategorySearch } from './category-search.js';
 import { ThemeToggle } from './theme-toggle.js';
 import { DonorVehicles } from './donor-vehicles.js';

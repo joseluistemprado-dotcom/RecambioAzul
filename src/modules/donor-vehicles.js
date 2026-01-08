@@ -12,60 +12,86 @@ export class DonorVehicles {
     async init() {
         this.section = document.getElementById('donor-vehicles-section');
         this.grid = document.getElementById('donor-list-grid');
-        this.modal = document.getElementById('donor-details-modal');
+        this.detailsContainer = document.getElementById('donor-details-content');
 
         await this.loadData();
-        this.detailsContainer = document.getElementById('donor-details-content');
 
         this.attachEvents();
         this.renderList();
         console.log('Donor Vehicles Module Initialized');
     }
 
+    async loadData() {
+        try {
+            const [vResp, pResp] = await Promise.all([
+                fetch('src/data/vehicles.json'),
+                fetch('src/data/products.json')
+            ]);
+            this.donors = await vResp.json();
+            this.products = await pResp.json();
+        } catch (error) {
+            console.error('Error loading data for DonorVehicles:', error);
+        }
+    }
+
     attachEvents() {
         // Initial navigation handled by navigation.js setupView
+
+        // Listen for load-vehicle-by-id events (from URL routing)
+        document.addEventListener('load-vehicle-by-id', (e) => {
+            this.loadById(e.detail);
+        });
+    }
+
+    async loadById(id) {
+        // Wait for data if not loaded yet
+        if (!this.donors || this.donors.length === 0) {
+            await this.loadData();
+        }
+
+        const vehicle = this.donors.find(v => v.id.toLowerCase() === id.toLowerCase());
+
+        if (vehicle) {
+            this.renderDetailsView(vehicle);
+            showView('view-donor-details', `/vehiculo/${id.toLowerCase()}`, vehicle);
+        } else {
+            console.error('Vehicle not found:', id);
+            showView('view-home');
+        }
     }
 
     async renderList() {
         if (!this.grid) return;
 
-        try {
-            const response = await fetch('src/data/vehicles.json');
-            const vehicles = await response.json();
-
-            this.grid.innerHTML = vehicles.map(v => `
-                <div class="product-card donor-card" data-id="${v.id}">
-                    <div class="product-image-frame">
-                        <img src="${v.image}" alt="${v.brand} ${v.model}" class="product-image">
-                    </div>
-                    <div class="product-info">
-                        <span class="product-category">${v.brand}</span>
-                        <h4>${v.model} (${v.year})</h4>
-                        <p class="product-price" style="font-size: 0.9rem; color: var(--text-muted);">Nº Ref: ${v.id}</p>
-                        <button class="btn-primary" style="width: 100%; margin-top: 1rem;">Ver Detalles</button>
-                    </div>
+        this.grid.innerHTML = this.donors.map(v => `
+            <div class="product-card donor-card" data-id="${v.id}">
+                <div class="product-image-frame">
+                    <img src="${v.image}" alt="${v.brand} ${v.model}" class="product-image">
                 </div>
-            `).join('');
+                <div class="product-info">
+                    <span class="product-category">${v.brand}</span>
+                    <h4>${v.model} (${v.year})</h4>
+                    <p class="product-price" style="font-size: 0.9rem; color: var(--text-muted);">Nº Ref: ${v.id}</p>
+                    <button class="btn-primary" style="width: 100%; margin-top: 1rem;">Ver Detalles</button>
+                </div>
+            </div>
+        `).join('');
 
-            // Click events
-            this.grid.querySelectorAll('.donor-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const id = card.dataset.id;
-                    const vehicle = vehicles.find(v => v.id === id);
-                    if (vehicle) this.openDetails(vehicle);
-                });
+        // Click events
+        this.grid.querySelectorAll('.donor-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const id = card.dataset.id;
+                const vehicle = this.donors.find(v => v.id === id);
+                if (vehicle) this.openDetails(vehicle);
             });
-
-        } catch (error) {
-            console.error('Error loading donor vehicles:', error);
-        }
+        });
     }
 
     openDetails(vehicle) {
         if (!this.detailsContainer) return;
 
         this.renderDetailsView(vehicle);
-        showView('view-donor-details');
+        showView('view-donor-details', `/vehiculo/${vehicle.id.toLowerCase()}`, vehicle);
     }
 
     renderDetailsView(vehicle) {

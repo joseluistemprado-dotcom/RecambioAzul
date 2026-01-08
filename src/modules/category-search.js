@@ -1,3 +1,5 @@
+import { showView } from './navigation.js';
+
 export class CategorySearch {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
@@ -42,19 +44,38 @@ export class CategorySearch {
     }
 
     attachEvents() {
+        // Listen for external category load (routing)
+        document.addEventListener('load-category', (e) => {
+            this.setCategory(e.detail);
+        });
+
         this.container.querySelectorAll('.btn-category').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const btn = e.currentTarget;
                 const categoryId = btn.dataset.id;
-
-                // Update UI
-                this.container.querySelectorAll('.btn-category').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                // Dispatch event
-                this.selectedCategory = categoryId === 'all' ? null : categoryId;
-                document.dispatchEvent(new CustomEvent('category-selected', { detail: this.selectedCategory }));
+                this.setCategory(categoryId === 'all' ? null : categoryId, true);
             });
         });
+    }
+
+    setCategory(categoryId, updateUrl = false) {
+        // Update UI
+        this.container.querySelectorAll('.btn-category').forEach(b => {
+            if (b.dataset.id === (categoryId || 'all')) {
+                b.classList.add('active');
+            } else {
+                b.classList.remove('active');
+            }
+        });
+
+        this.selectedCategory = categoryId;
+
+        if (updateUrl) {
+            const path = categoryId ? `/categoria/${categoryId}` : '/';
+            showView('view-home', path);
+        }
+
+        // Dispatch event for ProductList
+        document.dispatchEvent(new CustomEvent('category-selected', { detail: this.selectedCategory }));
     }
 }

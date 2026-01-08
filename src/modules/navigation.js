@@ -1,5 +1,5 @@
-export function showView(viewId) {
-    console.log('Switching to view:', viewId);
+export function showView(viewId, path = null, data = null) {
+    console.log('Switching to view:', viewId, 'Path:', path);
 
     // Hide all views
     document.querySelectorAll('.page-view').forEach(view => {
@@ -13,9 +13,50 @@ export function showView(viewId) {
         window.scrollTo(0, 0); // Reset scroll
 
         // Push state for history (back button support)
-        if (history.state?.view !== viewId) {
-            history.pushState({ view: viewId }, "");
+        const currentState = history.state;
+        const normalizedPath = path || (viewId === 'view-home' ? '/' : null);
+
+        if (normalizedPath && window.location.pathname !== normalizedPath) {
+            history.pushState({ view: viewId, data: data }, "", normalizedPath);
+        } else if (!normalizedPath && currentState?.view !== viewId) {
+            history.pushState({ view: viewId, data: data }, "");
         }
+    }
+}
+
+export function handleRouting() {
+    const path = window.location.pathname;
+    console.log('Handling routing for path:', path);
+
+    if (path === '/' || path === '/index.html') {
+        showView('view-home');
+        return;
+    }
+
+    const segments = path.split('/').filter(Boolean);
+
+    if (segments[0] === 'pieza' && segments[1]) {
+        // Dispatch event to load product by ID
+        document.dispatchEvent(new CustomEvent('load-product-by-id', { detail: segments[1] }));
+    } else if (segments[0] === 'vehiculo' && segments[1]) {
+        // Dispatch event to load vehicle by ID
+        document.dispatchEvent(new CustomEvent('load-vehicle-by-id', { detail: segments[1] }));
+    } else if (segments[0] === 'categoria' && segments[1]) {
+        // Dispatch event to filter current view by category
+        showView('view-home');
+        document.dispatchEvent(new CustomEvent('load-category', { detail: segments[1] }));
+    } else if (segments[0] === 'vehiculos') {
+        showView('view-donor-vehicles', '/vehiculos');
+    } else if (segments[0] === 'cliente') {
+        showView('view-client-area', '/cliente');
+    } else if (segments[0] === 'vender') {
+        showView('view-sell-car', '/vender');
+    } else if (segments[0] === 'contacto') {
+        showView('view-contact', '/contacto');
+    } else if (segments[0] === 'carrito') {
+        showView('view-cart', '/carrito');
+    } else {
+        showView('view-home', '/');
     }
 }
 
@@ -37,39 +78,39 @@ export function initNavigation() {
     });
 
     // View Transitions
-    setupView('nav-donor-vehicles', 'view-donor-vehicles');
-    setupView('nav-sell-car', 'view-sell-car');
-    setupView('footer-sell-car', 'view-sell-car');
-    setupView('nav-contact', 'view-contact');
+    setupView('nav-donor-vehicles', 'view-donor-vehicles', '/vehiculos');
+    setupView('nav-sell-car', 'view-sell-car', '/vender');
+    setupView('footer-sell-car', 'view-sell-car', '/vender');
+    setupView('nav-contact', 'view-contact', '/contacto');
+
+    // Quick link for cart
+    const cartToggle = document.getElementById('cart-toggle-btn');
+    if (cartToggle) {
+        cartToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('view-cart', '/carrito');
+        });
+    }
 
     // Home links/buttons
     document.querySelectorAll('.btn-back-home').forEach(btn => {
-        btn.addEventListener('click', () => showView('view-home'));
+        btn.addEventListener('click', () => showView('view-home', '/'));
     });
 
     // Custom back buttons for specific nested flows
     document.querySelectorAll('.btn-back-donors').forEach(btn => {
-        btn.addEventListener('click', () => showView('view-donor-vehicles'));
+        btn.addEventListener('click', () => showView('view-donor-vehicles', '/vehiculos'));
     });
 
     document.querySelectorAll('.btn-back-catalog').forEach(btn => {
-        btn.addEventListener('click', () => showView('view-home'));
+        btn.addEventListener('click', () => showView('view-home', '/'));
     });
 
     // History API - Support for Back Button
     window.addEventListener('popstate', (e) => {
-        // If state has a view, show it
-        if (e.state && e.state.view) {
-            const views = document.querySelectorAll('.page-view');
-            views.forEach(v => v.classList.add('hidden'));
-            const target = document.getElementById(e.state.view);
-            if (target) target.classList.remove('hidden');
-        } else {
-            // Default to home
-            showView('view-home');
-        }
+        handleRouting();
 
-        // Always close cart sidebar on any history change
+        // Always close cart sidebar/overlay if any (backward compatibility)
         const sidebar = document.getElementById('cart-sidebar');
         const overlay = document.getElementById('cart-overlay');
         if (sidebar) sidebar.classList.remove('active');
@@ -96,12 +137,12 @@ export function initNavigation() {
     console.log('Navigation Initialized');
 }
 
-function setupView(triggerId, viewId) {
+function setupView(triggerId, viewId, path) {
     const trigger = document.getElementById(triggerId);
     if (trigger) {
         trigger.addEventListener('click', (e) => {
             e.preventDefault();
-            showView(viewId);
+            showView(viewId, path);
         });
     }
 }

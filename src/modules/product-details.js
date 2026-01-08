@@ -16,13 +16,38 @@ export class ProductDetails {
         document.addEventListener('view-product', (e) => {
             this.open(e.detail);
         });
+
+        // Listen for load-product-by-id events (from URL routing)
+        document.addEventListener('load-product-by-id', (e) => {
+            this.loadById(e.detail);
+        });
+    }
+
+    async loadById(id) {
+        try {
+            const response = await fetch('src/data/products.json');
+            const products = await response.json();
+            const product = products.find(p => p.id.toLowerCase() === id.toLowerCase());
+
+            if (product) {
+                this.render(product);
+                // We use showView, which will update the URL
+                showView('view-product-details', `/pieza/${id.toLowerCase()}`, product);
+            } else {
+                console.error('Product not found:', id);
+                showView('view-home');
+            }
+        } catch (error) {
+            console.error('Error loading product by ID:', error);
+        }
     }
 
     open(product) {
         if (!this.container) return;
 
         this.render(product);
-        showView('view-product-details');
+        // Update URL to /pieza/id
+        showView('view-product-details', `/pieza/${product.id.toLowerCase()}`, product);
     }
 
     render(product) {
