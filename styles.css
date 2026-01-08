@@ -433,6 +433,14 @@ h6 {
     transition: opacity 0.3s ease;
 }
 
+#donor-details-modal {
+    z-index: 2100;
+}
+
+#product-details-modal {
+    z-index: 2200;
+}
+
 .modal-overlay.active {
     display: flex;
     opacity: 1;
@@ -473,10 +481,39 @@ h6 {
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid var(--border-color);
     padding: 1rem;
-    border-radius: 6px;
-    display: flex;
-    justify-content: space-between;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 1rem;
     align-items: center;
+}
+
+.order-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: block;
+}
+
+.order-status-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.order-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.order-total {
+    text-align: right;
+    font-weight: 600;
+}
+
+.tracking-link {
+    font-size: 0.8rem;
+    color: var(--primary-blue);
+    text-decoration: none;
 }
 
 .order-id {
@@ -1147,26 +1184,70 @@ h6 {
     .dashboard-sidebar {
         border-right: none !important;
         border-bottom: 1px solid var(--border-color);
-        padding-bottom: 1rem !important;
+        padding: 0.8rem 0 !important;
         display: flex;
         overflow-x: auto;
-        gap: 10px;
+        gap: 8px;
         margin-bottom: 1rem;
+        -webkit-overflow-scrolling: touch;
     }
 
     .dash-nav-btn {
         white-space: nowrap;
-        padding: 8px 15px !important;
+        padding: 6px 12px !important;
+        font-size: 0.8rem !important;
+        border-radius: 20px !important;
+        background: rgba(255, 255, 255, 0.03);
     }
 
-    .order-card {
-        padding: 12px !important;
+    .client-content {
+        padding: 1rem 0 !important;
     }
 
-    .order-header {
+    .dashboard-grid {
+        display: flex;
         flex-direction: column;
-        align-items: flex-start !important;
-        gap: 5px;
+        gap: 1.5rem;
+    }
+
+    .profile-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .form-group label {
+        font-size: 0.75rem !important;
+        margin-bottom: 4px !important;
+    }
+
+    .form-input {
+        padding: 10px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .order-item {
+        grid-template-columns: 1fr auto !important;
+        gap: 0.5rem !important;
+        padding: 0.8rem !important;
+    }
+
+    .order-status-wrap {
+        order: 3;
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding-top: 0.5rem;
+        margin-top: 0.2rem;
+    }
+
+    .order-total {
+        font-size: 0.9rem;
+    }
+
+    .order-subtitle {
+        font-size: 0.75rem;
     }
 
     /* Modals Responsive Fixes */

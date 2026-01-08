@@ -233,18 +233,18 @@ export class ClientArea {
         if (order.status === 'Devuelto') badgeStyle = 'badge-warning'; // reuse warning or add danger style
 
         return `
-            <div class="order-item" style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: center;">
+            <div class="order-item">
                 <div class="order-id">
                     <strong>${order.id}</strong>
-                    <span style="font-size:0.85rem;">${order.items}</span>
+                    <span class="order-subtitle">${order.items}</span>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 4px;">
-                    <span style="font-size:0.8rem; color: var(--text-muted);">${order.date}</span>
-                    <span class="${badgeStyle}" style="align-self: flex-start; ${order.status === 'Devuelto' ? 'color:#ef4444; background:rgba(239,68,68,0.1);' : ''}">${order.status}</span>
+                <div class="order-status-wrap">
+                    <span class="order-date">${order.date}</span>
+                    <span class="${badgeStyle}" style="${order.status === 'Devuelto' ? 'color:#ef4444; background:rgba(239,68,68,0.1);' : ''}">${order.status}</span>
                 </div>
-                <div class="order-total" style="text-align: right;">
+                <div class="order-total">
                     ${order.total}
-                    ${isActive ? '<br><a href="#" style="font-size:0.8rem; color: var(--primary-blue);">Seguimiento</a>' : ''}
+                    ${isActive ? '<br><a href="#" class="tracking-link">Seguimiento</a>' : ''}
                 </div>
             </div>
         `;
