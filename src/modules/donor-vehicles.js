@@ -161,19 +161,24 @@ export class DonorVehicles {
     renderInfoTab() {
         const d = this.currentDonor;
         return `
-            <div class="donor-technical-sheet">
-                <h3 class="sheet-title">Datos del Vehículo</h3>
-                <div class="sheet-grid">
-                    <div class="sheet-row"><span>Ref/ID:</span> <strong>${d.id}</strong></div>
-                    <div class="sheet-row"><span>Color:</span> <strong>${d.color}</strong></div>
-                    <div class="sheet-row"><span>KM:</span> <strong>${d.km.toLocaleString()} km</strong></div>
-                    <div class="sheet-row"><span>Año:</span> <strong>${d.year}</strong></div>
-                    <div class="sheet-row"><span>Daños:</span> <strong>${d.damage}</strong></div>
-                    <div class="sheet-row"><span>Entrada:</span> <strong>${d.date_dismantled}</strong></div>
+            <div class="donor-info-layout">
+                <div class="donor-info-image desktop-only">
+                    <img src="${d.image}" alt="${d.brand}" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
                 </div>
-                
-                <div class="cat-notice">
-                    <p>⚠️ Vehículo descontaminado y verificado según normativa CAT.</p>
+                <div class="donor-technical-sheet">
+                    <h3 class="sheet-title">Datos del Vehículo</h3>
+                    <div class="sheet-grid">
+                        <div class="sheet-row"><span>Referencia:</span> <strong>${d.id}</strong></div>
+                        <div class="sheet-row"><span>Color:</span> <strong>${d.color}</strong></div>
+                        <div class="sheet-row"><span>Kilometraje:</span> <strong>${d.km.toLocaleString()} km</strong></div>
+                        <div class="sheet-row"><span>Año:</span> <strong>${d.year}</strong></div>
+                        <div class="sheet-row"><span>Daños:</span> <strong>${d.damage}</strong></div>
+                        <div class="sheet-row"><span>Despiece:</span> <strong>${d.date_dismantled}</strong></div>
+                    </div>
+                    
+                    <div class="cat-notice">
+                        <p>⚠️ Vehículo descontaminado y verificado según normativa CAT (Centro Autorizado de Tratamiento).</p>
+                    </div>
                 </div>
             </div>
         `;
