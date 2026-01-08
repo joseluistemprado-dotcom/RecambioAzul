@@ -19,26 +19,37 @@ export class ChatBot {
     render() {
         const chatbotHtml = `
             <div id="chatbot-wrapper" class="chatbot-wrapper">
-                <button id="chatbot-toggle" class="chatbot-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <button id="chatbot-toggle" class="chatbot-toggle" aria-label="Abrir asistente">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="chat-icon-svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span class="chat-badge-pulse"></span>
                 </button>
                 <div id="chatbot-window" class="chatbot-window">
                     <div class="chatbot-header">
                         <div class="chatbot-title">
-                            <span class="online-indicator"></span>
-                            <h4>Asistente Azul</h4>
+                            <div class="avatar-status">
+                                <img src="src/assets/logo.png" alt="Bot" class="bot-avatar-img">
+                                <span class="online-indicator"></span>
+                            </div>
+                            <div class="header-text">
+                                <h4>Asistente Azul</h4>
+                                <span class="status-text">En línea ahora</span>
+                            </div>
                         </div>
                         <button id="chatbot-close" class="chatbot-close">&times;</button>
                     </div>
                     <div id="chatbot-messages" class="chatbot-messages">
-                        <div class="msg bot">¡Hola! Soy tu asistente de Recambio Azul. ¿En qué puedo ayudarte hoy?</div>
+                        <div class="msg-group bot">
+                            <div class="msg">¡Hola! Soy tu asistente de Recambio Azul. ¿Cómo puedo ayudarte hoy?</div>
+                        </div>
                     </div>
-                    <div class="chatbot-options">
-                        <button class="chat-opt" data-type="delivery">🚚 Plazos de entrega</button>
-                        <button class="chat-opt" data-type="invoice">📄 Solicitar factura</button>
-                        <button class="chat-opt" data-type="return">↩️ Devoluciones</button>
-                        <button class="chat-opt" data-type="compatibility">🧩 Compatibilidad</button>
-                        <button class="chat-opt" data-type="agent">📞 Hablar con agente</button>
+                    <div class="chatbot-footer">
+                        <div class="chatbot-options">
+                            <button class="chat-opt" data-type="delivery">🚚 Plazos de entrega</button>
+                            <button class="chat-opt" data-type="invoice">📄 Solicitar factura</button>
+                            <button class="chat-opt" data-type="return">↩️ Devoluciones</button>
+                            <button class="chat-opt" data-type="compatibility">🧩 Compatibilidad</button>
+                            <button class="chat-opt" data-type="agent">📞 Hablar con agente</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -80,12 +91,16 @@ export class ChatBot {
 
     addMessage(text, side) {
         const messagesContainer = document.getElementById('chatbot-messages');
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `msg ${side}`;
-        msgDiv.innerText = text;
-        messagesContainer.appendChild(msgDiv);
+        const msgGroup = document.createElement('div');
+        msgGroup.className = `msg-group ${side}`;
+
+        msgGroup.innerHTML = `<div class="msg">${text}</div>`;
+        messagesContainer.appendChild(msgGroup);
 
         // Scroll to bottom
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        messagesContainer.scrollTo({
+            top: messagesContainer.scrollHeight,
+            behavior: 'smooth'
+        });
     }
 }
