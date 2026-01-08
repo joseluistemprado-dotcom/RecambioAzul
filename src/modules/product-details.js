@@ -25,7 +25,7 @@ export class ProductDetails {
 
     async loadById(id) {
         try {
-            const response = await fetch('src/data/products.json');
+            const response = await fetch(`src/data/products.json?v=${Date.now()}`);
             const products = await response.json();
             const product = products.find(p => p.id.toLowerCase() === id.toLowerCase());
 

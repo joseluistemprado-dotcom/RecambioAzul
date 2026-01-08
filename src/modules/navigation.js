@@ -1,70 +1,8 @@
-export function showView(viewId, path = null, data = null) {
-    console.log('Switching to view:', viewId, 'Hash Path:', path);
-
-    // Hide all views
+// Internal helper to just toggle classes without changing history/hash
+function switchViewDOM(viewId) {
     document.querySelectorAll('.page-view').forEach(view => {
         view.classList.add('hidden');
     });
-
-    // Show target view
-    const target = document.getElementById(viewId);
-    if (target) {
-        target.classList.remove('hidden');
-        window.scrollTo(0, 0); // Reset scroll
-
-        if (path) {
-            // Update hash without triggering a full page reload or redundancy
-            const newHash = `#${path.startsWith('/') ? '' : '/'}${path}`;
-            if (window.location.hash !== newHash) {
-                window.location.hash = newHash;
-            }
-        } else if (viewId === 'view-home') {
-            if (window.location.hash !== '' && window.location.hash !== '#/') {
-                window.location.hash = '/';
-            }
-        }
-    }
-}
-
-export function handleRouting() {
-    const hash = window.location.hash || '#/';
-    const path = hash.replace(/^#/, '');
-    console.log('Handling routing for hash path:', path);
-
-    if (path === '/' || path === '' || path === '/index.html') {
-        showOneView('view-home');
-        return;
-    }
-
-    const segments = path.split('/').filter(Boolean);
-
-    if (segments[0] === 'pieza' && segments[1]) {
-        showOneView('view-product-details');
-        document.dispatchEvent(new CustomEvent('load-product-by-id', { detail: segments[1] }));
-    } else if (segments[0] === 'vehiculo' && segments[1]) {
-        showOneView('view-donor-details');
-        document.dispatchEvent(new CustomEvent('load-vehicle-by-id', { detail: segments[1] }));
-    } else if (segments[0] === 'categoria' && segments[1]) {
-        showOneView('view-home');
-        document.dispatchEvent(new CustomEvent('load-category', { detail: segments[1] }));
-    } else if (segments[0] === 'vehiculos') {
-        showOneView('view-donor-vehicles');
-    } else if (segments[0] === 'cliente') {
-        showOneView('view-client-area');
-    } else if (segments[0] === 'vender') {
-        showOneView('view-sell-car');
-    } else if (segments[0] === 'contacto') {
-        showOneView('view-contact');
-    } else if (segments[0] === 'carrito') {
-        showOneView('view-cart');
-    } else {
-        showOneView('view-home');
-    }
-}
-
-// Helper to handle view visibility without pushing state again
-function showOneView(viewId) {
-    document.querySelectorAll('.page-view').forEach(v => v.classList.add('hidden'));
     const target = document.getElementById(viewId);
     if (target) {
         target.classList.remove('hidden');
@@ -72,15 +10,72 @@ function showOneView(viewId) {
     }
 }
 
+export function showView(viewId, path = null, data = null) {
+    console.log('showView targeting:', viewId, 'with path:', path);
+    switchViewDOM(viewId);
+
+    if (path) {
+        // Prepare new hash (ensure it starts with #/)
+        const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+        const newHash = `#${normalizedPath}`;
+
+        if (window.location.hash !== newHash) {
+            history.pushState({ view: viewId, data: data }, "", newHash);
+        }
+    } else if (viewId === 'view-home') {
+        if (window.location.hash !== '' && window.location.hash !== '#/') {
+            history.pushState({ view: viewId, data: data }, "", '#/');
+        }
+    }
+}
+
+export function handleRouting() {
+    const hash = window.location.hash || '#/';
+    const path = hash.replace(/^#/, '');
+    console.log('handleRouting processing path:', path);
+
+    if (path === '/' || path === '' || path === '/index.html') {
+        switchViewDOM('view-home');
+        return;
+    }
+
+    const segments = path.split('/').filter(Boolean);
+
+    if (segments[0] === 'pieza' && segments[1]) {
+        switchViewDOM('view-product-details');
+        document.dispatchEvent(new CustomEvent('load-product-by-id', { detail: segments[1] }));
+    } else if (segments[0] === 'vehiculo' && segments[1]) {
+        switchViewDOM('view-donor-details');
+        document.dispatchEvent(new CustomEvent('load-vehicle-by-id', { detail: segments[1] }));
+    } else if (segments[0] === 'categoria' && segments[1]) {
+        switchViewDOM('view-home');
+        document.dispatchEvent(new CustomEvent('load-category', { detail: segments[1] }));
+    } else if (segments[0] === 'vehiculos') {
+        switchViewDOM('view-donor-vehicles');
+    } else if (segments[0] === 'cliente') {
+        switchViewDOM('view-client-area');
+    } else if (segments[0] === 'vender') {
+        switchViewDOM('view-sell-car');
+    } else if (segments[0] === 'contacto') {
+        switchViewDOM('view-contact');
+    } else if (segments[0] === 'carrito') {
+        switchViewDOM('view-cart');
+    } else {
+        switchViewDOM('view-home');
+    }
+}
+
 export function initNavigation() {
-    // Scroll handling for anchor links if any
+    // Scroll handling for anchor links (EXCLUDING routes like #/)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
+            const href = this.getAttribute('href');
+            if (href.startsWith('#/')) return; // Let routing handle this
 
-            const target = document.querySelector(targetId);
+            e.preventDefault();
+            if (href === '#') return;
+
+            const target = document.querySelector(href);
             if (target) {
                 target.scrollIntoView({
                     behavior: 'smooth'

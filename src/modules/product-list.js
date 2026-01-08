@@ -9,14 +9,17 @@ export class ProductList {
     }
 
     async init() {
+        this.attachEvents();
         try {
-            const response = await fetch('src/data/products.json');
+            const response = await fetch(`src/data/products.json?v=${Date.now()}`);
             this.products = await response.json();
             this.applyFilters();
         } catch (error) {
             console.error('Error loading products:', error);
         }
+    }
 
+    attachEvents() {
         // Listen for vehicle selection
         document.addEventListener('vehicle-selected', (e) => {
             this.currentVehicle = e.detail;

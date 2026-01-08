@@ -14,18 +14,20 @@ export class DonorVehicles {
         this.grid = document.getElementById('donor-list-grid');
         this.detailsContainer = document.getElementById('donor-details-content');
 
-        await this.loadData();
-
+        // Attach events FIRST so we don't miss routing events during loadData
         this.attachEvents();
+
+        await this.loadData();
         this.renderList();
         console.log('Donor Vehicles Module Initialized');
     }
 
     async loadData() {
         try {
+            const cacheBuster = `?v=${Date.now()}`;
             const [vResp, pResp] = await Promise.all([
-                fetch('src/data/donor_vehicles.json'),
-                fetch('src/data/products.json')
+                fetch('src/data/donor_vehicles.json' + cacheBuster),
+                fetch('src/data/products.json' + cacheBuster)
             ]);
             this.donors = await vResp.json();
             this.products = await pResp.json();
@@ -79,11 +81,24 @@ export class DonorVehicles {
 
         // Click events
         this.grid.querySelectorAll('.donor-card').forEach(card => {
-            card.addEventListener('click', () => {
+            card.addEventListener('click', (e) => {
                 const id = card.dataset.id;
                 const vehicle = this.donors.find(v => v.id === id);
-                if (vehicle) this.openDetails(vehicle);
+                if (vehicle) {
+                    this.openDetails(vehicle);
+                }
             });
+
+            // Also ensure buttons inside work explicitly
+            const btn = card.querySelector('.btn-primary');
+            if (btn) {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = card.dataset.id;
+                    const vehicle = this.donors.find(v => v.id === id);
+                    if (vehicle) this.openDetails(vehicle);
+                });
+            }
         });
     }
 
