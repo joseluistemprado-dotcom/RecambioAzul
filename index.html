@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <!-- Styles -->
-    <link rel="stylesheet" href="styles.css?v=1.5">
+    <link rel="stylesheet" href="styles.css?v=1.6">
 </head>
 
 <body>
@@ -266,15 +266,7 @@
         </div>
     </section>
 
-    <!-- Product Details Modal -->
-    <div id="product-details-modal" class="modal-overlay">
-        <div class="modal-container">
-            <button id="product-details-close" class="modal-close">&times;</button>
-            <div id="product-details-content">
-                <!-- Content injected here -->
-            </div>
-        </div>
-    </div>
+
 
     <!-- Donor Vehicles Main Container (Initially Hidden) -->
     <div id="donor-vehicles-section" class="container hidden" style="padding: 2rem 0;">
@@ -293,6 +285,16 @@
             <button id="donor-close" class="modal-close">&times;</button>
             <div id="donor-modal-content" style="height: 100%; display: flex; flex-direction: column;">
                 <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details Modal (Last in DOM for mobile layering) -->
+    <div id="product-details-modal" class="modal-overlay">
+        <div class="modal-container">
+            <button id="product-details-close" class="modal-close">&times;</button>
+            <div id="product-details-content">
+                <!-- Content injected here -->
             </div>
         </div>
     </div>

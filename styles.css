@@ -433,13 +433,7 @@ h6 {
     transition: opacity 0.3s ease;
 }
 
-#donor-details-modal {
-    z-index: 2100;
-}
 
-#product-details-modal {
-    z-index: 2200;
-}
 
 .modal-overlay.active {
     display: flex;
@@ -1504,4 +1498,22 @@ h6 {
         height: 480px;
         bottom: 75px;
     }
+}
+
+/* --- ABSOLUTE MODAL PRIORITY FIX --- */
+/* Part details MUST always be on top of vehicle details */
+#donor-details-modal {
+    z-index: 3000 !important;
+}
+
+#product-details-modal {
+    z-index: 4000 !important;
+}
+
+.cart-sidebar {
+    z-index: 5000 !important;
+}
+
+.cart-overlay {
+    z-index: 4900 !important;
 }
