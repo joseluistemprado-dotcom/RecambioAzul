@@ -1,3 +1,5 @@
+import { showView } from './navigation.js';
+
 export class DonorVehicles {
     constructor() {
         this.donors = [];
@@ -67,7 +69,7 @@ export class DonorVehicles {
 
         this.grid.innerHTML = this.donors.map(v => `
             <div class="product-card donor-card" data-id="${v.id}">
-                <div class="product-image-frame">
+                <div class="product-image-frame" style="background: var(--card-bg);">
                     <img src="${v.image}" alt="${v.brand} ${v.model}" class="product-image">
                 </div>
                 <div class="product-info">
@@ -81,21 +83,18 @@ export class DonorVehicles {
 
         // Click events
         this.grid.querySelectorAll('.donor-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                const id = card.dataset.id;
-                const vehicle = this.donors.find(v => v.id === id);
-                if (vehicle) {
-                    this.openDetails(vehicle);
-                }
+            const id = card.dataset.id;
+
+            card.addEventListener('click', () => {
+                const vehicle = this.donors.find(v => v.id.toLowerCase() === id.toLowerCase());
+                if (vehicle) this.openDetails(vehicle);
             });
 
-            // Also ensure buttons inside work explicitly
             const btn = card.querySelector('.btn-primary');
             if (btn) {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    const id = card.dataset.id;
-                    const vehicle = this.donors.find(v => v.id === id);
+                    const vehicle = this.donors.find(v => v.id.toLowerCase() === id.toLowerCase());
                     if (vehicle) this.openDetails(vehicle);
                 });
             }
@@ -155,18 +154,21 @@ export class DonorVehicles {
 
     renderInfoTab(vehicle) {
         return `
-            <div class="donor-info-layout">
-                <div class="donor-info-image">
+            <div class="donor-info-layout" style="background: var(--card-bg); padding: 2rem; border-radius: 12px;">
+                <div class="donor-info-image" style="background: var(--card-bg);">
                     <img src="${vehicle.image}" alt="${vehicle.brand} ${vehicle.model}" class="donor-sheet-img">
                 </div>
                 <div class="donor-info-specs">
-                    <h3 class="sheet-title">Información del Vehículo</h3>
+                    <h3 class="sheet-title">Ficha Técnica del Vehículo</h3>
                     <div class="sheet-grid">
                         <div class="sheet-row"><span>Marca:</span><strong>${vehicle.brand}</strong></div>
                         <div class="sheet-row"><span>Modelo:</span><strong>${vehicle.model}</strong></div>
                         <div class="sheet-row"><span>Versión:</span><strong>${vehicle.version}</strong></div>
                         <div class="sheet-row"><span>Año:</span><strong>${vehicle.year}</strong></div>
-                        <div class="sheet-row"><span>Motor:</span><strong>${vehicle.engine || 'N/D'}</strong></div>
+                        <div class="sheet-row"><span>Kilómetros:</span><strong>${(vehicle.km || 0).toLocaleString()} km</strong></div>
+                        <div class="sheet-row"><span>Matrícula:</span><strong>${vehicle.plate || '---'}</strong></div>
+                        <div class="sheet-row"><span>Nº Bastidor:</span><strong>${vehicle.vin || '---'}</strong></div>
+                        <div class="sheet-row"><span>Motor:</span><strong>${vehicle.engine || '---'}</strong></div>
                         <div class="sheet-row"><span>Combustible:</span><strong>${vehicle.fuelType || 'Eléctrico'}</strong></div>
                     </div>
                     <div class="cat-notice">

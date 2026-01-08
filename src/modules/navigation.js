@@ -20,11 +20,11 @@ export function showView(viewId, path = null, data = null) {
         const newHash = `#${normalizedPath}`;
 
         if (window.location.hash !== newHash) {
-            history.pushState({ view: viewId, data: data }, "", newHash);
+            window.location.hash = newHash;
         }
     } else if (viewId === 'view-home') {
         if (window.location.hash !== '' && window.location.hash !== '#/') {
-            history.pushState({ view: viewId, data: data }, "", '#/');
+            window.location.hash = '#/';
         }
     }
 }
