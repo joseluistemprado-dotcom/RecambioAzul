@@ -55,6 +55,7 @@ export class ClientArea {
     open() {
         if (this.modal) {
             this.modal.classList.add('active');
+            history.pushState({ modal: 'client-area-modal' }, "");
             this.render();
             document.body.style.overflow = 'hidden';
         }

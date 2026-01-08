@@ -103,6 +103,7 @@ export class DonorVehicles {
 
         this.activeTab = 'info';
         this.modal.classList.add('active');
+        history.pushState({ modal: 'donor-details-modal' }, "");
         this.renderModalContent();
     }
 

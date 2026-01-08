@@ -40,6 +40,7 @@ export class ProductDetails {
 
         this.render(product);
         this.modal.classList.add('active');
+        history.pushState({ modal: 'product-details-modal' }, "");
         this.isOpen = true;
         document.body.style.overflow = 'hidden'; // Prevent scrolling
     }

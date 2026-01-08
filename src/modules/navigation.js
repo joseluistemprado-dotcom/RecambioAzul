@@ -14,6 +14,7 @@ export function initNavigation() {
 
     // Sell Car Modal
     setupModal('nav-sell-car', 'sell-car-modal', 'sell-car-close');
+    setupModal('footer-sell-car', 'sell-car-modal', 'sell-car-close');
 
     // Contact Modal
     setupModal('nav-contact', 'contact-modal', 'contact-close');

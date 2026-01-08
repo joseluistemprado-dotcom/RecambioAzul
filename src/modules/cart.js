@@ -101,6 +101,7 @@ export class Cart {
             if (this.isOpen) {
                 sidebar.classList.add('active');
                 overlay.classList.add('active');
+                history.pushState({ modal: 'cart-sidebar' }, "");
             } else {
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
