@@ -117,76 +117,45 @@ export class VehicleSearch {
     }
 
     parseNHTSAData(results, vin) {
-        const getValue = (name) => {
-            const item = results.find(r => r.Variable === name);
-            return item?.Value || '';
+        const vehicle = {
+            id: 'NHTSA-' + vin.substring(0, 8),
+            vin: vin,
+            brand: '---',
+            model: '---',
+            version: '---',
+            year: new Date().getFullYear(),
+            plate: '---',
+            image: 'src/assets/vehicles/default.png',
+            nhtsaDetails: {}
         };
 
-        // Log all available fields for debugging
-        console.log('NHTSA Results:', results.map(r => `${r.Variable}: ${r.Value}`));
-
-        // Extract engine displacement
-        const displacement = getValue('DisplacementL') || getValue('DisplacementCC');
-        const cylinders = getValue('EngineCylinders');
-
-        // Build engine description
-        let engineDesc = '';
-        if (displacement && cylinders) {
-            engineDesc = `${displacement} L / ${cylinders} cyl`;
-        } else if (getValue('EngineModel')) {
-            engineDesc = getValue('EngineModel');
-        } else if (cylinders) {
-            engineDesc = `${cylinders} cilindros`;
-        } else {
-            engineDesc = '---';
-        }
-
-        // Extract power (prefer kW, fallback to HP)
-        const engineKW = getValue('EngineKW');
-        const engineHP = getValue('EngineHP');
-        let powerDesc = '---';
-        if (engineKW && engineHP) {
-            powerDesc = `${engineKW} kW (${engineHP} HP)`;
-        } else if (engineHP) {
-            powerDesc = `${engineHP} HP`;
-        } else if (engineKW) {
-            powerDesc = `${engineKW} kW`;
-        }
-
-        // Extract fuel type
-        const fuelType = getValue('FuelTypePrimary');
         const fuelTypeSpanish = {
             'Gasoline': 'Gasolina',
             'Diesel': 'Diésel',
             'Electric': 'Eléctrico',
             'Hybrid': 'Híbrido',
             'Plug-in Hybrid': 'Híbrido Enchufable',
-            'Flex Fuel': 'Flex Fuel'
         };
-        const fuelDisplay = fuelTypeSpanish[fuelType] || fuelType || 'Desconocido';
 
-        return {
-            id: 'NHTSA-' + vin.substring(0, 8),
-            brand: getValue('Make'),
-            model: getValue('Model'),
-            version: getValue('Trim') || getValue('Series') || '---',
-            year: parseInt(getValue('ModelYear')) || new Date().getFullYear(),
-            plate: '---',
-            vin: vin,
-            engine: engineDesc,
-            fuelType: fuelDisplay,
-            power: powerDesc,
-            battery: getValue('BatteryType') || (fuelDisplay === 'Eléctrico' ? 'Ver especificaciones' : '---'),
-            range: '---',
-            weight: getValue('GVWR') || '---',
-            dimensions: '---',
-            emissions: '---',
-            transmission: getValue('TransmissionStyle') || getValue('TransmissionSpeeds') ? getValue('TransmissionSpeeds') + ' velocidades' : 'Automática',
-            drivetrain: getValue('DriveType') || '---',
-            image: 'src/assets/vehicles/default.png',
-            damage: 'N/A',
-            date_dismantled: 'N/A'
-        };
+        results.forEach(item => {
+            if (item.Value && item.Value.trim() && item.Value.trim() !== 'Not Applicable') {
+                const key = item.Variable.replace(/ /g, '');
+
+                // Populate nhtsaDetails with all available data
+                vehicle.nhtsaDetails[item.Variable] = item.Value;
+
+                // Assign to top-level properties for quick access in the header
+                if (key === 'Make') vehicle.brand = item.Value;
+                if (key === 'Model') vehicle.model = item.Value;
+                if (key === 'ModelYear') vehicle.year = parseInt(item.Value) || vehicle.year;
+                if (key === 'Trim' || key === 'Series') vehicle.version = item.Value;
+                if (key === 'FuelTypePrimary') {
+                    vehicle.nhtsaDetails['Fuel Type'] = fuelTypeSpanish[item.Value] || item.Value;
+                }
+            }
+        });
+
+        return vehicle;
     }
 
     render() {
@@ -282,6 +251,43 @@ export class VehicleSearch {
             '<span style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">NHTSA (EE.UU.)</span>' :
             '<span style="background: var(--primary-blue); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Base de Datos Local</span>';
 
+        let detailsHtml = '';
+
+        if (source === 'nhtsa') {
+            // For NHTSA results, iterate over all the details we captured
+            for (const [key, value] of Object.entries(vehicle.nhtsaDetails)) {
+                detailsHtml += `
+                    <div class="spec-item">
+                        <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">${key}</span>
+                        <strong style="color: var(--text-main); font-size: 1rem;">${value}</strong>
+                    </div>
+                `;
+            }
+        } else {
+            // For local results, use the predefined structure
+            const mainDetails = {
+                'Matrícula': vehicle.plate,
+                'Bastidor (VIN)': vehicle.vin,
+                'Potencia': vehicle.power,
+                'Batería': vehicle.battery,
+                'Autonomía': vehicle.range,
+                'Tracción': vehicle.drivetrain,
+                'Peso': vehicle.weight,
+                'Dimensiones': vehicle.dimensions,
+            };
+
+            for (const [key, value] of Object.entries(mainDetails)) {
+                if (value && value !== '---') {
+                    detailsHtml += `
+                        <div class="spec-item">
+                            <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">${key}</span>
+                            <strong style="color: var(--text-main); font-size: 1rem;">${value}</strong>
+                        </div>
+                    `;
+                }
+            }
+        }
+
         messageDiv.innerHTML = `
             <div style="background: var(--card-bg); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; text-align: left; border: 2px solid var(--primary-blue); box-shadow: 0 4px 12px rgba(0, 240, 255, 0.1);">
                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
@@ -296,38 +302,7 @@ export class VehicleSearch {
                 </div>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
-                    <div class="spec-item">
-                        <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">Matrícula</span>
-                        <strong style="color: var(--text-main); font-size: 1rem;">${vehicle.plate}</strong>
-                    </div>
-                    <div class="spec-item">
-                        <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">Bastidor (VIN)</span>
-                        <strong style="color: var(--text-main); font-size: 0.9rem;">${vehicle.vin}</strong>
-                    </div>
-                    <div class="spec-item">
-                        <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">Potencia</span>
-                        <strong style="color: var(--text-main); font-size: 1rem;">${vehicle.power || '---'}</strong>
-                    </div>
-                    <div class="spec-item">
-                        <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">Batería</span>
-                        <strong style="color: var(--text-main); font-size: 1rem;">${vehicle.battery || '---'}</strong>
-                    </div>
-                    <div class="spec-item">
-                        <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">Autonomía</span>
-                        <strong style="color: var(--text-main); font-size: 1rem;">${vehicle.range || '---'}</strong>
-                    </div>
-                    <div class="spec-item">
-                        <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">Tracción</span>
-                        <strong style="color: var(--text-main); font-size: 1rem;">${vehicle.drivetrain || '---'}</strong>
-                    </div>
-                    <div class="spec-item">
-                        <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">Peso</span>
-                        <strong style="color: var(--text-main); font-size: 1rem;">${vehicle.weight || '---'}</strong>
-                    </div>
-                    <div class="spec-item">
-                        <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">Dimensiones</span>
-                        <strong style="color: var(--text-main); font-size: 0.85rem;">${vehicle.dimensions || '---'}</strong>
-                    </div>
+                    ${detailsHtml}
                 </div>
 
                 <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); text-align: center;">
