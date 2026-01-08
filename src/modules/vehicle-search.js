@@ -122,23 +122,66 @@ export class VehicleSearch {
             return item?.Value || '';
         };
 
+        // Log all available fields for debugging
+        console.log('NHTSA Results:', results.map(r => `${r.Variable}: ${r.Value}`));
+
+        // Extract engine displacement
+        const displacement = getValue('DisplacementL') || getValue('DisplacementCC');
+        const cylinders = getValue('EngineCylinders');
+
+        // Build engine description
+        let engineDesc = '';
+        if (displacement && cylinders) {
+            engineDesc = `${displacement} L / ${cylinders} cyl`;
+        } else if (getValue('EngineModel')) {
+            engineDesc = getValue('EngineModel');
+        } else if (cylinders) {
+            engineDesc = `${cylinders} cilindros`;
+        } else {
+            engineDesc = '---';
+        }
+
+        // Extract power (prefer kW, fallback to HP)
+        const engineKW = getValue('EngineKW');
+        const engineHP = getValue('EngineHP');
+        let powerDesc = '---';
+        if (engineKW && engineHP) {
+            powerDesc = `${engineKW} kW (${engineHP} HP)`;
+        } else if (engineHP) {
+            powerDesc = `${engineHP} HP`;
+        } else if (engineKW) {
+            powerDesc = `${engineKW} kW`;
+        }
+
+        // Extract fuel type
+        const fuelType = getValue('FuelTypePrimary');
+        const fuelTypeSpanish = {
+            'Gasoline': 'Gasolina',
+            'Diesel': 'Diésel',
+            'Electric': 'Eléctrico',
+            'Hybrid': 'Híbrido',
+            'Plug-in Hybrid': 'Híbrido Enchufable',
+            'Flex Fuel': 'Flex Fuel'
+        };
+        const fuelDisplay = fuelTypeSpanish[fuelType] || fuelType || 'Desconocido';
+
         return {
             id: 'NHTSA-' + vin.substring(0, 8),
             brand: getValue('Make'),
             model: getValue('Model'),
-            version: getValue('Trim') || getValue('Series'),
+            version: getValue('Trim') || getValue('Series') || '---',
             year: parseInt(getValue('ModelYear')) || new Date().getFullYear(),
             plate: '---',
             vin: vin,
-            engine: getValue('EngineModel') || getValue('EngineCylinders') + ' cyl',
-            fuelType: getValue('FuelTypePrimary') || 'Desconocido',
-            power: getValue('EngineHP') ? getValue('EngineHP') + ' HP' : '---',
-            battery: getValue('BatteryType') || '---',
+            engine: engineDesc,
+            fuelType: fuelDisplay,
+            power: powerDesc,
+            battery: getValue('BatteryType') || (fuelDisplay === 'Eléctrico' ? 'Ver especificaciones' : '---'),
             range: '---',
             weight: getValue('GVWR') || '---',
             dimensions: '---',
             emissions: '---',
-            transmission: getValue('TransmissionStyle') || 'Automática',
+            transmission: getValue('TransmissionStyle') || getValue('TransmissionSpeeds') ? getValue('TransmissionSpeeds') + ' velocidades' : 'Automática',
             drivetrain: getValue('DriveType') || '---',
             image: 'src/assets/vehicles/default.png',
             damage: 'N/A',
