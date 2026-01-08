@@ -936,3 +936,146 @@ h6 {
 .main-search-input::placeholder {
     color: var(--text-muted);
 }
+
+/* Base Mobile Overrides & Helpers */
+.mobile-only {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    .mobile-only {
+        display: flex !important;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Header & Mobile Nav */
+    .main-header {
+        height: 70px;
+        /* Slimmer on mobile */
+    }
+
+    .brand-name {
+        font-size: 1.1rem;
+    }
+
+    .logo-img {
+        height: 36px;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: var(--card-bg);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        transition: left 0.3s ease;
+        z-index: 1000;
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+
+    .nav-link {
+        font-size: 1.2rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border-color);
+        width: 100%;
+    }
+
+    .header-actions {
+        gap: 10px;
+    }
+
+    .btn-client-area {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    /* Grids & Layouts */
+    .product-grid,
+    .donor-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+    }
+
+    .product-info h4 {
+        font-size: 0.9rem;
+    }
+
+    .product-price {
+        font-size: 1.1rem;
+    }
+
+    .product-image-frame {
+        height: 140px;
+    }
+
+    /* Search & Filters */
+    .search-bar-container {
+        margin-bottom: 1.5rem;
+    }
+
+    .main-search-input {
+        font-size: 0.9rem;
+        padding: 12px 12px 12px 40px;
+    }
+
+    /* Hero Section */
+    section[style*="padding: 4rem 0"] {
+        padding: 2rem 0 !important;
+    }
+
+    h1[style*="font-size: 3rem"] {
+        font-size: 2rem !important;
+    }
+
+    /* Footer */
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-section h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* Modals */
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details-image {
+        min-height: 250px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .details-title {
+        font-size: 1.5rem;
+    }
+
+    /* ChatBot */
+    .chatbot-window {
+        width: calc(100vw - 40px);
+        height: 400px;
+        bottom: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+        /* Single column on very small screens if preferred, or stay 2 */
+    }
+}
