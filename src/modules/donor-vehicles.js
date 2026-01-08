@@ -118,17 +118,20 @@ export class DonorVehicles {
         const parts = this.products.filter(p => p.donorId === this.currentDonor.id);
 
         content.innerHTML = `
-            <div class="donor-hero">
-                <img src="${this.currentDonor.image}" alt="${this.currentDonor.brand} ${this.currentDonor.model}">
-            </div>
-            <div style="padding: 1.5rem 2rem 1rem 2rem; border-bottom: 1px solid var(--border-color);">
-                <h2 style="margin:0;">${this.currentDonor.brand} ${this.currentDonor.model} <span style="color:var(--text-muted); font-weight:400;">${this.currentDonor.version}</span></h2>
-                <div style="display:flex; gap: 1rem; margin-top:1.2rem;">
-                    <button class="nav-btn ${this.activeTab === 'info' ? 'active' : ''}" style="width:auto;">
+            <div class="donor-header-compact">
+                <div class="donor-header-top">
+                    <img src="${this.currentDonor.image}" alt="${this.currentDonor.brand} ${this.currentDonor.model}" class="donor-thumb-header">
+                    <div class="donor-header-text">
+                        <h2 style="margin:0; font-size: 1.25rem;">${this.currentDonor.brand} ${this.currentDonor.model}</h2>
+                        <span style="color:var(--text-muted); font-size: 0.9rem;">${this.currentDonor.version}</span>
+                    </div>
+                </div>
+                <div class="donor-tabs-row" style="display:flex; gap: 0.8rem; margin-top: 1rem;">
+                    <button class="nav-btn ${this.activeTab === 'info' ? 'active' : ''}" style="width:auto; flex:1; padding: 0.6rem;">
                         Ficha Técnica
                     </button>
-                    <button class="nav-btn ${this.activeTab === 'parts' ? 'active' : ''}" style="width:auto;">
-                        Aprovechamiento (${parts.length})
+                    <button class="nav-btn ${this.activeTab === 'parts' ? 'active' : ''}" style="width:auto; flex:1; padding: 0.6rem;">
+                        Piezas (${parts.length})
                     </button>
                 </div>
             </div>
