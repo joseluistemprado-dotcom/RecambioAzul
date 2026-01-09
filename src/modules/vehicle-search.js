@@ -222,13 +222,6 @@ export class VehicleSearch {
 
             if (result.success) {
                 this.showVehicleDetails(result.vehicle, result.source);
-                // Scroll to products
-                setTimeout(() => {
-                    const productSection = document.getElementById('product-list-container');
-                    if (productSection) {
-                        productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }, 500);
             } else {
                 this.showMessage(messageDiv, `✗ ${result.message}`, 'error');
             }
