@@ -16,92 +16,101 @@ import { RatingPlugin } from './rating-plugin.js';
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Recambio Azul App Initialized');
 
-    // Initialize Rating Plugin (Decoupled, non-blocking)
-    const ratingPlugin = new RatingPlugin();
-    ratingPlugin.init();
+    try {
+        // Initialize components if their containers exist
+        if (document.getElementById('vehicle-selector-container')) {
+            const vehicleSelector = new VehicleSelector('vehicle-selector-container');
+            vehicleSelector.init();
+        }
 
-    // Initialize components if their containers exist
-    if (document.getElementById('vehicle-selector-container')) {
-        const vehicleSelector = new VehicleSelector('vehicle-selector-container');
-        vehicleSelector.init();
+        if (document.getElementById('product-list-container')) {
+            const productList = new ProductList('product-list-container');
+            productList.init();
+        }
+
+        // Initialize Vehicle Search (Plate/VIN)
+        if (document.getElementById('vehicle-search-container')) {
+            const vehicleSearch = new VehicleSearch('vehicle-search-container');
+            vehicleSearch.init();
+        }
+
+        // Initialize Diagnostic Wizard
+        if (document.getElementById('diagnostic-wizard-container')) {
+            const diagnosticWizard = new DiagnosticWizard('diagnostic-wizard-container');
+            diagnosticWizard.init();
+        }
+
+        // Initialize Shopping Cart
+        const cart = new Cart();
+        cart.init();
+
+        // Initialize Product Details
+        const productDetails = new ProductDetails();
+        productDetails.init();
+
+        // Initialize Checkout
+        const checkout = new Checkout();
+        checkout.init(cart);
+
+        // Initialize Client Area
+        const clientArea = new ClientArea();
+        clientArea.init();
+
+        // Initialize Category Search
+        const categorySearch = new CategorySearch('category-search-container');
+        categorySearch.init();
+
+        // Initialize Theme Toggle
+        const themeToggle = new ThemeToggle();
+        themeToggle.init();
+
+        // Initialize Donor Vehicles
+        const donorVehicles = new DonorVehicles();
+        donorVehicles.init();
+
+        // Initialize ChatBot
+        const chatbot = new ChatBot();
+        chatbot.init();
+
+        // Initialize Search Bar
+        const searchInput = document.getElementById('main-search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                document.dispatchEvent(new CustomEvent('search-query', { detail: e.target.value }));
+            });
+        }
+
+        // Hero Buttons
+        const heroBtnDiagnostic = document.getElementById('hero-btn-diagnostic');
+        if (heroBtnDiagnostic) {
+            heroBtnDiagnostic.addEventListener('click', () => {
+                window.location.hash = '#/diagnostico';
+            });
+        }
+
+        const heroBtnSearch = document.getElementById('hero-btn-search');
+        if (heroBtnSearch) {
+            heroBtnSearch.addEventListener('click', () => {
+                const target = document.getElementById('category-search-container');
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        // Initialize General Navigation
+        initNavigation();
+
+        // Handle initial route
+        handleRouting();
+
+        // Initialize Rating Plugin (Decoupled, non-blocking, LAST)
+        try {
+            const ratingPlugin = new RatingPlugin();
+            ratingPlugin.init();
+        } catch (re) {
+            console.warn('Rating Plugin failed:', re);
+        }
+
+    } catch (error) {
+        console.error('CRITICAL: App failed to initialize:', error);
     }
-
-    if (document.getElementById('product-list-container')) {
-        const productList = new ProductList('product-list-container');
-        productList.init();
-    }
-
-    // Initialize Vehicle Search (Plate/VIN)
-    if (document.getElementById('vehicle-search-container')) {
-        const vehicleSearch = new VehicleSearch('vehicle-search-container');
-        vehicleSearch.init();
-    }
-
-    // Initialize Diagnostic Wizard
-    if (document.getElementById('diagnostic-wizard-container')) {
-        const diagnosticWizard = new DiagnosticWizard('diagnostic-wizard-container');
-        diagnosticWizard.init();
-    }
-
-    // Initialize Shopping Cart
-    const cart = new Cart();
-    cart.init();
-
-    // Initialize Product Details
-    const productDetails = new ProductDetails();
-    productDetails.init();
-
-    // Initialize Checkout
-    const checkout = new Checkout();
-    checkout.init(cart);
-
-    // Initialize Client Area
-    const clientArea = new ClientArea();
-    clientArea.init();
-
-    // Initialize Category Search
-    const categorySearch = new CategorySearch('category-search-container');
-    categorySearch.init();
-
-    // Initialize Theme Toggle
-    const themeToggle = new ThemeToggle();
-    themeToggle.init();
-
-    // Initialize Donor Vehicles
-    const donorVehicles = new DonorVehicles();
-    donorVehicles.init();
-
-    // Initialize ChatBot
-    const chatbot = new ChatBot();
-    chatbot.init();
-
-    // Initialize Search Bar
-    const searchInput = document.getElementById('main-search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            document.dispatchEvent(new CustomEvent('search-query', { detail: e.target.value }));
-        });
-    }
-
-    // Hero Buttons
-    const heroBtnDiagnostic = document.getElementById('hero-btn-diagnostic');
-    if (heroBtnDiagnostic) {
-        heroBtnDiagnostic.addEventListener('click', () => {
-            window.location.hash = '#/diagnostico';
-        });
-    }
-
-    const heroBtnSearch = document.getElementById('hero-btn-search');
-    if (heroBtnSearch) {
-        heroBtnSearch.addEventListener('click', () => {
-            const target = document.getElementById('category-search-container');
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
-        });
-    }
-
-    // Initialize General Navigation
-    initNavigation();
-
-    // Handle initial route
-    handleRouting();
 });
