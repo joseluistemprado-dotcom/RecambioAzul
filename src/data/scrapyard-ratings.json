@@ -1,0 +1,62 @@
+{
+    "DON-001": {
+        "name": "EcoRecambios Madrid",
+        "rating": 4.7,
+        "totalSales": 245,
+        "totalReviews": 89
+    },
+    "DON-002": {
+        "name": "GreenParts Barcelona",
+        "rating": 4.5,
+        "totalSales": 198,
+        "totalReviews": 67
+    },
+    "DON-003": {
+        "name": "AutoVerde Valencia",
+        "rating": 4.8,
+        "totalSales": 312,
+        "totalReviews": 124
+    },
+    "DON-004": {
+        "name": "ReciclaAuto Sevilla",
+        "rating": 4.3,
+        "totalSales": 156,
+        "totalReviews": 52
+    },
+    "DON-005": {
+        "name": "ElectroRecambios Málaga",
+        "rating": 4.6,
+        "totalSales": 203,
+        "totalReviews": 78
+    },
+    "DON-006": {
+        "name": "EcoPiezas Bilbao",
+        "rating": 4.9,
+        "totalSales": 178,
+        "totalReviews": 95
+    },
+    "DON-007": {
+        "name": "Recambios Sostenibles Zaragoza",
+        "rating": 4.4,
+        "totalSales": 134,
+        "totalReviews": 48
+    },
+    "DON-008": {
+        "name": "AutoCircular Murcia",
+        "rating": 4.7,
+        "totalSales": 221,
+        "totalReviews": 82
+    },
+    "DON-009": {
+        "name": "VerdeParts Alicante",
+        "rating": 4.5,
+        "totalSales": 167,
+        "totalReviews": 61
+    },
+    "DON-015": {
+        "name": "EcoMotor Granada",
+        "rating": 4.8,
+        "totalSales": 189,
+        "totalReviews": 73
+    }
+}

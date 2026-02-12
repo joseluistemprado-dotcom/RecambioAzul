@@ -12,17 +12,15 @@ import { ChatBot } from './chatbot.js';
 import { VehicleSearch } from './vehicle-search.js';
 import { DiagnosticWizard } from './diagnostic-wizard.js';
 import { ProductComparator } from './product-comparator.js';
+import { RatingSystem } from './rating-system.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     console.log('Recambio Azul App Initialized');
 
-    // Initialize standard modules
-    // This line seems to be a placeholder or an error in the provided instruction's context.
-    // The original code initializes ProductList conditionally. I will keep the original ProductList initialization.
-    // The instruction's provided context for ProductList instantiation seems to be a mistake,
-    // as it's not present in the original code in that exact form.
-    // I will insert the ProductComparator instantiation as requested,
-    // but will not add the `const app = new ProductList(...)` line if it's not already there.
+    // Initialize Rating System first
+    const ratingSystem = new RatingSystem();
+    await ratingSystem.init();
+    ratingSystem.attachGlobalEvents();
 
     // Initialize Comparator
     const comparator = new ProductComparator();
@@ -35,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (document.getElementById('product-list-container')) {
-        const productList = new ProductList('product-list-container');
+        const productList = new ProductList('product-list-container', ratingSystem);
         productList.init();
     }
 
@@ -56,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cart.init();
 
     // Initialize Product Details
-    const productDetails = new ProductDetails();
+    const productDetails = new ProductDetails(ratingSystem);
     productDetails.init();
 
     // Initialize Checkout
