@@ -11,7 +11,6 @@ import { DonorVehicles } from './donor-vehicles.js';
 import { ChatBot } from './chatbot.js';
 import { VehicleSearch } from './vehicle-search.js';
 import { DiagnosticWizard } from './diagnostic-wizard.js';
-import { ProductComparator } from './product-comparator.js';
 import { RatingSystem } from './rating-system.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -21,10 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ratingSystem = new RatingSystem();
     await ratingSystem.init();
     ratingSystem.attachGlobalEvents();
-
-    // Initialize Comparator
-    const comparator = new ProductComparator();
-    comparator.init();
 
     // Initialize components if their containers exist
     if (document.getElementById('vehicle-selector-container')) {
