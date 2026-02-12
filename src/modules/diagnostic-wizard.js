@@ -1,7 +1,7 @@
 export class DiagnosticWizard {
     constructor(containerId) {
         this.containerId = containerId;
-        this.container = document.getElementById(containerId);
+        this.container = null; // Will be set in init()
         this.currentStep = 0; // 0: Engine Select, 1: Category, 2: Symptom, 3: Questions, 4: Result
         this.selections = {
             engineType: null, // 'electric', 'gasoline', 'diesel'
@@ -215,7 +215,11 @@ export class DiagnosticWizard {
     }
 
     init() {
-        if (!this.container) return;
+        this.container = document.getElementById(this.containerId);
+        if (!this.container) {
+            console.error('DiagnosticWizard: Container not found:', this.containerId);
+            return;
+        }
         this.renderEngineSelect();
         document.addEventListener('reset-wizard', () => this.reset());
     }
