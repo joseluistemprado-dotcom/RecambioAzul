@@ -11,9 +11,14 @@ import { DonorVehicles } from './donor-vehicles.js';
 import { ChatBot } from './chatbot.js';
 import { VehicleSearch } from './vehicle-search.js';
 import { DiagnosticWizard } from './diagnostic-wizard.js';
+import { RatingPlugin } from './rating-plugin.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Recambio Azul App Initialized');
+
+    // Initialize Rating Plugin (Decoupled, non-blocking)
+    const ratingPlugin = new RatingPlugin();
+    ratingPlugin.init();
 
     // Initialize components if their containers exist
     if (document.getElementById('vehicle-selector-container')) {

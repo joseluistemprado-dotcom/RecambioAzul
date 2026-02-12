@@ -73,12 +73,15 @@ export class ProductDetails {
                 <div class="details-info">
                     <h2 class="details-title">${product.name}</h2>
                     <p class="details-price">${product.price} €</p>
+                    <div class="rating-slot" data-pid="${product.id}"></div>
                     
                     <div class="details-meta">
                         <p><strong>Referencia:</strong> ${product.id.toUpperCase()}</p>
                         <p><strong>Condición:</strong> <span class="badge-condition">${product.condition}</span></p>
                         <p><strong>Compatibilidad:</strong> ${product.vehicle || 'Consultar'}</p>
                     </div>
+
+                    <div class="scrapyard-slot" data-did="${product.donorId}"></div>
  
                     <div class="details-description">
                         <h3>Descripción</h3>
@@ -92,6 +95,7 @@ export class ProductDetails {
                     </div>
                 </div>
             </div>
+            <div class="reviews-container-slot" data-pid="${product.id}"></div>
         `;
 
         // Re-attach add to cart listener

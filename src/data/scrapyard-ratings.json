@@ -1,0 +1,52 @@
+{
+    "donor_1": {
+        "name": "Desguaces Madrid Eco",
+        "rating": 4.9,
+        "totalSales": 1250
+    },
+    "donor_2": {
+        "name": "EcoParts Valencia",
+        "rating": 4.7,
+        "totalSales": 980
+    },
+    "donor_3": {
+        "name": "Recambios Sostenibles BCN",
+        "rating": 4.5,
+        "totalSales": 2100
+    },
+    "donor_4": {
+        "name": "Desguace Sevilla Verde",
+        "rating": 4.8,
+        "totalSales": 750
+    },
+    "donor_5": {
+        "name": "GreenParts Bilbao",
+        "rating": 4.6,
+        "totalSales": 430
+    },
+    "donor_6": {
+        "name": "AutoEco Galicia",
+        "rating": 4.4,
+        "totalSales": 1560
+    },
+    "donor_7": {
+        "name": "Desguace Zaragoza Zero",
+        "rating": 4.7,
+        "totalSales": 890
+    },
+    "donor_8": {
+        "name": "Recuperaciones Levante",
+        "rating": 4.2,
+        "totalSales": 3100
+    },
+    "donor_9": {
+        "name": "Desguace Córdoba Sur",
+        "rating": 4.9,
+        "totalSales": 520
+    },
+    "donor_10": {
+        "name": "EcoMotores Málaga",
+        "rating": 4.8,
+        "totalSales": 1100
+    }
+}

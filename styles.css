@@ -2036,3 +2036,179 @@ h6 {
         font-size: 0.95rem;
     }
 }
+
+/* --- RATING SYSTEM STYLES (SAFE PLUGIN) --- */
+.stars {
+    color: #ffcc00;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+}
+
+.star.empty {
+    color: #444;
+}
+
+.product-rating-compact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+}
+
+.review-count, .rating-num {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.scrapyard-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.scrapyard-icon {
+    font-size: 1.5rem;
+}
+
+.scrapyard-name {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+.scrapyard-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.scrapyard-sales {
+    color: var(--primary-blue);
+}
+
+/* Reviews Section */
+.reviews-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.reviews-summary {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.reviews-total {
+    color: var(--text-muted);
+}
+
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.review-card {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.review-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.review-comment {
+    line-height: 1.6;
+}
+
+/* Review Modal */
+.review-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.review-modal-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    width: 400px;
+    max-width: 90%;
+    border: 1px solid var(--primary-blue);
+}
+
+.review-modal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.star-selector {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.s-opt {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.s-opt:hover {
+    transform: scale(1.2);
+}
+
+.review-modal-body textarea {
+    width: 100%;
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+

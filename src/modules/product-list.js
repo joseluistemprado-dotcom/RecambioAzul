@@ -121,7 +121,9 @@ export class ProductList {
                 <div class="product-info">
                     <h4>${p.name}</h4>
                     <p class="product-price">${p.price} €</p>
+                    <div class="rating-slot" data-pid="${p.id}"></div>
                     <p class="product-condition">${p.condition}</p>
+                    <div class="scrapyard-slot" data-did="${p.donorId}"></div>
                     <button class="btn-primary btn-sm btn-add" data-id="${p.id}">Añadir</button>
                 </div>
             </div>
