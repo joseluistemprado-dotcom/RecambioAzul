@@ -13,19 +13,17 @@ import { VehicleSearch } from './vehicle-search.js';
 import { DiagnosticWizard } from './diagnostic-wizard.js';
 import { RatingSystem } from './rating-system.js';
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     console.log('Recambio Azul App Initialized');
 
-    // Initialize Rating System first (optional - won't break app if it fails)
-    let ratingSystem = null;
-    try {
-        ratingSystem = new RatingSystem();
-        await ratingSystem.init();
+    // Initialize Rating System (async but non-blocking)
+    const ratingSystem = new RatingSystem();
+    ratingSystem.init().then(() => {
         ratingSystem.attachGlobalEvents();
-        console.log('Rating System loaded successfully');
-    } catch (error) {
-        console.warn('Rating System failed to load, continuing without ratings:', error);
-    }
+        console.log('Rating System loaded');
+    }).catch(error => {
+        console.warn('Rating System failed to load:', error);
+    });
 
     // Initialize components if their containers exist
     if (document.getElementById('vehicle-selector-container')) {
@@ -44,14 +42,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         vehicleSearch.init();
     }
 
-    // Initialize Diagnostic Wizard (lazy - when view is shown)
-    let diagnosticWizard = null;
-    document.addEventListener('view-shown', (e) => {
-        if (e.detail === 'view-diagnostic-wizard' && !diagnosticWizard) {
-            diagnosticWizard = new DiagnosticWizard('diagnostic-wizard-container');
-            diagnosticWizard.init();
-        }
-    });
+    // Initialize Diagnostic Wizard
+    if (document.getElementById('diagnostic-wizard-container')) {
+        const diagnosticWizard = new DiagnosticWizard('diagnostic-wizard-container');
+        diagnosticWizard.init();
+    }
 
     // Initialize Shopping Cart
     const cart = new Cart();
@@ -97,7 +92,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const heroBtnDiagnostic = document.getElementById('hero-btn-diagnostic');
     if (heroBtnDiagnostic) {
         heroBtnDiagnostic.addEventListener('click', () => {
-            // We'll handle this navigation via hash in navigation.js or here directly
             window.location.hash = '#/diagnostico';
         });
     }
