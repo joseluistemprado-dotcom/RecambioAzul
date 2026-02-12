@@ -102,6 +102,18 @@ export class ProductList {
         // If we want stateful "Load More", we need to store the current filtered list.
         this.currentFilteredProducts = products;
 
+        // Listen for state updates to keep checkboxes in sync
+        if (!this.compareListenerAttached) {
+            document.addEventListener('compare-updated', (e) => {
+                const { selectedIds } = e.detail;
+                const checkboxes = this.container.querySelectorAll('.compare-checkbox');
+                checkboxes.forEach(cb => {
+                    cb.checked = selectedIds.includes(cb.dataset.id);
+                });
+            });
+            this.compareListenerAttached = true;
+        }
+
         // If we haven't rendered this list before, reset limit
         if (!this.currentLimit || this.currentListTitle !== title) {
             this.currentLimit = INITIAL_LIMIT;
@@ -116,6 +128,11 @@ export class ProductList {
                     <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                     <div class="product-image-placeholder" style="display:none">
                         <span>${p.category}</span>
+                    </div>
+                    <div class="compare-toggle">
+                        <label>
+                            <input type="checkbox" class="compare-checkbox" data-id="${p.id}"> Comparar
+                        </label>
                     </div>
                 </div>
                 <div class="product-info">
@@ -156,10 +173,24 @@ export class ProductList {
             });
         });
 
+        // Attach Compare listeners
+        this.container.querySelectorAll('.compare-checkbox').forEach(cb => {
+            cb.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent card click
+            });
+            cb.addEventListener('change', (e) => {
+                const productId = e.target.dataset.id;
+                const product = this.products.find(p => p.id === productId);
+                if (product) {
+                    document.dispatchEvent(new CustomEvent('toggle-compare', { detail: product }));
+                }
+            });
+        });
+
         // Click on card to view details
         this.container.querySelectorAll('.product-card').forEach(card => {
             card.addEventListener('click', (e) => {
-                if (e.target.closest('.btn-add')) return;
+                if (e.target.closest('.btn-add') || e.target.closest('.compare-toggle')) return;
 
                 // Find ID from the button inside this card to be safe
                 const productId = card.querySelector('.btn-add').dataset.id;

@@ -216,173 +216,204 @@
                         </div>
                         <button class="btn-primary" style="width: 100%; padding: 1rem;">Enviar Mensaje</button>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- View: Diagnostic Wizard -->
-    <div id="view-diagnostic-wizard" class="page-view hidden">
-        <div class="container" style="padding: 2rem 0;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h2 class="section-title"
-                    style="margin: 0 0 2rem; font-size: 1.5rem; color: var(--text-muted); text-transform:uppercase; letter-spacing: 1px;">
-                    Centro de Diagnóstico</h2>
-                <button class="btn-secondary btn-back-home">Salir del Asistente</button>
-            </div>
-            <div id="diagnostic-wizard-container" class="wizard-container card">
-                <!-- Wizard content injected here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- View: Cart -->
-    <div id="view-cart" class="page-view hidden">
-        <div class="container" style="padding: 4rem 0;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
-                <h2 style="margin:0">Cesta de la Compra</h2>
-                <button class="btn-secondary btn-back-home">Seguir Comprando</button>
-            </div>
-            <div class="grid" style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem;">
-                <div class="card" style="padding: 2rem;">
-                    <div id="cart-items-container-view">
-                        <!-- Items injected here -->
-                    </div>
-                </div>
-                <div class="card" style="padding: 2rem; height: fit-content;">
-                    <h3 style="margin-bottom: 1.5rem;">Resumen</h3>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 1.2rem;">
-                        <span>Subtotal</span>
-                        <span id="cart-total-price-view">0.00 €</span>
-                    </div>
-                    <button id="btn-to-checkout" class="btn-primary"
-                        style="width: 100%; padding: 1rem; font-size: 1.1rem;">Tramitar Pedido</button>
-                    <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); text-align: center;">Envío
-                        gratuito en 24/48h</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Checkout Section -->
-    <section id="view-checkout" class="page-view hidden">
-        <div class="container" style="padding: 4rem 0;">
-            <h2 style="margin-bottom: 2rem;">Finalizar Pedido</h2>
-            <div class="checkout-grid">
-                <div class="checkout-form-container">
-                    <form class="checkout-form card">
-                        <h3>Datos de Envío</h3>
-                        <div class="form-group">
-                            <label>Nombre Completo</label>
-                            <input type="text" class="form-input" required placeholder="Juan Pérez">
-                        </div>
-                        <div class="form-group">
-                            <label>Dirección</label>
-                            <input type="text" class="form-input" required placeholder="Calle Ejemplo, 123">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Ciudad</label>
-                                <input type="text" class="form-input" required placeholder="Madrid">
-                            </div>
-                            <div class="form-group">
-                                <label>Código Postal</label>
-                                <input type="text" class="form-input" required placeholder="28001">
+                    <div class="grid" style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem;">
+                        <div class="card" style="padding: 2rem;">
+                            <div id="cart-items-container-view">
+                                <!-- Items injected here -->
                             </div>
                         </div>
-
-                        <h3 style="margin-top: 2rem;">Datos de Pago</h3>
-                        <div class="form-group">
-                            <label>Tarjeta de Crédito</label>
-                            <input type="text" class="form-input" required placeholder="0000 0000 0000 0000">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Caducidad</label>
-                                <input type="text" class="form-input" required placeholder="MM/YY">
-                            </div>
-                            <div class="form-group">
-                                <label>CVC</label>
-                                <input type="text" class="form-input" required placeholder="123">
-                            </div>
-                        </div>
-
-                        <div class="form-actions" style="margin-top: 2rem; display: flex; gap: 1rem;">
-                            <button type="submit" class="btn-primary" style="flex: 1;">Pagar ahora</button>
-                            <button id="checkout-cancel" class="btn-secondary"
-                                style="background:transparent; border:1px solid var(--border-color); color: var(--text-muted); padding: 10px 20px; cursor: pointer; border-radius: 4px;">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="checkout-summary">
-                    <div class="card">
-                        <h3>Resumen del Pedido</h3>
-                        <div id="order-items-summary" style="margin: 1.5rem 0; max-height: 300px; overflow-y: auto;">
-                            <!-- Items injected here -->
-                        </div>
-                        <div class="summary-total"
-                            style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Artículos (<span id="order-count">0</span>)</span>
-                            </div>
+                        <div class="card" style="padding: 2rem; height: fit-content;">
+                            <h3 style="margin-bottom: 1.5rem;">Resumen</h3>
                             <div
-                                style="display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 700; color: var(--primary-blue);">
-                                <span>Total</span>
-                                <span id="order-total">0.00 €</span>
+                                style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 1.2rem;">
+                                <span>Subtotal</span>
+                                <span id="cart-total-price-view">0.00 €</span>
                             </div>
+                            <button id="btn-to-checkout" class="btn-primary"
+                                style="width: 100%; padding: 1rem; font-size: 1.1rem;">Tramitar Pedido</button>
+                            <p
+                                style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); text-align: center;">
+                                Envío
+                                gratuito en 24/48h</p>
                         </div>
                     </div>
                 </div>
             </div>
-    </section>
 
-
-
-    <!-- Footer -->
-
-    <!-- Footer -->
-    <footer
-        style="background-color: var(--card-bg); border-top: 1px solid var(--border-color); padding: 3rem 0; margin-top: 4rem;">
-        <div class="container"
-            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
-            <div>
-                <h4 style="color: var(--text-main); margin-bottom: 1rem;">Recambio <span
-                        class="text-electric">Azul</span></h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Especialistas en recambios verificados para
-                    vehículos eléctricos y movilidad sostenible.</p>
+            <!-- View: Product Comparison -->
+            <div id="view-compare" class="page-view hidden">
+                <!-- Content rendered by js -->
             </div>
-            <div>
-                <h4 style="color: var(--text-main); margin-bottom: 1rem;">Enlaces</h4>
-                <ul style="list-style: none; color: var(--text-muted);">
-                    <li style="margin-bottom: 0.5rem;"><a href="#/"
-                            style="color: inherit; text-decoration: none;">Inicio</a></li>
-                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: inherit; text-decoration: none;">Buscar
-                            Piezas</a></li>
-                    <li style="margin-bottom: 0.5rem;"><a href="#" id="footer-sell-car"
-                            style="color: inherit; text-decoration: none;">Vender
-                            Coche</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 style="color: var(--text-main); margin-bottom: 1rem;">Legal</h4>
-                <ul style="list-style: none; color: var(--text-muted);">
-                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: inherit; text-decoration: none;">Aviso
-                            Legal</a></li>
-                    <li style="margin-bottom: 0.5rem;"><a href="#"
-                            style="color: inherit; text-decoration: none;">Privacidad</a></li>
-                    <li style="margin-bottom: 0.5rem;"><a href="#"
-                            style="color: inherit; text-decoration: none;">Cookies</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="container"
-            style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.8rem;">
-            &copy; 2026 Recambio Azul S.L. Todos los derechos reservados.
-        </div>
-    </footer>
 
-    <script type="module" src="src/modules/app.js?v=3.0"></script>
+            <!-- View: Diagnostic Wizard -->
+            <div id="view-diagnostic-wizard" class="page-view hidden">
+                <div class="container" style="padding: 2rem 0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h2 class="section-title"
+                            style="margin: 0 0 2rem; font-size: 1.5rem; color: var(--text-muted); text-transform:uppercase; letter-spacing: 1px;">
+                            Centro de Diagnóstico</h2>
+                        <button class="btn-secondary btn-back-home">Salir del Asistente</button>
+                    </div>
+                    <div id="diagnostic-wizard-container" class="wizard-container card">
+                        <!-- Wizard content injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- View: Cart -->
+            <div id="view-cart" class="page-view hidden">
+                <div class="container" style="padding: 4rem 0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
+                        <h2 style="margin:0">Cesta de la Compra</h2>
+                        <button class="btn-secondary btn-back-home">Seguir Comprando</button>
+                    </div>
+                    <div class="grid" style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem;">
+                        <div class="card" style="padding: 2rem;">
+                            <div id="cart-items-container-view">
+                                <!-- Items injected here -->
+                            </div>
+                        </div>
+                        <div class="card" style="padding: 2rem; height: fit-content;">
+                            <h3 style="margin-bottom: 1.5rem;">Resumen</h3>
+                            <div
+                                style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 1.2rem;">
+                                <span>Subtotal</span>
+                                <span id="cart-total-price-view">0.00 €</span>
+                            </div>
+                            <button id="btn-to-checkout" class="btn-primary"
+                                style="width: 100%; padding: 1rem; font-size: 1.1rem;">Tramitar Pedido</button>
+                            <p
+                                style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); text-align: center;">
+                                Envío
+                                gratuito en 24/48h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkout Section -->
+            <section id="view-checkout" class="page-view hidden">
+                <div class="container" style="padding: 4rem 0;">
+                    <h2 style="margin-bottom: 2rem;">Finalizar Pedido</h2>
+                    <div class="checkout-grid">
+                        <div class="checkout-form-container">
+                            <form class="checkout-form card">
+                                <h3>Datos de Envío</h3>
+                                <div class="form-group">
+                                    <label>Nombre Completo</label>
+                                    <input type="text" class="form-input" required placeholder="Juan Pérez">
+                                </div>
+                                <div class="form-group">
+                                    <label>Dirección</label>
+                                    <input type="text" class="form-input" required placeholder="Calle Ejemplo, 123">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Ciudad</label>
+                                        <input type="text" class="form-input" required placeholder="Madrid">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Código Postal</label>
+                                        <input type="text" class="form-input" required placeholder="28001">
+                                    </div>
+                                </div>
+
+                                <h3 style="margin-top: 2rem;">Datos de Pago</h3>
+                                <div class="form-group">
+                                    <label>Tarjeta de Crédito</label>
+                                    <input type="text" class="form-input" required placeholder="0000 0000 0000 0000">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Caducidad</label>
+                                        <input type="text" class="form-input" required placeholder="MM/YY">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>CVC</label>
+                                        <input type="text" class="form-input" required placeholder="123">
+                                    </div>
+                                </div>
+
+                                <div class="form-actions" style="margin-top: 2rem; display: flex; gap: 1rem;">
+                                    <button type="submit" class="btn-primary" style="flex: 1;">Pagar ahora</button>
+                                    <button id="checkout-cancel" class="btn-secondary"
+                                        style="background:transparent; border:1px solid var(--border-color); color: var(--text-muted); padding: 10px 20px; cursor: pointer; border-radius: 4px;">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="checkout-summary">
+                            <div class="card">
+                                <h3>Resumen del Pedido</h3>
+                                <div id="order-items-summary"
+                                    style="margin: 1.5rem 0; max-height: 300px; overflow-y: auto;">
+                                    <!-- Items injected here -->
+                                </div>
+                                <div class="summary-total"
+                                    style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span>Artículos (<span id="order-count">0</span>)</span>
+                                    </div>
+                                    <div
+                                        style="display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 700; color: var(--primary-blue);">
+                                        <span>Total</span>
+                                        <span id="order-total">0.00 €</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+
+
+
+            <!-- Footer -->
+
+            <!-- Footer -->
+            <footer
+                style="background-color: var(--card-bg); border-top: 1px solid var(--border-color); padding: 3rem 0; margin-top: 4rem;">
+                <div class="container"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                    <div>
+                        <h4 style="color: var(--text-main); margin-bottom: 1rem;">Recambio <span
+                                class="text-electric">Azul</span></h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Especialistas en recambios verificados
+                            para
+                            vehículos eléctricos y movilidad sostenible.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--text-main); margin-bottom: 1rem;">Enlaces</h4>
+                        <ul style="list-style: none; color: var(--text-muted);">
+                            <li style="margin-bottom: 0.5rem;"><a href="#/"
+                                    style="color: inherit; text-decoration: none;">Inicio</a></li>
+                            <li style="margin-bottom: 0.5rem;"><a href="#"
+                                    style="color: inherit; text-decoration: none;">Buscar
+                                    Piezas</a></li>
+                            <li style="margin-bottom: 0.5rem;"><a href="#" id="footer-sell-car"
+                                    style="color: inherit; text-decoration: none;">Vender
+                                    Coche</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--text-main); margin-bottom: 1rem;">Legal</h4>
+                        <ul style="list-style: none; color: var(--text-muted);">
+                            <li style="margin-bottom: 0.5rem;"><a href="#"
+                                    style="color: inherit; text-decoration: none;">Aviso
+                                    Legal</a></li>
+                            <li style="margin-bottom: 0.5rem;"><a href="#"
+                                    style="color: inherit; text-decoration: none;">Privacidad</a></li>
+                            <li style="margin-bottom: 0.5rem;"><a href="#"
+                                    style="color: inherit; text-decoration: none;">Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="container"
+                    style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+                    &copy; 2026 Recambio Azul S.L. Todos los derechos reservados.
+                </div>
+            </footer>
+
+            <script type="module" src="src/modules/app.js?v=3.0"></script>
 </body>
 
 </html>
