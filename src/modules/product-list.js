@@ -1,12 +1,11 @@
 
 export class ProductList {
-    constructor(containerId, ratingSystem = null) {
+    constructor(containerId) {
         this.container = document.getElementById(containerId);
         this.products = [];
         this.currentVehicle = null;
         this.currentCategory = null;
         this.currentSearch = "";
-        this.ratingSystem = ratingSystem;
     }
 
     getBasePath() {
@@ -122,9 +121,7 @@ export class ProductList {
                 <div class="product-info">
                     <h4>${p.name}</h4>
                     <p class="product-price">${p.price} €</p>
-                    ${this.ratingSystem ? this.ratingSystem.renderCompactRating(p.id) : ''}
                     <p class="product-condition">${p.condition}</p>
-                    ${this.ratingSystem && p.donorId ? this.ratingSystem.renderScrapyardBadge(p.donorId) : ''}
                     <button class="btn-primary btn-sm btn-add" data-id="${p.id}">Añadir</button>
                 </div>
             </div>

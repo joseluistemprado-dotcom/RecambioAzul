@@ -1,9 +1,8 @@
 import { showView } from './navigation.js';
 
 export class ProductDetails {
-    constructor(ratingSystem = null) {
+    constructor() {
         this.container = null;
-        this.ratingSystem = ratingSystem;
     }
 
     init() {
@@ -61,8 +60,6 @@ export class ProductDetails {
     }
 
     render(product) {
-        const ratingData = this.ratingSystem ? this.ratingSystem.getProductRating(product.id) : null;
-
         this.container.innerHTML = `
             <div class="details-grid">
                 <div class="details-image">
@@ -77,20 +74,11 @@ export class ProductDetails {
                     <h2 class="details-title">${product.name}</h2>
                     <p class="details-price">${product.price} €</p>
                     
-                    ${ratingData ? `
-                        <div class="details-rating">
-                            ${this.ratingSystem.renderStars(ratingData.averageRating, true)}
-                            <span class="details-review-count">(${ratingData.totalReviews} valoraciones)</span>
-                        </div>
-                    ` : ''}
-                    
                     <div class="details-meta">
                         <p><strong>Referencia:</strong> ${product.id.toUpperCase()}</p>
                         <p><strong>Condición:</strong> <span class="badge-condition">${product.condition}</span></p>
                         <p><strong>Compatibilidad:</strong> ${product.vehicle || 'Consultar'}</p>
                     </div>
-                    
-                    ${this.ratingSystem && product.donorId ? this.ratingSystem.renderScrapyardBadge(product.donorId) : ''}
  
                     <div class="details-description">
                         <h3>Descripción</h3>
@@ -104,8 +92,6 @@ export class ProductDetails {
                     </div>
                 </div>
             </div>
-            
-            ${this.ratingSystem ? this.ratingSystem.renderReviewsSection(product.id) : ''}
         `;
 
         // Re-attach add to cart listener

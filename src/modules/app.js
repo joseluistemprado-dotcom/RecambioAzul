@@ -11,19 +11,9 @@ import { DonorVehicles } from './donor-vehicles.js';
 import { ChatBot } from './chatbot.js';
 import { VehicleSearch } from './vehicle-search.js';
 import { DiagnosticWizard } from './diagnostic-wizard.js';
-import { RatingSystem } from './rating-system.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Recambio Azul App Initialized');
-
-    // Initialize Rating System (async but non-blocking)
-    const ratingSystem = new RatingSystem();
-    ratingSystem.init().then(() => {
-        ratingSystem.attachGlobalEvents();
-        console.log('Rating System loaded');
-    }).catch(error => {
-        console.warn('Rating System failed to load:', error);
-    });
 
     // Initialize components if their containers exist
     if (document.getElementById('vehicle-selector-container')) {
@@ -32,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (document.getElementById('product-list-container')) {
-        const productList = new ProductList('product-list-container', ratingSystem);
+        const productList = new ProductList('product-list-container');
         productList.init();
     }
 
@@ -53,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cart.init();
 
     // Initialize Product Details
-    const productDetails = new ProductDetails(ratingSystem);
+    const productDetails = new ProductDetails();
     productDetails.init();
 
     // Initialize Checkout
