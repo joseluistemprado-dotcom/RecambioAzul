@@ -38,11 +38,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         vehicleSearch.init();
     }
 
-    // Initialize Diagnostic Wizard
-    if (document.getElementById('diagnostic-wizard-container')) {
-        const diagnosticWizard = new DiagnosticWizard('diagnostic-wizard-container');
-        diagnosticWizard.init();
-    }
+    // Initialize Diagnostic Wizard (lazy - when view is shown)
+    let diagnosticWizard = null;
+    document.addEventListener('view-shown', (e) => {
+        if (e.detail === 'view-diagnostic-wizard' && !diagnosticWizard) {
+            diagnosticWizard = new DiagnosticWizard('diagnostic-wizard-container');
+            diagnosticWizard.init();
+        }
+    });
 
     // Initialize Shopping Cart
     const cart = new Cart();

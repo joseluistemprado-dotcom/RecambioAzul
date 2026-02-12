@@ -7,6 +7,8 @@ function switchViewDOM(viewId) {
     if (target) {
         target.classList.remove('hidden');
         window.scrollTo(0, 0);
+        // Dispatch event for lazy initialization
+        document.dispatchEvent(new CustomEvent('view-shown', { detail: viewId }));
     }
 }
 
