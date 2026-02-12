@@ -16,10 +16,16 @@ import { RatingSystem } from './rating-system.js';
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Recambio Azul App Initialized');
 
-    // Initialize Rating System first
-    const ratingSystem = new RatingSystem();
-    await ratingSystem.init();
-    ratingSystem.attachGlobalEvents();
+    // Initialize Rating System first (optional - won't break app if it fails)
+    let ratingSystem = null;
+    try {
+        ratingSystem = new RatingSystem();
+        await ratingSystem.init();
+        ratingSystem.attachGlobalEvents();
+        console.log('Rating System loaded successfully');
+    } catch (error) {
+        console.warn('Rating System failed to load, continuing without ratings:', error);
+    }
 
     // Initialize components if their containers exist
     if (document.getElementById('vehicle-selector-container')) {
