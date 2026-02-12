@@ -1,0 +1,507 @@
+[
+  {
+    "id": "BAT-001",
+    "name": "Batería Alto Voltaje Tesla Model 3 (75kWh)",
+    "category": "baterias",
+    "vehicle": "tesla-model3",
+    "price": 4500,
+    "condition": "Nuevo",
+    "image": "src/assets/products/battery.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "BAT-002",
+    "name": "Módulo Batería Nissan Leaf 40kWh",
+    "category": "baterias",
+    "vehicle": "nissan-leaf",
+    "price": 1200,
+    "condition": "Usado",
+    "image": "src/assets/products/battery.png",
+    "donorId": "DON-003"
+  },
+  {
+    "id": "BAT-003",
+    "name": "Batería Renault Zoe 50kWh",
+    "category": "baterias",
+    "vehicle": "renault-zoe",
+    "price": 3000,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/battery.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "BAT-004",
+    "name": "BMS Tesla Model S",
+    "category": "baterias",
+    "vehicle": "tesla-models",
+    "price": 350,
+    "condition": "Usado",
+    "image": "src/assets/products/battery.png",
+    "donorId": "DON-009"
+  },
+  {
+    "id": "BAT-005",
+    "name": "Cableado Alta Tensión VW ID.3",
+    "category": "baterias",
+    "vehicle": "vw-id3",
+    "price": 150,
+    "condition": "Nuevo",
+    "image": "src/assets/products/battery.png",
+    "donorId": "DON-015"
+  },
+  {
+    "id": "BAT-006",
+    "name": "Batería Auxiliar 12V Li-Ion",
+    "category": "baterias",
+    "vehicle": "tesla-modely",
+    "price": 200,
+    "condition": "Nuevo",
+    "image": "src/assets/products/battery.png",
+    "donorId": "DON-006"
+  },
+  {
+    "id": "BAT-007",
+    "name": "Celda Batería Individual BMW i3",
+    "category": "baterias",
+    "vehicle": "bmw-i3",
+    "price": 80,
+    "condition": "Usado",
+    "image": "src/assets/products/battery.png",
+    "donorId": "DON-005"
+  },
+  {
+    "id": "MOT-001",
+    "name": "Motor Trasero Tesla Model 3 (Perf.)",
+    "category": "motores",
+    "vehicle": "tesla-model3",
+    "price": 2800,
+    "condition": "Usado",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "MOT-002",
+    "name": "Unidad Potencia Delantera Zoe",
+    "category": "motores",
+    "vehicle": "renault-zoe",
+    "price": 1500,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "MOT-003",
+    "name": "Inversor Corriente Nissan Leaf",
+    "category": "motores",
+    "vehicle": "nissan-leaf",
+    "price": 600,
+    "condition": "Usado",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-003"
+  },
+  {
+    "id": "MOT-004",
+    "name": "Motor Eléctrico VW ID.4",
+    "category": "motores",
+    "vehicle": "vw-id4",
+    "price": 2200,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-004"
+  },
+  {
+    "id": "MOT-005",
+    "name": "Reductora Tesla Model S",
+    "category": "motores",
+    "vehicle": "tesla-models",
+    "price": 900,
+    "condition": "Usado",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-009"
+  },
+  {
+    "id": "MOT-006",
+    "name": "Motor Delantero Taycan 4S",
+    "category": "motores",
+    "vehicle": "porsche-taycan",
+    "price": 3500,
+    "condition": "Usado",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-008"
+  },
+  {
+    "id": "MOT-007",
+    "name": "Transmisión E-Axle Fiat 500e",
+    "category": "motores",
+    "vehicle": "fiat-500e",
+    "price": 1100,
+    "condition": "Usado",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-007"
+  },
+  {
+    "id": "LIG-001",
+    "name": "Faro LED Matrix Izq. Model 3",
+    "category": "iluminacion",
+    "vehicle": "tesla-model3",
+    "price": 850,
+    "condition": "Usado",
+    "image": "src/assets/products/light.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "LIG-002",
+    "name": "Piloto Trasero Der. Zoe",
+    "category": "iluminacion",
+    "vehicle": "renault-zoe",
+    "price": 120,
+    "condition": "Nuevo",
+    "image": "src/assets/products/light.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "LIG-003",
+    "name": "Faro Full LED Nissan Leaf",
+    "category": "iluminacion",
+    "vehicle": "nissan-leaf",
+    "price": 550,
+    "condition": "Usado",
+    "image": "src/assets/products/light.png",
+    "donorId": "DON-003"
+  },
+  {
+    "id": "LIG-004",
+    "name": "Barra Luz Trasera VW ID.3",
+    "category": "iluminacion",
+    "vehicle": "vw-id3",
+    "price": 300,
+    "condition": "Nuevo",
+    "image": "src/assets/products/light.png",
+    "donorId": "DON-015"
+  },
+  {
+    "id": "LIG-005",
+    "name": "Intermitente Lateral Tesla",
+    "category": "iluminacion",
+    "vehicle": "tesla-models",
+    "price": 45,
+    "condition": "Usado",
+    "image": "src/assets/products/light.png",
+    "donorId": "DON-009"
+  },
+  {
+    "id": "LIG-006",
+    "name": "Faro Laserlight BMW i3",
+    "category": "iluminacion",
+    "vehicle": "bmw-i3",
+    "price": 700,
+    "condition": "Usado",
+    "image": "src/assets/products/light.png",
+    "donorId": "DON-005"
+  },
+  {
+    "id": "BOD-001",
+    "name": "Paragolpes Delantero Model 3",
+    "category": "carroceria",
+    "vehicle": "tesla-model3",
+    "price": 400,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "BOD-002",
+    "name": "Puerta Conductor Zoe",
+    "category": "carroceria",
+    "vehicle": "renault-zoe",
+    "price": 250,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "BOD-003",
+    "name": "Capó Aluminio Model S",
+    "category": "carroceria",
+    "vehicle": "tesla-models",
+    "price": 600,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-009"
+  },
+  {
+    "id": "BOD-004",
+    "name": "Espejo Retrovisor ID.4",
+    "category": "carroceria",
+    "vehicle": "vw-id4",
+    "price": 180,
+    "condition": "Nuevo",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-004"
+  },
+  {
+    "id": "BOD-005",
+    "name": "Portón Trasero Nissan Leaf",
+    "category": "carroceria",
+    "vehicle": "nissan-leaf",
+    "price": 350,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-003"
+  },
+  {
+    "id": "BOD-006",
+    "name": "Alerón Fibra Carbono Taycan",
+    "category": "carroceria",
+    "vehicle": "porsche-taycan",
+    "price": 900,
+    "condition": "Nuevo",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-008"
+  },
+  {
+    "id": "BOD-007",
+    "name": "Techo Solar Model Y",
+    "category": "carroceria",
+    "vehicle": "tesla-modely",
+    "price": 1100,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-006"
+  },
+  {
+    "id": "CHG-001",
+    "name": "Puerto de Carga CCS2 Model 3",
+    "category": "carga",
+    "vehicle": "tesla-model3",
+    "price": 250,
+    "condition": "Nuevo",
+    "image": "src/assets/products/charge.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "CHG-002",
+    "name": "Cable Mennekes Tipo 2 (5m)",
+    "category": "carga",
+    "vehicle": "universal",
+    "price": 120,
+    "condition": "Usado",
+    "image": "src/assets/products/charge.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "CHG-003",
+    "name": "Cargador a Bordo (OBC) Zoe",
+    "category": "carga",
+    "vehicle": "renault-zoe",
+    "price": 800,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/charge.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "CHG-004",
+    "name": "Tapa Puerto Carga Tesla",
+    "category": "carga",
+    "vehicle": "tesla-models",
+    "price": 90,
+    "condition": "Usado",
+    "image": "src/assets/products/charge.png",
+    "donorId": "DON-009"
+  },
+  {
+    "id": "CHG-005",
+    "name": "Wallbox Pulsar Plus",
+    "category": "carga",
+    "vehicle": "universal",
+    "price": 450,
+    "condition": "Nuevo",
+    "image": "src/assets/products/charge.png"
+  },
+  {
+    "id": "CHG-006",
+    "name": "Adaptador CCS1 a CCS2",
+    "category": "carga",
+    "vehicle": "universal",
+    "price": 150,
+    "condition": "Nuevo",
+    "image": "src/assets/products/charge.png"
+  },
+  {
+    "id": "CLM-001",
+    "name": "Compresor A/C Eléctrico Model 3",
+    "category": "climatizacion",
+    "vehicle": "tesla-model3",
+    "price": 400,
+    "condition": "Usado",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "CLM-002",
+    "name": "Bomba de Calor VW ID.3",
+    "category": "climatizacion",
+    "vehicle": "vw-id3",
+    "price": 650,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-015"
+  },
+  {
+    "id": "CLM-003",
+    "name": "Ventilador Radiador Zoe",
+    "category": "climatizacion",
+    "vehicle": "renault-zoe",
+    "price": 120,
+    "condition": "Usado",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "CLM-004",
+    "name": "Radiador Principal Leaf",
+    "category": "climatizacion",
+    "vehicle": "nissan-leaf",
+    "price": 180,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-003"
+  },
+  {
+    "id": "CLM-005",
+    "name": "Sensor Temperatura Habitáculo",
+    "category": "climatizacion",
+    "vehicle": "universal",
+    "price": 25,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "INT-001",
+    "name": "Volante Tesla Model 3",
+    "category": "interior",
+    "vehicle": "tesla-model3",
+    "price": 300,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "INT-002",
+    "name": "Pantalla Central 15\"",
+    "category": "interior",
+    "vehicle": "tesla-model3",
+    "price": 900,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "INT-003",
+    "name": "Asiento Conductor Zoe",
+    "category": "interior",
+    "vehicle": "renault-zoe",
+    "price": 200,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "INT-004",
+    "name": "Alfombrillas Goma ID.4",
+    "category": "interior",
+    "vehicle": "vw-id4",
+    "price": 60,
+    "condition": "Nuevo",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-004"
+  },
+  {
+    "id": "INT-005",
+    "name": "Consola Central Leaf",
+    "category": "interior",
+    "vehicle": "nissan-leaf",
+    "price": 150,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-003"
+  },
+  {
+    "id": "INT-006",
+    "name": "Salpicadero Carbono Taycan",
+    "category": "interior",
+    "vehicle": "porsche-taycan",
+    "price": 1200,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-008"
+  },
+  {
+    "id": "INT-007",
+    "name": "Pomo Cambio Marchas e-208",
+    "category": "interior",
+    "vehicle": "peugeot-e208",
+    "price": 45,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png",
+    "donorId": "DON-012"
+  },
+  {
+    "id": "WHL-001",
+    "name": "Lanta Aero 18\" Model 3",
+    "category": "ruedas",
+    "vehicle": "tesla-model3",
+    "price": 250,
+    "condition": "Usado",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "WHL-002",
+    "name": "Kit Reparación Pinchazos",
+    "category": "ruedas",
+    "vehicle": "universal",
+    "price": 45,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "WHL-003",
+    "name": "Sensor Presión TPMS Tesla",
+    "category": "ruedas",
+    "vehicle": "tesla-models",
+    "price": 40,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-009"
+  },
+  {
+    "id": "WHL-004",
+    "name": "Juego Pastillas Freno Zoe",
+    "category": "ruedas",
+    "vehicle": "renault-zoe",
+    "price": 50,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "WHL-005",
+    "name": "Disco Freno Delantero Leaf",
+    "category": "ruedas",
+    "vehicle": "nissan-leaf",
+    "price": 80,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-003"
+  },
+  {
+    "id": "WHL-006",
+    "name": "Neumático Michelin Pilot Sport EV",
+    "category": "ruedas",
+    "vehicle": "universal",
+    "price": 280,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  }
+]

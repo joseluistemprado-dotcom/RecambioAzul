@@ -1,0 +1,100 @@
+[
+    {
+        "id": "tesla",
+        "name": "Tesla",
+        "models": [
+            {
+                "id": "model-3",
+                "name": "Model 3",
+                "versions": [
+                    "Standard Range",
+                    "Long Range",
+                    "Performance"
+                ]
+            },
+            {
+                "id": "model-y",
+                "name": "Model Y",
+                "versions": [
+                    "Long Range",
+                    "Performance"
+                ]
+            },
+            {
+                "id": "model-s",
+                "name": "Model S",
+                "versions": [
+                    "Plaid",
+                    "Long Range"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "renault",
+        "name": "Renault",
+        "models": [
+            {
+                "id": "zoe",
+                "name": "Zoe",
+                "versions": [
+                    "R110",
+                    "R135"
+                ]
+            },
+            {
+                "id": "megane-itech",
+                "name": "Megane E-Tech",
+                "versions": [
+                    "EV40",
+                    "EV60"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "nissan",
+        "name": "Nissan",
+        "models": [
+            {
+                "id": "leaf",
+                "name": "Leaf",
+                "versions": [
+                    "40kWh",
+                    "e+ 62kWh"
+                ]
+            },
+            {
+                "id": "ariya",
+                "name": "Ariya",
+                "versions": [
+                    "63kWh",
+                    "87kWh"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "mg",
+        "name": "MG",
+        "models": [
+            {
+                "id": "mg4",
+                "name": "MG4 Electric",
+                "versions": [
+                    "Standard",
+                    "Comfort",
+                    "Luxury"
+                ]
+            },
+            {
+                "id": "zs-ev",
+                "name": "ZS EV",
+                "versions": [
+                    "Long Range",
+                    "Standard Range"
+                ]
+            }
+        ]
+    }
+]

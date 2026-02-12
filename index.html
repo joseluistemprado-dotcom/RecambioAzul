@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recambio Azul - Repuestos Vehículos Eléctricos</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css?v=2.2">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="container header-content">
+            <a href="#/" class="logo-container">
+                <img src="src/assets/logo.png" alt="Recambio Azul Logo" class="logo-img">
+                <span class="brand-name">Recambio <span class="text-electric">Azul</span></span>
+            </a>
+
+            <nav class="nav-links" id="main-nav-links">
+                <a href="#/" class="nav-link active">Inicio</a>
+                <a href="#" id="nav-search-parts" class="nav-link">Buscar Piezas</a>
+                <a href="#" id="nav-donor-vehicles" class="nav-link">Vehículos</a>
+                <a href="#" id="nav-sell-car" class="nav-link">Vender Coche</a>
+                <a href="#" id="nav-contact" class="nav-link">Contacto</a>
+            </nav>
+
+            <div class="header-actions">
+                <button id="mobile-menu-toggle" class="btn-icon mobile-only" aria-label="Abrir menú">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <button id="cart-toggle-btn" class="btn-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
+                    <span id="cart-count" class="cart-badge" style="display: none;">0</span>
+                </button>
+                <button class="btn-primary btn-client-area">Área Cliente</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Empty Space for views if needed -->
+
+
+
+
+    <div id="view-home" class="page-view">
+        <main class="container">
+            <!-- Hero Section -->
+            <section style="padding: 4rem 0; text-align: center;">
+                <h1 style="font-size: 3rem; margin-bottom: 1rem;">El Futuro del Recambio <span
+                        class="text-electric">Eléctrico</span></h1>
+                <p style="color: var(--text-muted); font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem;">
+                    Encuentra piezas originales verificadas para tu Tesla, Nissan, Renault y más.
+                    Economía circular para la movilidad sostenible.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <button id="hero-btn-diagnostic" class="btn-primary" style="padding: 12px 30px; font-size: 1.1rem;">
+                        🛠️ Diagnóstico de Averías
+                    </button>
+                    <button id="hero-btn-search" class="btn-secondary"
+                        style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); padding: 12px 30px; font-size: 1.1rem; border-radius: 4px; cursor: pointer;">
+                        🔍 Buscar Piezas
+                    </button>
+                </div>
+            </section>
+
+            <!-- Category Search -->
+            <div id="category-search-container"></div>
+
+            <!-- Search Bar -->
+            <div class="search-bar-container container">
+                <div class="search-input-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="search-icon">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input type="text" id="main-search-input"
+                        placeholder="¿Qué pieza buscas? (Ej: Faro, Batería, Motor...)" class="main-search-input">
+                </div>
+            </div>
+
+            <!-- Vehicle Search (Plate/VIN) -->
+            <div id="vehicle-search-container"></div>
+
+            <!-- Vehicle Logic -->
+            <div id="vehicle-selector-container"></div>
+
+            <!-- Products Grid -->
+            <div id="product-list-container"></div>
+        </main>
+    </div>
+
+    <!-- View: Donor Vehicles -->
+    <div id="view-donor-vehicles" class="page-view hidden">
+        <div class="container" style="padding: 2rem 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 class="section-title" style="margin: 0 0 2rem;">Vehículos en Despiece</h2>
+                <button class="btn-secondary btn-back-home">Volver al Inicio</button>
+            </div>
+            <div id="donor-list-grid" class="product-grid">
+                <!-- Donor Cards Injected Here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- View: Donor Details -->
+    <div id="view-donor-details" class="page-view hidden">
+        <div class="container" style="padding: 2rem 0;">
+            <div style="margin-bottom: 1rem;">
+                <button class="btn-secondary btn-back-donors">&larr; Volver a Vehículos</button>
+            </div>
+            <div id="donor-details-content">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- View: Product Details -->
+    <div id="view-product-details" class="page-view hidden">
+        <div class="container" style="padding: 2rem 0;">
+            <div style="margin-bottom: 2rem;">
+                <button class="btn-secondary btn-back-catalog">&larr; Volver al Catálogo</button>
+            </div>
+            <div id="product-details-content-view">
+                <!-- Content injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- View: Client Area -->
+    <div id="view-client-area" class="page-view hidden">
+        <div class="container" style="padding: 2rem 0;">
+            <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="margin:0">Área de Cliente</h2>
+                <button class="btn-secondary btn-back-home">Volver al Inicio</button>
+            </div>
+            <div id="client-area-content-view" class="card" style="min-height: 400px;">
+                <!-- Login or Dashboard injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- View: Sell Car -->
+    <div id="view-sell-car" class="page-view hidden">
+        <div class="container" style="padding: 4rem 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
+                <h2 style="margin:0">Vende tu Coche Eléctrico</h2>
+                <button class="btn-secondary btn-back-home">Volver al Inicio</button>
+            </div>
+            <div class="card" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+                <p style="margin-bottom: 2rem; color: var(--text-muted);">Te ofrecemos la mejor tasación del mercado.
+                    Envíanos los datos y recibe tu oferta en 24h.</p>
+                <form>
+                    <div class="form-row">
+                        <div class="form-group"><label>Marca/Modelo</label><input type="text" class="form-input"
+                                placeholder="Ej: Tesla Model 3"></div>
+                        <div class="form-group"><label>Año</label><input type="text" class="form-input"
+                                placeholder="Ej: 2021"></div>
+                    </div>
+                    <div class="form-group"><label>Email de contacto</label><input type="email" class="form-input"
+                            placeholder="tu@email.com">
+                    </div>
+                    <div class="form-group"><label>Descripción daños</label><textarea class="form-input" rows="4"
+                            placeholder="Describe brevemente el estado del vehículo..."></textarea></div>
+                    <button class="btn-primary" style="width: 100%; padding: 1rem;">Solicitar Tasación Gratuita</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- View: Contact -->
+    <div id="view-contact" class="page-view hidden">
+        <div class="container" style="padding: 4rem 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
+                <h2 style="margin:0">Contacta con Nosotros</h2>
+                <button class="btn-secondary btn-back-home">Volver al Inicio</button>
+            </div>
+            <div class="grid"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+                <div class="card" style="padding: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">Información de Contacto</h3>
+                    <div class="contact-info" style="color: var(--text-muted);">
+                        <p style="margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.5rem;">📧</span> info@recambioazul.com
+                        </p>
+                        <p style="margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.5rem;">📞</span> 900 123 456
+                        </p>
+                        <p style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.5rem;">📍</span> Polígono Industrial Tecnológico, Madrid
+                        </p>
+                    </div>
+                </div>
+                <div class="card" style="padding: 2rem;">
+                    <form>
+                        <div class="form-group"><label>Tu Email</label><input type="email" class="form-input"
+                                placeholder="tu@email.com"></div>
+                        <div class="form-group"><label>Mensaje</label><textarea class="form-input" rows="5"
+                                placeholder="¿En qué podemos ayudarte?"></textarea>
+                        </div>
+                        <button class="btn-primary" style="width: 100%; padding: 1rem;">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View: Diagnostic Wizard -->
+    <div id="view-diagnostic-wizard" class="page-view hidden">
+        <div class="container" style="padding: 2rem 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 class="section-title"
+                    style="margin: 0 0 2rem; font-size: 1.5rem; color: var(--text-muted); text-transform:uppercase; letter-spacing: 1px;">
+                    Centro de Diagnóstico</h2>
+                <button class="btn-secondary btn-back-home">Salir del Asistente</button>
+            </div>
+            <div id="diagnostic-wizard-container" class="wizard-container card">
+                <!-- Wizard content injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- View: Cart -->
+    <div id="view-cart" class="page-view hidden">
+        <div class="container" style="padding: 4rem 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
+                <h2 style="margin:0">Cesta de la Compra</h2>
+                <button class="btn-secondary btn-back-home">Seguir Comprando</button>
+            </div>
+            <div class="grid" style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem;">
+                <div class="card" style="padding: 2rem;">
+                    <div id="cart-items-container-view">
+                        <!-- Items injected here -->
+                    </div>
+                </div>
+                <div class="card" style="padding: 2rem; height: fit-content;">
+                    <h3 style="margin-bottom: 1.5rem;">Resumen</h3>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 1.2rem;">
+                        <span>Subtotal</span>
+                        <span id="cart-total-price-view">0.00 €</span>
+                    </div>
+                    <button id="btn-to-checkout" class="btn-primary"
+                        style="width: 100%; padding: 1rem; font-size: 1.1rem;">Tramitar Pedido</button>
+                    <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); text-align: center;">Envío
+                        gratuito en 24/48h</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Section -->
+    <section id="view-checkout" class="page-view hidden">
+        <div class="container" style="padding: 4rem 0;">
+            <h2 style="margin-bottom: 2rem;">Finalizar Pedido</h2>
+            <div class="checkout-grid">
+                <div class="checkout-form-container">
+                    <form class="checkout-form card">
+                        <h3>Datos de Envío</h3>
+                        <div class="form-group">
+                            <label>Nombre Completo</label>
+                            <input type="text" class="form-input" required placeholder="Juan Pérez">
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input type="text" class="form-input" required placeholder="Calle Ejemplo, 123">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Ciudad</label>
+                                <input type="text" class="form-input" required placeholder="Madrid">
+                            </div>
+                            <div class="form-group">
+                                <label>Código Postal</label>
+                                <input type="text" class="form-input" required placeholder="28001">
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 2rem;">Datos de Pago</h3>
+                        <div class="form-group">
+                            <label>Tarjeta de Crédito</label>
+                            <input type="text" class="form-input" required placeholder="0000 0000 0000 0000">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Caducidad</label>
+                                <input type="text" class="form-input" required placeholder="MM/YY">
+                            </div>
+                            <div class="form-group">
+                                <label>CVC</label>
+                                <input type="text" class="form-input" required placeholder="123">
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="margin-top: 2rem; display: flex; gap: 1rem;">
+                            <button type="submit" class="btn-primary" style="flex: 1;">Pagar ahora</button>
+                            <button id="checkout-cancel" class="btn-secondary"
+                                style="background:transparent; border:1px solid var(--border-color); color: var(--text-muted); padding: 10px 20px; cursor: pointer; border-radius: 4px;">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="checkout-summary">
+                    <div class="card">
+                        <h3>Resumen del Pedido</h3>
+                        <div id="order-items-summary" style="margin: 1.5rem 0; max-height: 300px; overflow-y: auto;">
+                            <!-- Items injected here -->
+                        </div>
+                        <div class="summary-total"
+                            style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Artículos (<span id="order-count">0</span>)</span>
+                            </div>
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 700; color: var(--primary-blue);">
+                                <span>Total</span>
+                                <span id="order-total">0.00 €</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <!-- Footer -->
+    <footer
+        style="background-color: var(--card-bg); border-top: 1px solid var(--border-color); padding: 3rem 0; margin-top: 4rem;">
+        <div class="container"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+            <div>
+                <h4 style="color: var(--text-main); margin-bottom: 1rem;">Recambio <span
+                        class="text-electric">Azul</span></h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Especialistas en recambios verificados para
+                    vehículos eléctricos y movilidad sostenible.</p>
+            </div>
+            <div>
+                <h4 style="color: var(--text-main); margin-bottom: 1rem;">Enlaces</h4>
+                <ul style="list-style: none; color: var(--text-muted);">
+                    <li style="margin-bottom: 0.5rem;"><a href="#/"
+                            style="color: inherit; text-decoration: none;">Inicio</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: inherit; text-decoration: none;">Buscar
+                            Piezas</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" id="footer-sell-car"
+                            style="color: inherit; text-decoration: none;">Vender
+                            Coche</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: var(--text-main); margin-bottom: 1rem;">Legal</h4>
+                <ul style="list-style: none; color: var(--text-muted);">
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: inherit; text-decoration: none;">Aviso
+                            Legal</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#"
+                            style="color: inherit; text-decoration: none;">Privacidad</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#"
+                            style="color: inherit; text-decoration: none;">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container"
+            style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+            &copy; 2026 Recambio Azul S.L. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script type="module" src="src/modules/app.js?v=3.0"></script>
+</body>
+
+</html>
