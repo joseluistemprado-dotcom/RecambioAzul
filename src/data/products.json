@@ -502,6 +502,55 @@
     "vehicle": "universal",
     "price": 280,
     "condition": "Nuevo",
+    "image": "src/assets/products/motor.png",
+    "donorId": "DON-003"
+  },
+  {
+    "id": "CHG-007",
+    "name": "Actuador de Bloqueo Puerto Carga Tesla",
+    "category": "carga",
+    "vehicle": "tesla-model3",
+    "price": 45,
+    "condition": "Nuevo",
+    "image": "src/assets/products/charge.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "BAT-008",
+    "name": "Fusible Principal Alta Tensión (HV) 400V",
+    "category": "baterias",
+    "vehicle": "universal",
+    "price": 15,
+    "condition": "Nuevo",
+    "image": "src/assets/products/battery.png"
+  },
+  {
+    "id": "BAT-009",
+    "name": "Módulo de Control Batería (BMS) Reacondicionado",
+    "category": "baterias",
+    "vehicle": "nissan-leaf",
+    "price": 150,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/battery.png",
+    "donorId": "DON-003"
+  },
+  {
+    "id": "BAT-010",
+    "name": "Módulo Batería Reacondicionado (Celdas)",
+    "category": "baterias",
+    "vehicle": "renault-zoe",
+    "price": 800,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/battery.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "CHG-008",
+    "name": "Inyector Adblue Sistema SCR",
+    "category": "motores",
+    "vehicle": "universal",
+    "price": 140,
+    "condition": "Nuevo",
     "image": "src/assets/products/motor.png"
   }
 ]
