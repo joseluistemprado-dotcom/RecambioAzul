@@ -12,7 +12,7 @@ export class DiagnosticWizard {
 
         // Data Structures
         this.data = {
-            electric: [ /* Existing EV Data + Expanded */
+            electric: [
                 {
                     id: 'bateria_carga',
                     label: 'Batería y Carga',
@@ -26,36 +26,68 @@ export class DiagnosticWizard {
                                 { id: 'q2', text: '¿Has probado en otro cargador diferente?', yes: 'obc', no: 'cargador_externo' }
                             ],
                             diagnoses: {
-                                'fallo_puerto': { title: 'Fallo en Puerto de Carga', text: 'El puerto de carga detecta error.', parts: [{ name: 'Puerto de Carga CCS2', price: 250 }, { name: 'Actuador Bloqueo', price: 45 }] },
-                                'obc': { title: 'Fallo Cargador de a Bordo', text: 'El OBC no gestiona la carga.', parts: [{ name: 'Cargador a Bordo (OBC)', price: 1200 }, { name: 'Fusible HV', price: 15 }] },
-                                'cargador_externo': { title: 'Revisar Cargador Externo', text: 'El problema parece del poste o cable.', parts: [{ name: 'Cable Tipo 2 Mennekes', price: 180 }] }
+                                'fallo_puerto': { title: 'Fallo en Puerto de Carga (DTC B1234)', text: 'El puerto de carga detecta error de hardware o comunicación.', parts: [{ name: 'Puerto de Carga CCS2', price: 250 }, { name: 'Actuador Bloqueo', price: 45 }] },
+                                'obc': { title: 'Fallo Cargador a Bordo (OBC)', text: 'El inversor interno AC/DC no gestiona la carga.', parts: [{ name: 'Cargador a Bordo (OBC)', price: 1200 }, { name: 'Fusible Alta Tensión HV', price: 15 }] },
+                                'cargador_externo': { title: 'Error de Infraestructura Exterior', text: 'El problema parece del poste o cable de carga.', parts: [{ name: 'Cable Tipo 2 Mennekes', price: 180 }] }
                             }
                         },
                         {
                             id: 's_autonomia',
-                            label: 'Autonomía reducida drásticamente',
-                            questions: [
-                                { id: 'q1', text: '¿Ocurre solo en invierno?', yes: 'frio', no: 'degradacion' }
-                            ],
+                            label: 'Pérdida súbita de autonomía',
+                            questions: [{ id: 'q1', text: '¿Se ha degradado con el tiempo?', yes: 'soh_bajo', no: 'celda_desequilibrada' }],
                             diagnoses: {
-                                'frio': { title: 'Batería Fría', text: 'La química de la batería rinde menos en frío.', parts: [{ name: 'Manta Térmica Batería', price: 120 }] },
-                                'degradacion': { title: 'Degradación Batería', text: 'Pérdida de capacidad (SOH).', parts: [{ name: 'Módulo Batería Reacondicionado', price: 800 }] }
+                                'soh_bajo': { title: 'Degradación Química (SOH < 70%)', text: 'La batería ha perdido capacidad por ciclos de uso.', parts: [{ name: 'Módulo Batería Reacondicionado', price: 800 }] },
+                                'celda_desequilibrada': { title: 'Desequilibrio de Celdas (BMS Error)', text: 'Alguna celda tiene diferente voltaje al resto.', parts: [{ name: 'Actualización BMS y Equilibrado', price: 150 }] }
                             }
                         }
                     ]
                 },
                 {
-                    id: 'motor_ev',
-                    label: 'Motor Eléctrico',
-                    icon: '⚡',
+                    id: 'turbo_admision',
+                    label: 'Turbo y Admisión',
+                    icon: '🐌',
                     symptoms: [
                         {
-                            id: 's_ruido_motor',
-                            label: 'Zumbido agudo al acelerar',
-                            questions: [{ id: 'q1', text: '¿Aumenta con la velocidad?', yes: 'rodamiento', no: 'inversor' }],
+                            id: 's_silbido_turbo',
+                            label: 'Silbido fuerte al acelerar (Sonido Sirena)',
+                            questions: [{ id: 'q1', text: '¿Echa humo azulado por el escape?', yes: 'holgura_turbo', no: 'fuga_manguito' }],
                             diagnoses: {
-                                'rodamiento': { title: 'Rodamiento Motor', text: 'Desgaste mecánico.', parts: [{ name: 'Kit Reparación Motor', price: 350 }] },
-                                'inversor': { title: 'Ruido Inversor', text: 'Coil whine excesivo en electrónica.', parts: [{ name: 'Inversor Potencia', price: 1500 }] }
+                                'holgura_turbo': { title: 'Holgura en Eje del Turbo', text: 'Desgaste severo en rodamientos, riesgo de rotura inminente.', parts: [{ name: 'Turbo Reconstruido', price: 450 }, { name: 'Juego Juntas Turbo', price: 25 }] },
+                                'fuga_manguito': { title: 'Fuga de Presión en Admisión', text: 'Un manguito del intercooler está rajado o suelto.', parts: [{ name: 'Manguito Intercooler Reforzado', price: 65 }] }
+                            }
+                        },
+                        {
+                            id: 's_geometria',
+                            label: 'Corte de potencia a altas vueltas (Limp Mode)',
+                            questions: [{ id: 'q1', text: '¿Falla solo al pisar fuerte?', yes: 'geometria_atascada', no: 'actuador_turbo' }],
+                            diagnoses: {
+                                'geometria_atascada': { title: 'Geometría Variable Sucia (P0299)', text: 'Exceso de carbonilla bloquea los álabes del turbo.', parts: [{ name: 'Limpieza Turbo Descarbonizadora', price: 120 }, { name: 'Turbo Nuevo', price: 650 }] },
+                                'actuador_turbo': { title: 'Fallo Actuador Electrónico', text: 'El motor que regula la presión no responde.', parts: [{ name: 'Actuador Turbo Electrónico', price: 180 }] }
+                            }
+                        }
+                    ]
+                },
+                {
+                    id: 'refrigeracion',
+                    label: 'Sist. Refrigeración',
+                    icon: '🌡️',
+                    symptoms: [
+                        {
+                            id: 's_calienta',
+                            label: 'La temperatura sube al máximo',
+                            questions: [{ id: 'q1', text: '¿Sale aire frío por la calefacción?', yes: 'aire_circuito', no: 'termostato_pegado' }],
+                            diagnoses: {
+                                'aire_circuito': { title: 'Aire en el Circuito / Fuga', text: 'Nivel bajo de anticongelante por fuga técnica.', parts: [{ name: 'Bomba de Agua GMB', price: 55 }, { name: 'Garrafa Anticongelante G12', price: 18 }] },
+                                'termostato_pegado': { title: 'Termostato Bloqueado Cerrado', text: 'No permite el flujo de agua hacia el radiador.', parts: [{ name: 'Termostato con Cuerpo', price: 40 }] }
+                            }
+                        },
+                        {
+                            id: 's_humo_blanco',
+                            label: 'Humo blanco denso por el escape (Olor dulce)',
+                            questions: [{ id: 'q1', text: '¿Hay aceite en el agua (mayonesa)?', yes: 'culata', no: 'enfriador_aceite' }],
+                            diagnoses: {
+                                'culata': { title: 'Junta de Culata Quemada', text: 'Paso de anticongelante a los cilindros.', parts: [{ name: 'Kit Juntas Descarbonización', price: 150 }, { name: 'Tornillos Culata', price: 35 }] },
+                                'enfriador_aceite': { title: 'Fallo Enfriador de Aceite', text: 'Mezcla de fluidos por rotura interna del intercambiador.', parts: [{ name: 'Enfriador de Aceite', price: 90 }] }
                             }
                         }
                     ]
@@ -68,52 +100,12 @@ export class DiagnosticWizard {
                     icon: '⛽',
                     symptoms: [
                         {
-                            id: 's_no_arranca',
-                            label: 'No arranca (hace ruido de intento)',
-                            questions: [
-                                { id: 'q1', text: '¿Huele a gasolina?', yes: 'ahogado', no: 'bomba_gasolina' }
-                            ],
+                            id: 's_misfire',
+                            label: 'Motor vibra y pierde potencia (Check Engine parpadea)',
+                            questions: [{ id: 'q1', text: '¿Solo en frío?', yes: 'bujias_humedas', no: 'bobina_falla' }],
                             diagnoses: {
-                                'ahogado': { title: 'Motor Ahogado / Bujías', text: 'Exceso de combustible o falta de chispa.', parts: [{ name: 'Juego de Bujías', price: 40 }, { name: 'Bobina de Encendido', price: 35 }] },
-                                'bomba_gasolina': { title: 'Fallo Bomba Gasolina', text: 'No llega combustible al motor.', parts: [{ name: 'Bomba de Combustible', price: 120 }, { name: 'Relé Bomba', price: 15 }] }
-                            }
-                        },
-                        {
-                            id: 's_tirones',
-                            label: 'Tirones al acelerar',
-                            questions: [
-                                { id: 'q1', text: '¿Se enciende luz de fallo motor?', yes: 'bobina', no: 'filtro' }
-                            ],
-                            diagnoses: {
-                                'bobina': { title: 'Fallo de Encendido (Misfire)', text: 'Una bobina o bujía está fallando.', parts: [{ name: 'Bobina de Encendido', price: 45 }, { name: 'Bujías Iridio', price: 60 }] },
-                                'filtro': { title: 'Filtro Combustible Sucio', text: 'Flujo de gasolina restringido.', parts: [{ name: 'Filtro Gasolina', price: 20 }] }
-                            }
-                        },
-                        {
-                            id: 's_humo',
-                            label: 'Humo por el escape',
-                            questions: [
-                                { id: 'q1', text: '¿El humo es azulado?', yes: 'aceite', no: 'agua' }
-                            ],
-                            diagnoses: {
-                                'aceite': { title: 'Consumo de Aceite', text: 'Retenes de válvula o segmentos desgastados.', parts: [{ name: 'Juego Juntas Válvula', price: 80 }, { name: 'Segmentos Pistón', price: 150 }] },
-                                'agua': { title: 'Junta de Culata', text: 'Humo blanco denso: anticongelante en cámara.', parts: [{ name: 'Junta de Culata', price: 60 }, { name: 'Kit Rectificado', price: 300 }] }
-                            }
-                        }
-                    ]
-                },
-                {
-                    id: 'escape_gasolina',
-                    label: 'Escape y Emisiones',
-                    icon: '💨',
-                    symptoms: [
-                        {
-                            id: 's_ruido_escape',
-                            label: 'Ruido fuerte en escape',
-                            questions: [{ id: 'q1', text: '¿Suena debajo del coche?', yes: 'intermedio', no: 'final' }],
-                            diagnoses: {
-                                'intermedio': { title: 'Silencioso Intermedio Roto', text: 'Fuga en tramo medio.', parts: [{ name: 'Silencioso Intermedio', price: 90 }] },
-                                'final': { title: 'Silencioso Trasero Picado', text: 'Óxido en la cola de escape.', parts: [{ name: 'Silencioso Trasero', price: 110 }] }
+                                'bujias_humedas': { title: 'Bujías Incrustadas (Contaminadas)', text: 'Mala combustión por bujías viejas.', parts: [{ name: 'Juego Bujías Iridio Ngk', price: 60 }] },
+                                'bobina_falla': { title: 'Fallo Bobina de Encendido (P0300)', text: 'Falta de chispa en uno o más cilindros.', parts: [{ name: 'Bobina de Encendido', price: 45 }] }
                             }
                         }
                     ]
@@ -126,86 +118,114 @@ export class DiagnosticWizard {
                     icon: '🛢️',
                     symptoms: [
                         {
-                            id: 's_humo_negro',
-                            label: 'Humo negro al acelerar',
-                            questions: [
-                                { id: 'q1', text: '¿Pierde potencia?', yes: 'egr', no: 'inyector' }
-                            ],
+                            id: 's_adblue',
+                            label: 'Fallo sistema AdBlue (Cuenta atrás)',
+                            questions: [{
+                                id: 'q1', text: '¿Hay cristalización?', yes: 'inyector_adblue', no: 'bomba_urea'
+                            }],
                             diagnoses: {
-                                'egr': { title: 'Válvula EGR Sucia/Abierta', text: 'Recirculación de gases bloqueada abierta.', parts: [{ name: 'Válvula EGR', price: 140 }, { name: 'Spray Limpia EGR', price: 15 }] },
-                                'inyector': { title: 'Inyector Goteando', text: 'Exceso de combustible no quemado.', parts: [{ name: 'Inyector Diésel', price: 250 }] }
-                            }
-                        },
-                        {
-                            id: 's_cuesta_arrancar',
-                            label: 'Cuesta arrancar en frío',
-                            questions: [
-                                { id: 'q1', text: '¿Se enciende testigo de muelle?', yes: 'calentadores', no: 'bomba' }
-                            ],
-                            diagnoses: {
-                                'calentadores': { title: 'Calentadores Fundidos', text: 'Las bujías de precalentamiento no funcionan.', parts: [{ name: 'Juego Calentadores', price: 60 }, { name: 'Relé Calentadores', price: 40 }] },
-                                'bomba': { title: 'Descebe Circuito Gasoil', text: 'Aire en el circuito de baja presión.', parts: [{ name: 'Bomba Cebado', price: 30 }, { name: 'Válvula Antirretorno', price: 10 }] }
-                            }
-                        },
-                        {
-                            id: 's_filtro_particulas',
-                            label: 'Aviso Filtro Partículas (DPF)',
-                            questions: [
-                                { id: 'q1', text: '¿Haces mucha ciudad?', yes: 'regeneracion_fallida', no: 'sensor_presion' }
-                            ],
-                            diagnoses: {
-                                'regeneracion_fallida': { title: 'DPF Saturado', text: 'El filtro no ha podido regenerar por trayectos cortos.', parts: [{ name: 'Líquido Limpia DPF', price: 25 }, { name: 'Filtro DPF Nuevo', price: 450 }] },
-                                'sensor_presion': { title: 'Sensor Diferencial Presión', text: 'El sensor lee mal la saturación.', parts: [{ name: 'Sensor Presión DPF', price: 50 }] }
+                                'inyector_adblue': { title: 'Inyector Urea Obstruido', text: 'Cristales de AdBlue bloquean la inyección.', parts: [{ name: 'Inyector Adblue', price: 140 }, { name: 'Limpiador Adblue', price: 15 }] },
+                                'bomba_urea': { title: 'Fallo Bomba Tanque Adblue', text: 'Pérdida de presión en el circuito SCR.', parts: [{ name: 'Depósito Urea Completo', price: 450 }] }
                             }
                         }
                     ]
                 }
             ],
-            shared: [ // Common for all (Suspension, Brakes, AC, Body)
+            shared: [
                 {
-                    id: 'frenos',
-                    label: 'Frenos',
+                    id: 'frenos_pro',
+                    label: 'Frenos ABS/ESP',
                     icon: '🛑',
                     symptoms: [
                         {
-                            id: 's_chirrido',
-                            label: 'Chirrido al frenar',
-                            questions: [{ id: 'q1', text: '¿Es constante?', yes: 'pastillas', no: 'suciedad' }],
+                            id: 's_abs',
+                            label: 'Testigo ABS/ESP encendido',
+                            questions: [{ id: 'q1', text: '¿Ha fallado tras cambiar ruedas?', yes: 'sensor_abs_sucio', no: 'centralita_abs' }],
                             diagnoses: {
-                                'pastillas': { title: 'Pastillas Gastadas', text: 'Metal contra metal.', parts: [{ name: 'Juego Pastillas Freno', price: 45 }, { name: 'Testigo Desgaste', price: 12 }] },
-                                'suciedad': { title: 'Suciedad en Discos', text: 'Polvo acumulado.', parts: [{ name: 'Limpiador Frenos', price: 8 }] }
+                                'sensor_abs_sucio': { title: 'Sensor de Rueda Defectuoso', text: 'Lectura incorrecta de velocidad de rueda.', parts: [{ name: 'Sensor ABS', price: 25 }] },
+                                'centralita_abs': { title: 'Fallo Módulo Hidráulico ABS', text: 'Fallo interno en la electrónica de frenado.', parts: [{ name: 'Modulo ABS Reconstruido', price: 300 }] }
                             }
                         }
                     ]
                 },
                 {
-                    id: 'suspension',
-                    label: 'Suspensión',
-                    icon: '🔩',
+                    id: 'chasis_ruedas',
+                    label: 'Chasis y Neumáticos',
+                    icon: '🚜',
                     symptoms: [
                         {
-                            id: 's_golpe',
-                            label: 'Golpe seco en baches',
-                            questions: [{ id: 'q1', text: '¿Suena "clonc"?', yes: 'bieleta', no: 'amortiguador' }],
+                            id: 's_desgaste_irregular',
+                            label: 'Desgaste por los bordes (Tire Wear Diagnostics)',
+                            questions: [{ id: 'q1', text: '¿Vibra el volante a partir de 100km/h?', yes: 'equilibrado_alineado', no: 'silentblocks' }],
                             diagnoses: {
-                                'bieleta': { title: 'Bieleta Estabilizadora', text: 'Holgura en rótula.', parts: [{ name: 'Bieleta Suspensión', price: 25 }] },
-                                'amortiguador': { title: 'Amortiguador Reventado', text: 'Pérdida de aceite/gas.', parts: [{ name: 'Juego Amortiguadores', price: 180 }, { name: 'Copelas', price: 40 }] }
+                                'equilibrado_alineado': { title: 'Desalineación y Mal Equilibrado', text: 'Geometría de dirección fuera de cotas.', parts: [{ name: 'Neumático 205/55 R16', price: 65 }, { name: 'Alineado 3D', price: 50 }] },
+                                'silentblocks': { title: 'Silentblocks de Trapecio Rajados', text: 'Holgura en brazos de suspensión.', parts: [{ name: 'Kit Trapecios Delanteros', price: 180 }] }
                             }
                         }
                     ]
                 },
                 {
-                    id: 'clima',
-                    label: 'Climatización',
-                    icon: '❄️',
+                    id: 'iluminacion',
+                    label: 'Luces y Visibilidad',
+                    icon: '🔦',
                     symptoms: [
                         {
-                            id: 's_no_enfria',
-                            label: 'No enfría nada',
-                            questions: [{ id: 'q1', text: '¿Se oye el compresor?', yes: 'gas', no: 'compresor' }],
+                            id: 's_xenon',
+                            label: 'Faro Xenon parpadea o se apaga',
+                            questions: [{ id: 'q1', text: '¿La luz está rosada?', yes: 'bombilla_xenon', no: 'balastro' }],
                             diagnoses: {
-                                'gas': { title: 'Falta de Gas', text: 'Fuga en el circuito.', parts: [{ name: 'Kit Fuga AC', price: 30 }] },
-                                'compresor': { title: 'Fallo Compresor', text: 'El embrague del compresor no acopla.', parts: [{ name: 'Compresor Aire Acondicionado', price: 250 }] }
+                                'bombilla_xenon': { title: 'Bombilla Xenon Agotada', text: 'Vida útil del gas finalizada.', parts: [{ name: 'Bombilla D1S Osram', price: 80 }] },
+                                'balastro': { title: 'Fallo Balastro Electrónico', text: 'El transformador de alta tensión ha fallado.', parts: [{ name: 'Balastro Xenon', price: 120 }] }
+                            }
+                        },
+                        {
+                            id: 's_limpia',
+                            label: 'Limpia parabrisas no funciona o hace ruido',
+                            questions: [{ id: 'q1', text: '¿Huele a quemado?', yes: 'motor_limpia', no: 'varillaje_atascado' }],
+                            diagnoses: {
+                                'motor_limpia': { title: 'Quemado de Motor Limpia', text: 'Fallo eléctrico interno por sobreesfuerzo.', parts: [{ name: 'Motor Limpiaparabrisas', price: 70 }] },
+                                'varillaje_atascado': { title: 'Mecanismo de Limpia Bloqueado', text: 'Oxido en las rótulas del varillaje.', parts: [{ name: 'Varillaje Limpia', price: 45 }, { name: 'Escobillas Aerotwin', price: 30 }] }
+                            }
+                        }
+                    ]
+                },
+                {
+                    id: 'confort_body',
+                    label: 'Cuerpo y Confort',
+                    icon: '🏢',
+                    symptoms: [
+                        {
+                            id: 's_ventanilla',
+                            label: 'Ventanilla no sube (se oye motor)',
+                            questions: [{ id: 'q1', text: '¿Cristal caído al fondo?', yes: 'elevalunas_roto', no: 'pulsador' }],
+                            diagnoses: {
+                                'elevalunas_roto': { title: 'Rotura de Mecanismo Elevalunas', text: 'Cables de acero trenzado cortados.', parts: [{ name: 'Elevalunas con Motor', price: 95 }] },
+                                'pulsador': { title: 'Fallo Interruptor de Ventanilla', text: 'Contactos internos sucios o quemados.', parts: [{ name: 'Botonera Principal', price: 35 }] }
+                            }
+                        },
+                        {
+                            id: 's_climatizador',
+                            label: 'Sale aire frío por un lado y caliente por otro',
+                            questions: [{ id: 'q1', text: '¿Se oyen "clics" tras el salpicadero?', yes: 'servomotor', no: 'compuerta_atascada' }],
+                            diagnoses: {
+                                'servomotor': { title: 'Fallo Servomotor de Mezcla', text: 'El motor eléctrico de la trampilla no mueve.', parts: [{ name: 'Servomotor Climatizador', price: 60 }] },
+                                'compuerta_atascada': { title: 'Compuerta Obstruida', text: 'Bloqueo mecánico del flujo de aire.', parts: [{ name: 'Filtro Habitáculo Polen', price: 15 }] }
+                            }
+                        }
+                    ]
+                },
+                {
+                    id: 'transmision_pro',
+                    label: 'Transmisión Pro',
+                    icon: '⚙️',
+                    symptoms: [
+                        {
+                            id: 's_dsg',
+                            label: 'Tirones en cambio automático (DSG/ZF)',
+                            questions: [{ id: 'q1', text: '¿Parpadea la letra P/R/D?', yes: 'mechatronica', no: 'mantenimiento_caja' }],
+                            diagnoses: {
+                                'mechatronica': { title: 'Fallo Unidad Mecatrónica', text: 'Fallo en el cerebro electro-hidráulico del cambio.', parts: [{ name: 'Unidad Mecatrónica Reac.', price: 650 }] },
+                                'mantenimiento_caja': { title: 'Aceite de Caja Agotado/Sucio', text: 'Necesita mantenimiento inmediato para evitar daños.', parts: [{ name: 'Kit Aceite y Filtro Caja', price: 180 }] }
                             }
                         }
                     ]
