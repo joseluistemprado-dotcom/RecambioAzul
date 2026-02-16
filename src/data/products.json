@@ -552,5 +552,218 @@
     "price": 140,
     "condition": "Nuevo",
     "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "ABS-001",
+    "name": "Sensor ABS Delantero Tesla Model 3",
+    "category": "frenos",
+    "vehicle": "tesla-model3",
+    "price": 25,
+    "condition": "Nuevo",
+    "image": "src/assets/products/wheel.png",
+    "donorId": "DON-001"
+  },
+  {
+    "id": "ABS-002",
+    "name": "Sensor ABS Renault Zoe",
+    "category": "frenos",
+    "vehicle": "renault-zoe",
+    "price": 22,
+    "condition": "Nuevo",
+    "image": "src/assets/products/wheel.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "ABS-003",
+    "name": "Sensor ABS Nissan Leaf",
+    "category": "frenos",
+    "vehicle": "nissan-leaf",
+    "price": 24,
+    "condition": "Nuevo",
+    "image": "src/assets/products/wheel.png",
+    "donorId": "DON-003"
+  },
+  {
+    "id": "ABS-004",
+    "name": "Módulo Hidráulico ABS Tesla Model S",
+    "category": "frenos",
+    "vehicle": "tesla-models",
+    "price": 300,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/wheel.png",
+    "donorId": "DON-009"
+  },
+  {
+    "id": "TRB-001",
+    "name": "Turbo Reconstruido Garrett VNT",
+    "category": "motores",
+    "vehicle": "universal",
+    "price": 450,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "TRB-002",
+    "name": "Actuador Turbo Electrónico Hella",
+    "category": "motores",
+    "vehicle": "universal",
+    "price": 180,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "TRB-003",
+    "name": "Manguito Intercooler Reforzado",
+    "category": "motores",
+    "vehicle": "universal",
+    "price": 65,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "REF-001",
+    "name": "Bomba de Agua GMB Reforzada",
+    "category": "motores",
+    "vehicle": "universal",
+    "price": 55,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "REF-002",
+    "name": "Termostato con Cuerpo de Aluminio",
+    "category": "motores",
+    "vehicle": "universal",
+    "price": 40,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "REF-003",
+    "name": "Enfriador de Aceite de Motor",
+    "category": "motores",
+    "vehicle": "universal",
+    "price": 90,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "LIG-007",
+    "name": "Balastro Xenon 35W Hid High-Pro",
+    "category": "iluminacion",
+    "vehicle": "universal",
+    "price": 120,
+    "condition": "Nuevo",
+    "image": "src/assets/products/light.png"
+  },
+  {
+    "id": "LIG-008",
+    "name": "Bombilla D1S Osram Night Breaker",
+    "category": "iluminacion",
+    "vehicle": "universal",
+    "price": 80,
+    "condition": "Nuevo",
+    "image": "src/assets/products/light.png"
+  },
+  {
+    "id": "WPR-001",
+    "name": "Motor Limpiaparabrisas Delantero Pro",
+    "category": "carroceria",
+    "vehicle": "universal",
+    "price": 70,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png"
+  },
+  {
+    "id": "WPR-002",
+    "name": "Varillaje Mecanismo Limpia",
+    "category": "carroceria",
+    "vehicle": "universal",
+    "price": 45,
+    "condition": "Nuevo",
+    "image": "src/assets/products/body.png"
+  },
+  {
+    "id": "WIN-001",
+    "name": "Elevalunas Eléctrico con Motor (Izq.)",
+    "category": "interior",
+    "vehicle": "universal",
+    "price": 95,
+    "condition": "Usado",
+    "image": "src/assets/products/body.png"
+  },
+  {
+    "id": "WIN-002",
+    "name": "Botonera Principal Elevalunas (4v)",
+    "category": "interior",
+    "vehicle": "universal",
+    "price": 35,
+    "condition": "Nuevo",
+    "image": "src/assets/products/body.png"
+  },
+  {
+    "id": "CLM-006",
+    "name": "Servomotor Mezcla Climatizador",
+    "category": "climatizacion",
+    "vehicle": "universal",
+    "price": 60,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "CLM-007",
+    "name": "Filtro Habitáculo Carbón Activo (Pack 2)",
+    "category": "climatizacion",
+    "vehicle": "universal",
+    "price": 15,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "TRA-001",
+    "name": "Unidad Mecatrónica Reacondicionada",
+    "category": "motores",
+    "vehicle": "universal",
+    "price": 650,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "SUS-001",
+    "name": "Kit Silentblocks Trapecio Delantero",
+    "category": "ruedas",
+    "vehicle": "universal",
+    "price": 180,
+    "condition": "Nuevo",
+    "image": "src/assets/products/motor.png"
+  },
+  {
+    "id": "CHG-009",
+    "name": "Actuador Bloqueo Puerto Carga Zoe",
+    "category": "carga",
+    "vehicle": "renault-zoe",
+    "price": 45,
+    "condition": "Nuevo",
+    "image": "src/assets/products/charge.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "CHG-010",
+    "name": "Cargador a Bordo (OBC) Zoe 22kW",
+    "category": "carga",
+    "vehicle": "renault-zoe",
+    "price": 800,
+    "condition": "Reacondicionado",
+    "image": "src/assets/products/charge.png",
+    "donorId": "DON-002"
+  },
+  {
+    "id": "CHG-011",
+    "name": "Cable Carga Mennekes Tipo 2 (7m)",
+    "category": "carga",
+    "vehicle": "universal",
+    "price": 180,
+    "condition": "Nuevo",
+    "image": "src/assets/products/charge.png"
   }
 ]
