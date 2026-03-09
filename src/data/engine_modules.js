@@ -20,7 +20,7 @@ export const diesel_symptoms = [
 const generateData = () => {
     for (let i = 1; i <= 20; i++) {
         turbo_admision_symptoms.push({
-            id: \`s_turbo_new_\${i}\`, label: \`Fallo de sobrealimentación \${i} - Falta de respuesta inicial\`,
+            id: `s_turbo_new_${i}`, label: `Fallo de sobrealimentación ${i} - Falta de respuesta inicial`,
             questions: [{ id: 'q1', text: '¿El coche da tirones al entrar el turbo?', yes: 'valvula_n75', no: 'sensor_map' }],
             diagnoses: {
                 valvula_n75: { title: 'Válvula N75 defectuosa', text: 'Falla el control de vacío del turbo.', parts: [{ name: 'Electroválvula N75 / Pierburg', price: 45 }] },
@@ -29,7 +29,7 @@ const generateData = () => {
         });
 
         refrigeracion_symptoms.push({
-            id: \`s_refri_new_\${i}\`, label: \`Problema de temperatura de motor \${i} - Fluctuaciones\`,
+            id: `s_refri_new_${i}`, label: `Problema de temperatura de motor ${i} - Fluctuaciones`,
             questions: [{ id: 'q1', text: '¿El ventilador hace mucho ruido a veces?', yes: 'viscoso_roto', no: 'radiador_sucio' }],
             diagnoses: {
                 viscoso_roto: { title: 'Embrague Viscoso del Ventilador Degastado', text: 'Ventilador no acopla bien por temperatura.', parts: [{ name: 'Embrague Viscoso Radiador', price: 80 }] },
@@ -38,7 +38,7 @@ const generateData = () => {
         });
 
         gasoline_symptoms.push({
-            id: \`s_gas_new_\${i}\`, label: \`Fallo de combustión Gasolina \${i} - Olor a gasolina sin quemar\`,
+            id: `s_gas_new_${i}`, label: `Fallo de combustión Gasolina ${i} - Olor a gasolina sin quemar`,
             questions: [{ id: 'q1', text: '¿Cuesta arrancar en caliente?', yes: 'inyector_gotea', no: 'filtro_gasolina_tapado' }],
             diagnoses: {
                 inyector_gotea: { title: 'Inyector Fuga Gasolina', text: 'Un inyector no cierra del todo, ahogando el pistón.', parts: [{ name: 'Inyector Gasolina Multipunto', price: 120 }] },
@@ -47,7 +47,7 @@ const generateData = () => {
         });
 
         diesel_symptoms.push({
-            id: \`s_die_new_\${i}\`, label: \`Problema emisiones Diésel \${i} - Humo negro o regeneración constante\`,
+            id: `s_die_new_${i}`, label: `Problema emisiones Diésel ${i} - Humo negro o regeneración constante`,
             questions: [{ id: 'q1', text: '¿El ralentí es inestable?', yes: 'egr_sucia', no: 'dpf_saturado' }],
             diagnoses: {
                 egr_sucia: { title: 'Válvula EGR Abierta Atascada', text: 'Reingresa demasiados gases quemados ahogando el motor.', parts: [{ name: 'Válvula EGR Reacondicionada', price: 130 }] },

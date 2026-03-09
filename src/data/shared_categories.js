@@ -24,7 +24,7 @@ export const transmision_pro_symptoms = [
 const generateSharedData = () => {
     for (let i = 1; i <= 20; i++) {
         frenos_pro_symptoms.push({
-            id: \`s_fre_new_\${i}\`, label: \`Problema de frenado \${i} - Pedal esponjoso / largo\`,
+            id: `s_fre_new_${i}`, label: `Problema de frenado ${i} - Pedal esponjoso / largo`,
             questions: [{ id: 'q1', text: '¿Hay pérdida visible de líquido oscuro?', yes: 'latiguillo_roto', no: 'bomba_freno' }],
             diagnoses: {
                 latiguillo_roto: { title: 'Fuga en Latiguillo Flex', text: 'Goma cuarteada por tiempo o mordida de roedor.', parts: [{ name: 'Latiguillo de Freno Rueda', price: 30 }] },
@@ -33,7 +33,7 @@ const generateSharedData = () => {
         });
 
         chasis_ruedas_symptoms.push({
-            id: \`s_cha_new_\${i}\`, label: \`Anomalía de suspensión \${i} - Ruido clonk en baches\`,
+            id: `s_cha_new_${i}`, label: `Anomalía de suspensión ${i} - Ruido clonk en baches`,
             questions: [{ id: 'q1', text: '¿Solo suena al girar el volante en parado?', yes: 'copela_roto', no: 'bieleta_estabilizadora' }],
             diagnoses: {
                 copela_roto: { title: 'Rodamiento de Copela Bloqueado', text: 'Fricción en la parte alta del amortiguador al girar.', parts: [{ name: 'Kit Copelas Amortiguador', price: 45 }] },
@@ -42,7 +42,7 @@ const generateSharedData = () => {
         });
 
         iluminacion_symptoms.push({
-            id: \`s_ilu_new_\${i}\`, label: \`Fallo eléctrico luces \${i} - Cortocircuito en piloto\`,
+            id: `s_ilu_new_${i}`, label: `Fallo eléctrico luces ${i} - Cortocircuito en piloto`,
             questions: [{ id: 'q1', text: '¿Al pisar el freno se enciende el intermitente?', yes: 'masa_corta', no: 'portalámparas_quemado' }],
             diagnoses: {
                 masa_corta: { title: 'Falta de Masa en Piloto Trasero', text: 'La corriente retorna por otros filamentos creando el fallo.', parts: [{ name: 'Conector de Piloto y Cableado', price: 15 }] },
@@ -51,7 +51,7 @@ const generateSharedData = () => {
         });
 
         confort_body_symptoms.push({
-            id: \`s_con_new_\${i}\`, label: \`Problema habitáculo \${i} - Bloqueo de puerta trasera\`,
+            id: `s_con_new_${i}`, label: `Problema habitáculo ${i} - Bloqueo de puerta trasera`,
             questions: [{ id: 'q1', text: '¿Tampoco abre desde dentro?', yes: 'supercondenacion', no: 'cable_tirador' }],
             diagnoses: {
                 supercondenacion: { title: 'Cerradura Trabada Safelock', text: 'Motor eléctrico clavado en posición de seguridad infantil.', parts: [{ name: 'Módulo Cerradura Puerta', price: 85 }] },
@@ -60,7 +60,7 @@ const generateSharedData = () => {
         });
 
         transmision_pro_symptoms.push({
-            id: \`s_tra_new_\${i}\`, label: \`Anomalía de tracción \${i} - Vibración al acelerar en carga\`,
+            id: `s_tra_new_${i}`, label: `Anomalía de tracción ${i} - Vibración al acelerar en carga`,
             questions: [{ id: 'q1', text: '¿Se nota en el túnel central?', yes: 'flector_cardan', no: 'palier_homocinetico' }],
             diagnoses: {
                 flector_cardan: { title: 'Flector Árbol Transmisión Roto', text: 'Goma de acople entre caja y diferencial desgarrada.', parts: [{ name: 'Flector Goma Cardán', price: 75 }] },
